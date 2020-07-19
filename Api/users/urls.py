@@ -4,6 +4,6 @@ from . import views
 app_name = "users"
 
 urlpatterns = [
-    path('<int:pk>/', views.UserDetail.as_view(), name="users-detail"),
-    path('', views.UserList.as_view(), name="users-list"),
+
+    path('', views.UserViewSet.as_view({'get': 'list'}), name="users-list"),
 ]

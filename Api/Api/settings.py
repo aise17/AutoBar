@@ -51,8 +51,6 @@ TENANT_APPS = (
     # your tenant-specific apps
     "users",
     "books"
-    # 'myapp.hotels',
-    # 'myapp.houses',
 )
 
 
@@ -68,13 +66,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    # 'myapp.hotels',
-    # 'myapp.houses',
     "users",
-    "books"
+    "books",
+    "rest_framework",
+    'django.contrib.staticfiles',
 )
 
-TENANT_MODEL = "customers.Client" # app.Model
+TENANT_MODEL = "customers.Client" 
 PUBLIC_SCHEMA_URLCONF = 'myproject.urls_public'
 
 DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
@@ -99,8 +97,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.debug',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -125,8 +123,8 @@ DATABASES = {
         'NAME': 'docker',
         'USER': 'docker',
         'PASSWORD': 'docker',
-        'HOST': 'postgresql',
-        #'HOST': 'localhost',
+        #'HOST': 'postgresql', 
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -175,3 +173,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '..', "static"),  # dev only after collecting static schemas
+]
+MULTITENANT_STATICFILES_DIRS= [
+    os.path.join(BASE_DIR, '..', "static"),  # dev only after collecting static schemas
+]
+
