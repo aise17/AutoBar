@@ -42,15 +42,17 @@ SHARED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'oauth2_provider',
 )
 
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
+    'oauth2_provider',
 
     # your tenant-specific apps
     "users",
-    "books"
+    "inventary"
 )
 
 
@@ -67,9 +69,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     "users",
-    "books",
+    "inventary",
     "rest_framework",
     'django.contrib.staticfiles',
+    'oauth2_provider',
+    
 )
 
 TENANT_MODEL = "customers.Client" 
@@ -87,6 +91,22 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+OAUTH2_PROVIDER = {
+    # parses OAuth2 data from application/json requests
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
 
 ROOT_URLCONF = 'Api.urls'
 
