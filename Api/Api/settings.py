@@ -73,7 +73,7 @@ INSTALLED_APPS = (
 )
 
 TENANT_MODEL = "customers.Client" 
-PUBLIC_SCHEMA_URLCONF = 'myproject.urls_public'
+PUBLIC_SCHEMA_URLCONF = 'Api.urls'
 
 DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
 
@@ -123,8 +123,8 @@ DATABASES = {
         'NAME': 'docker',
         'USER': 'docker',
         'PASSWORD': 'docker',
-        #'HOST': 'postgresql', 
-        'HOST': 'localhost',
+        'HOST': 'postgresql', 
+        #'HOST': 'localhost',
         'PORT': 5432,
     }
 }
