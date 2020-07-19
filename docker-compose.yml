@@ -29,7 +29,7 @@ services:
     volumes:
     - "./docker/volumes/django/logs:/var/log"
     - "./Api:/code/"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate_schemas --shared && gunicorn Api.wsgi -b 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate_schemas --shared && gunicorn --workers=4 Api.wsgi -b 0.0.0.0:8000"
     links:
     - postgresql
 

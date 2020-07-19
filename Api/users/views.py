@@ -4,6 +4,18 @@ from .models import User
 from .serializers import UserSerializer, UserLoginSerializer
 
 
+import json
+from pprint import pformat
+
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login as do_login
+from django.contrib.auth import logout as do_logout
+
+
 from django.contrib.auth.models import User, Group
 from django.contrib import admin
 from rest_framework.permissions import AllowAny
@@ -31,8 +43,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
 @permission_classes([AllowAny])
 class LoginApi(generics.ListCreateAPIView):
-
+    queryset = User.objects.all()
     serializer_class = UserLoginSerializer
+    
 
     def post(self, request, *args, **kwargs):
 
@@ -44,7 +57,7 @@ class LoginApi(generics.ListCreateAPIView):
 
             user = authenticate(username=serializer['username'].value, password=serializer['password'].value)
             if user:
-                login(request)
+                
                 ser = UserSerializer(instance=user)
 
                 salida['ok'] = True
@@ -63,3 +76,11 @@ class CreateUserView(CreateAPIView):
         permissions.AllowAny # Or anon users can't register
     ]
     serializer_class = UserSerializer
+
+def logout(request):
+    salida = dict()
+    do_logout(request)
+    salida['ok'] = True
+    salida['datos'] = str(request)
+
+    return JsonResponse(salida, status=status.HTTP_200_OK)

@@ -12,3 +12,5 @@ class User(models.Model):
 
     def __str__(self):
         return "Author - %s" % self.name 
+
+        
