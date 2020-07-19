@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+
+  nginx:
+    build: ./docker/dockerfiles/nginx
+    restart: always
+    hostname: "nginx"
+    volumes:
+      - "./docker/volumes/nginx/mysite.template:/etc/nginx/conf.d/"
+      - "./Api/static:/static"
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+    links:
+      - django
+
+  django:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/django/Dockerfile
+    ports:
+    - "8000:8000"
+    hostname: "django"
+    restart: always
+    volumes:
+    - "./docker/volumes/django/logs:/var/log"
+    - "./Api:/code/"
+    command: bash -c "gunicorn Api.wsgi -b 0.0.0.0:8000"
+    links:
+    - postgresql
+
+
+  postgresql:
+    build: ./docker/dockerfiles/postgresql
+    hostname: "postgresql"
+    restart: always
+    ports:
+      - "5432:5432"
+
+
+
+
+
