@@ -27,3 +27,5 @@ python-scrapyd-api
 Scrapy
 scrapyd
 django-tenant-schemas==1.10.0
+django-cors-headers
+

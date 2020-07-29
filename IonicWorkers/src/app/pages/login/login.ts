@@ -14,7 +14,7 @@ import { UserOptions } from '../../interfaces/user-options';
   styleUrls: ['./login.scss'],
 })
 export class LoginPage {
-  login: UserOptions = { username: '', password: '' };
+  login: UserOptions = { username: '', password: '', email: '' };
   submitted = false;
 
   constructor(
@@ -25,9 +25,18 @@ export class LoginPage {
   onLogin(form: NgForm) {
     this.submitted = true;
 
+    
+
     if (form.valid) {
       this.userData.login(this.login.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+
+      this.userData.loginRequest(this.login).subscribe(res => {
+        console.log(res['datos']['username']);
+        this.userData.getToken(this.login.username, this.login.password).subscribe(res => {
+          console.log('Respuesta de Token ->'  + res)
+        });
+      });
+      //this.router.navigateByUrl('/app/tabs/schedule');
     }
   }
 

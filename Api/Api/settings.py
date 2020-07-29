@@ -39,10 +39,11 @@ SHARED_APPS = (
     # everything below here is optional
     'django.contrib.auth',
     'django.contrib.sessions',
-    'django.contrib.sites',
+
     'django.contrib.messages',
     'django.contrib.admin',
     'oauth2_provider',
+    'corsheaders'
 )
 
 
@@ -52,7 +53,9 @@ TENANT_APPS = (
 
     # your tenant-specific apps
     "users",
-    "inventary"
+    "inventary",
+    'django.contrib.admin',
+    
 )
 
 
@@ -65,7 +68,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
-    'django.contrib.sites',
+
     'django.contrib.messages',
     'django.contrib.admin',
     "users",
@@ -73,6 +76,7 @@ INSTALLED_APPS = (
     "rest_framework",
     'django.contrib.staticfiles',
     'oauth2_provider',
+    'corsheaders'
     
 )
 
@@ -80,6 +84,13 @@ TENANT_MODEL = "customers.Client"
 PUBLIC_SCHEMA_URLCONF = 'Api.urls'
 
 DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
+
+CORS_ORIGIN_WHITELIST = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8100",
+    "http://127.0.0.1:9000"
+]
 
 MIDDLEWARE = [
     'tenant_schemas.middleware.TenantMiddleware',
@@ -90,6 +101,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 
