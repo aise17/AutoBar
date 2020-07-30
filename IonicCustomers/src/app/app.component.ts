@@ -21,25 +21,16 @@ import { Security } from './providers/security';
 export class AppComponent implements OnInit {
   appPages = [
     {
-      title: 'Barra',
+      title: 'Pedir en bar',
       url: '/app/tabs/schedule',
       icon: 'cafe'
     },
     {
-      title: 'Cocina',
+      title: 'Pedir a domicilio',
       url: '/app/tabs/speakers',
-      icon: 'bonfire'
+      icon: 'home'
     },
-    {
-      title: 'Camarero',
-      url: '/app/tabs/map',
-      icon: 'person'
-    },
-    {
-      title: 'About',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    }
+
   ];
   loggedIn = false;
   dark = true;
