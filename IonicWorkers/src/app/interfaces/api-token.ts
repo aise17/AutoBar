@@ -1,8 +1,8 @@
 export class ApiToken{
 
     grant_type: string;
-    usuario: string;
-    pass: string;
+    username: string;
+    password: string;
     client_id: string;
     client_secret: string;
     
@@ -12,10 +12,10 @@ export class ApiToken{
     constructor(usuario: string, pass: string){
 
         this.grant_type = 'password';
-        this.usuario = usuario;
-        this.pass = pass;
-        this.client_id = 'lRXzM1RQdlerCUl0ZrWmnpXpYuLfAjoWHRhQmDRn';
-        this.client_secret = 'EoGblkjmbc3udHZfeXA86hQNKGljnoNxIngiYjRVAgFsbnChclTTld8Asmp7M1M5looLJptSsvB5do8Jjqa4QZDCTd3L5SZFMDq9vH0sKpHEf1kiLAIUvrFn77ECLdkU';
+        this.username = usuario;
+        this.password = pass;
+        this.client_id = 'MJgIqPJxAMvLHCDG4vTwhHJBiIQYVSM82Mbij6dV';
+        this.client_secret = 'NrQc6Bud2JcrNBQICcWitVQJThiMPdXXIAp5sOsVYchApExmq3WmVNI0WjygNQDJhcDCllzMOuvbLPi6fjr708FN9da0thpYVLY1JI72i1XPr4ksHD6ziDZrjX1HYAzD';
         
     }
 

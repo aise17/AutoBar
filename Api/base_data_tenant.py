@@ -8,9 +8,9 @@ tenant = Client(domain_url='my-domain.com',
                 on_trial=False)
 tenant.save()
 
-tenant = Client(domain_url='tenant.my-domain.com', # don't add your port or www here!
-                schema_name='tenant1',
-                name='Fonzy Tenant',
+tenant = Client(domain_url='lacentro.my-domain.com', # don't add your port or www here!
+                schema_name='lacentro',
+                name='lacentro',
                 paid_until='2014-12-05',
                 on_trial=True)
 tenant.save()

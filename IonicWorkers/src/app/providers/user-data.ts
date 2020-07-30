@@ -16,9 +16,9 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
 
-  private loginUrl = 'http://tenant.my-domain.com:8000/users/loginApi/';
-  private registerUrl = 'http://tenant.my-domain.com:8000/users/register';
-  private createApiTokenUrl = 'http://tenant.my-domain.com:8000/users/o/token/';
+  private loginUrl = 'http://my-domain.com:8000/users/loginApi/';
+  private registerUrl = 'http://my-domain.com:8000/users/register';
+  private createApiTokenUrl = 'http://my-domain.com:8000/users/o/token/';
 
   constructor(
     public http: HttpClient,
@@ -72,33 +72,23 @@ export class UserData {
     );
   }
 
-  getToken (usuario: string, pass: string): Observable<Response> {
+  tokenRequest (usuario: string, pass: string): Observable<Response> {
 
     var token = new ApiToken(usuario, pass.toString());
 
     console.log(token)
 
-    const fd = new FormData();
-    fd.append('grant_type', token.grant_type);
-    fd.append('username', token.usuario);
-    fd.append('password', token.pass);
-    fd.append('client_id', token.client_id);
-    fd.append('client_secret', token.client_secret);
-  
-
-  
-
-    console.log(fd);
-    return this.http.post<Response>(this.createApiTokenUrl, fd ).pipe(
-      tap((res: Response) => this.log(`get token w/ token=${res}`)),
+    return this.http.post<Response>(this.createApiTokenUrl, token ).pipe(
+      tap((res) => this.log(`get token=${res['access_token']}`)),
       catchError(this.handleError<Response>('getToken'))
     );
   }
 
 
-  login(username: string): Promise<any> {
+  login(username: string, password: string): Promise<any> {
     return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
       this.setUsername(username);
+      this.setPassword(password);
       return window.dispatchEvent(new CustomEvent('user:login'));
     });
   }
@@ -122,8 +112,31 @@ export class UserData {
     return this.storage.set('username', username);
   }
 
+
   getUsername(): Promise<string> {
     return this.storage.get('username').then((value) => {
+      return value;
+    });
+  }
+
+  setPassword(password: string): Promise<any> {
+    return this.storage.set('password', password);
+  }
+
+
+  getPassword(): Promise<string> {
+    return this.storage.get('password').then((value) => {
+      return value;
+    });
+  }
+
+  setToken(password: string): Promise<any> {
+    return this.storage.set('token', password);
+  }
+
+
+  getToken(): Promise<string> {
+    return this.storage.get('token').then((value) => {
       return value;
     });
   }

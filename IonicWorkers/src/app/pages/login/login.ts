@@ -28,12 +28,13 @@ export class LoginPage {
     
 
     if (form.valid) {
-      this.userData.login(this.login.username);
+      this.userData.login(this.login.username, this.login.password);
 
       this.userData.loginRequest(this.login).subscribe(res => {
         console.log(res['datos']['username']);
-        this.userData.getToken(this.login.username, this.login.password).subscribe(res => {
-          console.log('Respuesta de Token ->'  + res)
+        this.userData.tokenRequest(this.login.username, this.login.password).subscribe(res => {
+          console.log('Respuesta de Token ->'  + res);
+          this.userData.setToken(res['access_token'])
         });
       });
       //this.router.navigateByUrl('/app/tabs/schedule');
