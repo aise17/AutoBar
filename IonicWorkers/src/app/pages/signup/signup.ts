@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
+import { Security } from '../../providers/security';
 
 
 
@@ -19,7 +20,7 @@ export class SignupPage {
 
   constructor(
     public router: Router,
-    public userData: UserData
+    public security: Security
   ) {}
 
   onSignup(form: NgForm) {
@@ -28,12 +29,25 @@ export class SignupPage {
     if (form.valid) {
 
       
-      this.userData.registerRequest(this.signup).subscribe(res => {
+      this.security.registerRequest(this.signup).subscribe(res => {
+        
         console.log(res);
+
+        this.security.signup(this.signup.username, this.signup.password);
+       
+
+        this.security.loginRequest(this.signup).subscribe(res => {
+          console.log(res['datos']['username']);
+
+          this.security.tokenRequest(this.signup.username, this.signup.password).subscribe(res => {
+            console.log('Respuesta de Token ->'  + res);
+            this.security.setToken(res['access_token']);
+            this.router.navigateByUrl('/app/tabs/schedule');
+          });
+        });
       });
 
-      this.userData.signup(this.signup.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+
     }
   }
 }

@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
+import { Security } from './providers/security';
 
 @Component({
   selector: 'app-root',
@@ -27,12 +28,12 @@ export class AppComponent implements OnInit {
     {
       title: 'Cocina',
       url: '/app/tabs/speakers',
-      icon: 'people'
+      icon: 'bonfire'
     },
     {
-      title: 'Map',
+      title: 'Camarero',
       url: '/app/tabs/map',
-      icon: 'map'
+      icon: 'person'
     },
     {
       title: 'About',
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit {
     }
   ];
   loggedIn = false;
-  dark = false;
+  dark = true;
 
   constructor(
     private menu: MenuController,
@@ -53,6 +54,7 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    private security: Security
   ) {
     this.initializeApp();
   }
@@ -90,7 +92,7 @@ export class AppComponent implements OnInit {
   }
 
   checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
+    return this.security.isLoggedIn().then(loggedIn => {
       return this.updateLoggedInStatus(loggedIn);
     });
   }
@@ -116,7 +118,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userData.logout().then(() => {
+    this.security.logout().then(() => {
       return this.router.navigateByUrl('/app/tabs/schedule');
     });
   }

@@ -5,13 +5,13 @@
     </ion-buttons>
     <ion-segment *ngIf="ios" [(ngModel)]="segment" (ionChange)="updateSchedule()">
       <ion-segment-button value="all">
-        All
+        Pedidos
       </ion-segment-button>
       <ion-segment-button value="favorites">
-        Favorites
+        Historico
       </ion-segment-button>
     </ion-segment>
-    <ion-title *ngIf="!ios && !showSearchbar">Schedule</ion-title>
+    <ion-title *ngIf="!ios && !showSearchbar">Barra</ion-title>
     <ion-searchbar *ngIf="showSearchbar" showCancelButton="always" [(ngModel)]="queryText" (ionChange)="updateSchedule()" (ionCancel)="showSearchbar = false" placeholder="Search"></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button *ngIf="!ios && !showSearchbar" (click)="showSearchbar = true">
@@ -28,10 +28,10 @@
   <ion-toolbar *ngIf="!ios">
     <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
       <ion-segment-button value="all">
-        All
+        Pedidos
       </ion-segment-button>
       <ion-segment-button value="favorites">
-        Favorites
+        Historico
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 import { UserData } from '../../providers/user-data';
+import { Security } from '../../providers/security';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class AccountPage implements AfterViewInit {
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
-    public userData: UserData
+    public userData: UserData,
+    public security: Security
   ) { }
 
   ngAfterViewInit() {
@@ -39,7 +41,7 @@ export class AccountPage implements AfterViewInit {
         {
           text: 'Ok',
           handler: (data: any) => {
-            this.userData.setUsername(data.username);
+            this.security.setUsername(data.username);
             this.getUsername();
           }
         }
@@ -57,7 +59,7 @@ export class AccountPage implements AfterViewInit {
   }
 
   getUsername() {
-    this.userData.getUsername().then((username) => {
+    this.security.getUsername().then((username) => {
       this.username = username;
     });
   }
@@ -67,7 +69,7 @@ export class AccountPage implements AfterViewInit {
   }
 
   logout() {
-    this.userData.logout();
+    this.security.logout();
     this.router.navigateByUrl('/login');
   }
 
