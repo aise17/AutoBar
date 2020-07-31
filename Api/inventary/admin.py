@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from .models import Product
 
-admin.site.site_header = 'productos'
+admin.site.site_header = 'Autobar'
 admin.site.index_title = 'Administración'
 admin.site.site_title = 'HTML title from adminsitration'
 

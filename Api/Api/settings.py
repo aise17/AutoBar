@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 SHARED_APPS = (
     'tenant_schemas',  # mandatory, should always be before any django app
+    'oauth2_provider',
     'customers', # you must list the app where your tenant model resides in
 
     'django.contrib.contenttypes',
@@ -42,14 +43,14 @@ SHARED_APPS = (
 
     'django.contrib.messages',
     'django.contrib.admin',
-    'oauth2_provider',
+    
     'corsheaders'
 )
 
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
-    'oauth2_provider',
+
 
     # your tenant-specific apps
     "users",
@@ -62,8 +63,9 @@ TENANT_APPS = (
 # Application definition
 
 INSTALLED_APPS = (
-    'tenant_schemas',  # mandatory, should always be before any django app
 
+    'tenant_schemas',  # mandatory, should always be before any django app
+    'oauth2_provider',
     'customers',
     'django.contrib.contenttypes',
     'django.contrib.auth',
@@ -75,7 +77,7 @@ INSTALLED_APPS = (
     "inventary",
     "rest_framework",
     'django.contrib.staticfiles',
-    'oauth2_provider',
+    
     'corsheaders'
     
 )

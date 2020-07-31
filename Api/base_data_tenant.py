@@ -6,6 +6,7 @@ tenant = Client(domain_url='my-domain.com',
                 name='Schemas Inc.',
                 paid_until='2016-12-05',
                 on_trial=False)
+
 tenant.save()
 
 tenant = Client(domain_url='lacentro.my-domain.com', # don't add your port or www here!
@@ -13,4 +14,13 @@ tenant = Client(domain_url='lacentro.my-domain.com', # don't add your port or ww
                 name='lacentro',
                 paid_until='2014-12-05',
                 on_trial=True)
+
+tenant.save()
+
+tenant = Client(domain_url='ellibra.my-domain.com', # don't add your port or www here!
+                schema_name='ellibra',
+                name='el libra',
+                paid_until='2014-12-05',
+                on_trial=True)
+
 tenant.save()
