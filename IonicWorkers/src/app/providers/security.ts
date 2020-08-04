@@ -50,7 +50,7 @@ export class Security {
         headers.append('responseType', 'application/json');
     
         return this.http.post<UserOptions>(this.registerUrl, user, {headers: headers}  ).pipe(
-          tap((res: UserOptions) => this.log(`reusltad0 =${res['ok']}  usuario recivido=${res['salida']} `)),
+          tap((res: UserOptions) => this.log(`reusltad0 =${res['ok']}  usuario recibido=${res['salida']} `)),
           catchError(this.handleError<UserOptions>('error de envio de usuario'))
         );
     }
