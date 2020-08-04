@@ -18,7 +18,6 @@ def load_fixture(apps, schema_editor):
     user.last_name = 'Admin'
     user.save()
 
- 
     Aplication = get_application_model()
     aplication = Aplication()
     aplication.client_secret = 'NrQc6Bud2JcrNBQICcWitVQJThiMPdXXIAp5sOsVYchApExmq3WmVNI0WjygNQDJhcDCllzMOuvbLPi6fjr708FN9da0thpYVLY1JI72i1XPr4ksHD6ziDZrjX1HYAzD'
@@ -30,8 +29,6 @@ def load_fixture(apps, schema_editor):
     aplication.redirect_uris = 'http://localhost:8000'
 
     aplication.save()
-
-
 
     # create your public tenant
     tenant = Client(domain_url='my-domain.com', 
@@ -58,7 +55,6 @@ def load_fixture(apps, schema_editor):
 
     tenant.save()
 
-    
 
 class Migration(migrations.Migration):
 
