@@ -30,6 +30,12 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/speakers',
       icon: 'home'
     },
+    {
+      title: 'Carta',
+      url: '/app/tabs/menu/menu',
+      icon: 'create'
+
+    },
 
   ];
   loggedIn = false;

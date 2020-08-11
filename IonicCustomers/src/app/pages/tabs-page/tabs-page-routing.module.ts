@@ -4,6 +4,7 @@ import { TabsPage } from './tabs-page';
 import { SchedulePage } from '../schedule/schedule';
 
 
+
 const routes: Routes = [
   {
     path: 'tabs',
@@ -56,12 +57,18 @@ const routes: Routes = [
             loadChildren: () => import('../about/about.module').then(m => m.AboutModule)
           }
         ]
+      },{
+        path: 'menu/menu',
+        loadChildren: () => import('../menu/menu/menu.module').then(m => m.MenuPageModule)
+          
+        
       },
       {
         path: '',
         redirectTo: '/app/tabs/schedule',
         pathMatch: 'full'
-      }
+      },
+      
     ]
   }
 ];
