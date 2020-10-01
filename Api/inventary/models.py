@@ -21,7 +21,7 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True,)
     allergy = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    category = models.ForeignKey(Category, models.CASCADE, null=True)
+    category = models.ForeignKey(Category, models.CASCADE, null=True, related_name='products')
     
     publish = models.BooleanField(null=True, blank=True)
     publish_date = models.DateTimeField(null=True, blank=True)
