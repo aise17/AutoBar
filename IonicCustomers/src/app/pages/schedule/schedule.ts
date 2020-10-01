@@ -6,6 +6,7 @@ import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { ConferenceData } from '../../providers/conference-data';
 import { UserData } from '../../providers/user-data';
 import {MenuController} from '@ionic/angular';
+import { Security } from '../../providers/security';
 
 @Component({
   selector: 'page-schedule',
@@ -36,17 +37,21 @@ export class SchedulePage implements OnInit {
     public toastCtrl: ToastController,
     public user: UserData,
     public config: Config,
-    private menu: MenuController
+    private menu: MenuController,
+    public security: Security
   ) { }
 
   ngOnInit() {
     this.updateSchedule();
     
     this.ios = this.config.get('mode') === 'ios';
+
+    this.getCarta();
+    
   }
 
   toggleMenu() {
-    this.menu.toggle('left'); //Add this method to your button click function
+    this.menu.toggle(); //Add this method to your button click function
   }
 
   updateSchedule() {
@@ -57,8 +62,11 @@ export class SchedulePage implements OnInit {
 
     this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
       this.shownSessions = data.shownSessions;
-      this.groups = data.groups;
+      console.log(data.shownSessions);
+      this.groups = data;
+      console.log('sada  ->' + data[0]);
     });
+    
   }
 
   async presentFilter() {
@@ -143,4 +151,19 @@ export class SchedulePage implements OnInit {
     await loading.onWillDismiss();
     fab.close();
   }
+
+async getCarta(){
+
+  this.security.getCarta().subscribe(res => {
+    var a;
+    console.log(res);
+
+    this.groups = res
+    
+  });
+
+
+}
+
+
 }

@@ -18,6 +18,7 @@ export class Security {
     private loginUrl = 'http://my-domain.com:8000/users/loginApi/';
     private registerUrl = 'http://my-domain.com:8000/users/register';
     private createApiTokenUrl = 'http://my-domain.com:8000/users/o/token/';
+    private cartaUrl = 'http://lacentro.my-domain.com:8080/inventary/product_list?format=json'
 
     constructor(
         public http: HttpClient,
@@ -64,6 +65,16 @@ export class Security {
           catchError(this.handleError<Response>('getToken'))
         );
     }
+
+
+    getCarta (): Observable<Response> {
+    
+
+      return this.http.get<Response>(this.cartaUrl ).pipe(
+        tap((res) => this.log(`get token=${res['access_token']}`)),
+        catchError(this.handleError<Response>('getToken'))
+      );
+  }
     
     login(username: string, password: string): Promise<any> {
         return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {

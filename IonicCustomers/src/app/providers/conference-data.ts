@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
@@ -18,7 +19,7 @@ export class ConferenceData {
       return of(this.data);
     } else {
       return this.http
-        .get('assets/data/data.json')
+        .get('http://lacentro.my-domain.com:8080/inventary/product_list?format=json')
         .pipe(map(this.processData, this));
     }
   }
@@ -27,31 +28,21 @@ export class ConferenceData {
     // just some good 'ol JS fun with objects and arrays
     // build up the data by linking speakers to sessions
     this.data = data;
+    console.log('Datos  ' + JSON.stringify(data));
 
     // loop through each day in the schedule
-    this.data.schedule.forEach((day: any) => {
+    this.data.forEach((category: any) => {
+      console.log('Datos' + JSON.stringify(category['name']));
       // loop through each timeline group in the day
-      day.groups.forEach((group: any) => {
+      category.products.forEach((product: any) => {
         // loop through each session in the timeline group
-        group.sessions.forEach((session: any) => {
-          session.speakers = [];
-          if (session.speakerNames) {
-            session.speakerNames.forEach((speakerName: any) => {
-              const speaker = this.data.speakers.find(
-                (s: any) => s.name === speakerName
-              );
-              if (speaker) {
-                session.speakers.push(speaker);
-                speaker.sessions = speaker.sessions || [];
-                speaker.sessions.push(session);
-              }
-            });
-          }
-        });
+        console.log('Datos' + JSON.stringify(product['name']));
+        
       });
     });
 
     return this.data;
+
   }
 
   getTimeline(
@@ -62,28 +53,31 @@ export class ConferenceData {
   ) {
     return this.load().pipe(
       map((data: any) => {
-        const day = data.schedule[dayIndex];
-        day.shownSessions = 0;
+        data.forEach((category: any) => {
+        const day = category;
+        
 
         queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
         const queryWords = queryText.split(' ').filter(w => !!w.trim().length);
 
-        day.groups.forEach((group: any) => {
-          group.hide = true;
+        day.products.forEach((products: any) => {
+          products.hide = true;
+          console.log('LLegamos')
 
-          group.sessions.forEach((session: any) => {
+        //  products.sessions.forEach((session: any) => {
             // check if this session should show or not
-            this.filterSession(session, queryWords, excludeTracks, segment);
+            this.filterSession(products, queryWords, excludeTracks, segment);
 
-            if (!session.hide) {
+            if (!products.hide) {
               // if this session is not hidden then this group should show
-              group.hide = false;
+              products.hide = false;
               day.shownSessions++;
             }
-          });
+          //});
         });
-
-        return day;
+      });
+      console.log('End')
+        return data;
       })
     );
   }
@@ -110,11 +104,11 @@ export class ConferenceData {
     // if any of the sessions tracks are not in the
     // exclude tracks then this session passes the track test
     let matchesTracks = false;
-    session.tracks.forEach((trackName: string) => {
-      if (excludeTracks.indexOf(trackName) === -1) {
+
+      if (excludeTracks.indexOf(name) === -1) {
         matchesTracks = true;
       }
-    });
+    
 
     // if the segment is 'favorites', but session is not a user favorite
     // then this session does not pass the segment test

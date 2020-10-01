@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 import { UserData } from '../../providers/user-data';
 
@@ -20,10 +21,11 @@ export class LoginPage {
 
   constructor(
     public router: Router,
-    public security: Security
+    public security: Security,
+    private toastCtrl: ToastController
   ) { }
 
-  onLogin(form: NgForm) {
+   async onLogin(form: NgForm) {
     this.submitted = true;
 
     
@@ -36,8 +38,20 @@ export class LoginPage {
         this.security.tokenRequest(this.login.username, this.login.password).subscribe(res => {
           console.log('Respuesta de Token ->'  + res);
           this.security.setToken(res['access_token'])
+          
         });
       });
+
+      const toast = await this.toastCtrl.create({
+        message: 'Login successful!',
+        color: 'success',
+        position: 'bottom',
+        duration: 3000,
+      });
+
+      await toast.present();
+
+      
       this.router.navigateByUrl('/tutorial');
     }
   }

@@ -53,17 +53,16 @@
     <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
       <ion-item-divider sticky>
         <ion-label>
-          {{group.time}}
+          {{group.name}}
         </ion-label>
       </ion-item-divider>
 
-      <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase"
-        [hidden]="session.hide">
-        <ion-item routerLink="/app/tabs/schedule/session/{{session.id}}">
+      <ion-item-sliding *ngFor="let products of group.products" #slidingItem >
+        <ion-item routerLink="/app/tabs/schedule/session/{{products.id}}">
           <ion-label>
-            <h3>{{session.name}}</h3>
+            <h3>{{products.name}}</h3>
             <p>
-              {{session.timeStart}} &mdash; {{session.timeEnd}}: {{session.location}}
+              {{products.description}}
             </p>
           </ion-label>
         </ion-item>
@@ -84,7 +83,7 @@
     No Sessions Found
   </ion-list-header>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" #fab>
+  <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" #fab>
     <ion-fab-button>
       <ion-icon name="share-social"></ion-icon>
     </ion-fab-button>
@@ -102,5 +101,5 @@
         <ion-icon name="logo-facebook"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>
