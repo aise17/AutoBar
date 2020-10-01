@@ -5,6 +5,7 @@ import { MenuController, IonSlides } from '@ionic/angular';
 
 import { Storage } from '@ionic/storage';
 
+
 @Component({
   selector: 'page-tutorial',
   templateUrl: 'tutorial.html',

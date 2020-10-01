@@ -14,20 +14,57 @@ import { Security } from '../../providers/security';
 })
 export class AccountPage implements AfterViewInit {
   username: string;
+  fileToUpload: File = null;
 
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
     public userData: UserData,
     public security: Security
+
   ) { }
 
   ngAfterViewInit() {
     this.getUsername();
   }
 
-  updatePicture() {
+  cambiar( event){
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        console.log(reader.result);
+    };
+
+    
+  }
+
+  async updatePicture() {
     console.log('Clicked to update picture');
+    const alert = await this.alertCtrl.create({
+      header: 'pepe',
+      message: 'Would you like to remove this session from your favorites?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            // they clicked the cancel button, do not remove the session
+            // close the sliding item and hide the option buttons
+   
+          }
+        },
+        {
+          text: 'Remove',
+          handler: () => {
+            // they want to remove this session from their favorites
+
+
+          }
+        }
+      ]
+    });
+    // now present the alert on top of all other content
+    await alert.present();
   }
 
   // Present an alert with the current username populated

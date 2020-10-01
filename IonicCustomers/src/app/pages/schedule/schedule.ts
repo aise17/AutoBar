@@ -5,6 +5,7 @@ import { AlertController, IonList, IonRouterOutlet, LoadingController, ModalCont
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { ConferenceData } from '../../providers/conference-data';
 import { UserData } from '../../providers/user-data';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'page-schedule',
@@ -34,13 +35,18 @@ export class SchedulePage implements OnInit {
     public routerOutlet: IonRouterOutlet,
     public toastCtrl: ToastController,
     public user: UserData,
-    public config: Config
+    public config: Config,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {
     this.updateSchedule();
-
+    
     this.ios = this.config.get('mode') === 'ios';
+  }
+
+  toggleMenu() {
+    this.menu.toggle('left'); //Add this method to your button click function
   }
 
   updateSchedule() {
