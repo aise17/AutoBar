@@ -59,10 +59,10 @@
 
       <ion-item-sliding *ngFor="let products of group.products" #slidingItem >
         <ion-item routerLink="/app/tabs/schedule/session/{{products.id}}">
-          <ion-label>
+          <ion-label >
             <h3>{{products.name}}</h3>
-            <p>
-              {{products.description}}
+            <p >
+              {{products.description}} <ion-label> Precio: {{products.price}} € </ion-label>
             </p>
           </ion-label>
         </ion-item>

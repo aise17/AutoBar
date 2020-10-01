@@ -128,9 +128,14 @@ export class ConferenceData {
   getSpeakers() {
     return this.load().pipe(
       map((data: any) => {
-        return data.speakers.sort((a: any, b: any) => {
-          const aName = a.name.split(' ').pop();
-          const bName = b.name.split(' ').pop();
+
+        data.forEach((category: string) =>{
+          console.log(category);
+        });
+
+        return  data.forEach((category: string) =>{
+          const aName = category.name.split(' ').pop();
+          const bName = category.name.split(' ').pop();
           return aName.localeCompare(bName);
         });
       })

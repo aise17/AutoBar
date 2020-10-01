@@ -7,6 +7,7 @@ import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
 import { Security } from '../../providers/security';
+import { MenuController, IonSlides } from '@ionic/angular';
 
 
 
@@ -22,8 +23,11 @@ export class LoginPage {
   constructor(
     public router: Router,
     public security: Security,
-    private toastCtrl: ToastController
-  ) { }
+    private toastCtrl: ToastController,
+    public menu: MenuController
+  ) { 
+    this.menu.enable(false);
+  }
 
    async onLogin(form: NgForm) {
     this.submitted = true;
