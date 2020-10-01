@@ -16,6 +16,8 @@ def load_fixture(apps, schema_editor):
 
     user = User.objects.create_user('autobar', 'autobar@autobar.com', 'swdzswdz')
     user.last_name = 'Admin'
+    user.is_superuser = True
+    user.is_staff = True
     user.save()
 
     Aplication = get_application_model()

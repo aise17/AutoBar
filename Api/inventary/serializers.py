@@ -1,4 +1,4 @@
-from .models import Product, Category
+from .models import Product, Category, Orders, OrdersProducts
 from rest_framework import serializers
 
 
@@ -24,7 +24,6 @@ class ProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
 
-        # Tuple of serialized model fields (see link [2])
         fields = ( '__all__' )
 
 class ProductsListSerializer(serializers.ModelSerializer):
@@ -33,5 +32,21 @@ class ProductsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
 
-        # Tuple of serialized model fields (see link [2])
+        fields = ( '__all__' )
+
+
+class OrderProductsSerializer(serializers.ModelSerializer):
+    product = ProductsSerializer(many=False)
+
+    class Meta:
+        model = OrdersProducts
+
+        fields = ( '__all__' )
+
+class OrderListSerializer(serializers.ModelSerializer):
+    order = OrderProductsSerializer(many=True)
+
+    class Meta:
+        model = Orders
+
         fields = ( '__all__' )

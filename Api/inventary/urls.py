@@ -9,5 +9,6 @@ urlpatterns = [
 
 
     path('product_list', views.CreateUserView.as_view(), name='ProductList'),
+    path('orders_list', views.getOrdersView.as_view(), name='OrdersList'),
 
 ]
