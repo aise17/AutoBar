@@ -21,13 +21,27 @@ UserModel = get_user_model()
 
 class ProductsSerializer(serializers.ModelSerializer):
 
+    def create(self, validated_data):
+
+        product = Product.objects.create(**validated_data)
+        #product.save()
+
+        return product
+
     class Meta:
         model = Product
-
+        
         fields = ( '__all__' )
 
 class ProductsListSerializer(serializers.ModelSerializer):
     products = ProductsSerializer(many=True)
+
+    def create(self, validated_data):
+
+        category = Category.objects.create(**validated_data)
+        #category.save()
+
+        return category
 
     class Meta:
         model = Category
@@ -44,9 +58,11 @@ class OrderProductsSerializer(serializers.ModelSerializer):
         fields = ( '__all__' )
 
 class OrderListSerializer(serializers.ModelSerializer):
-    order = OrderProductsSerializer(many=True)
+    order_product = OrderProductsSerializer(many=True)
+
+
 
     class Meta:
         model = Orders
-
-        fields = ( '__all__' )
+        optional_fields = ['order_product', ]
+        fields = ( 'user', 'creation_date', 'order_product' )
