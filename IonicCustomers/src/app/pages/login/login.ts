@@ -38,7 +38,7 @@ export class LoginPage {
           this.security.setToken(res['access_token'])
         });
       });
-      //this.router.navigateByUrl('/app/tabs/schedule');
+      this.router.navigateByUrl('/tutorial');
     }
   }
 

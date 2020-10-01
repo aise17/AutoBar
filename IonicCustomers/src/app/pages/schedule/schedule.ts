@@ -19,7 +19,7 @@ export class SchedulePage implements OnInit {
   ios: boolean;
   dayIndex = 0;
   queryText = '';
-  segment = 'favorite';
+  segment = 'all';
   excludeTracks: any = [];
   shownSessions: any = [];
   groups: any = [];

@@ -1,22 +1,19 @@
-from .models import Product, Category, Orders, OrdersProducts
+from django.contrib import admin
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import Group, User, update_last_login
 from rest_framework import serializers
 
+from .models import Category, Orders, OrdersProducts, Product
 
-
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User, Group, update_last_login
-from django.contrib import admin
 admin.autodiscover()
 
+from django.contrib.auth import get_user_model  # If used custom user model
 from rest_framework import serializers
-
 
 # first we define the serializers
 
-from django.contrib.auth import get_user_model # If used custom user model
 
 UserModel = get_user_model()
-
 
 
 class ProductsSerializer(serializers.ModelSerializer):
@@ -60,9 +57,7 @@ class OrderProductsSerializer(serializers.ModelSerializer):
 class OrderListSerializer(serializers.ModelSerializer):
     order_product = OrderProductsSerializer(many=True)
 
-
-
     class Meta:
         model = Orders
         optional_fields = ['order_product', ]
-        fields = ( 'user', 'creation_date', 'order_product' )
+        fields = ( '__all__' )

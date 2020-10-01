@@ -42,7 +42,7 @@ export class SignupPage {
           this.security.tokenRequest(this.signup.username, this.signup.password).subscribe(res => {
             console.log('Respuesta de Token ->'  + res);
             this.security.setToken(res['access_token']);
-            this.router.navigateByUrl('/app/tabs/schedule');
+            this.router.navigateByUrl('/tutorial');
           });
         });
       });
