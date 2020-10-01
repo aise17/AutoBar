@@ -43,11 +43,12 @@ export class AccountPage implements AfterViewInit {
     console.log('Clicked to update picture');
     const alert = await this.alertCtrl.create({
       header: 'pepe',
-      message: 'Would you like to remove this session from your favorites?',
+      message: '<ion-input value={text} placeholder="Enter Input" ></ion-input>',
       buttons: [
         {
           text: 'Cancel',
-          handler: () => {
+          handler: (data:any) => {
+          console.log(data);
             // they clicked the cancel button, do not remove the session
             // close the sliding item and hide the option buttons
    
