@@ -40,7 +40,7 @@ export class SchedulePage implements OnInit {
     private menu: MenuController,
     public security: Security
   ) { 
-    this.menu.enable(false);
+    //this.menu.enable(false);
   }
 
   ngOnInit() {
@@ -52,9 +52,7 @@ export class SchedulePage implements OnInit {
     
   }
 
-  toggleMenu() {
-    this.menu.toggle(); //Add this method to your button click function
-  }
+
 
   updateSchedule() {
     // Close any open sliding items when the schedule updates
