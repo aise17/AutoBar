@@ -39,7 +39,9 @@ export class SchedulePage implements OnInit {
     public config: Config,
     private menu: MenuController,
     public security: Security
-  ) { }
+  ) { 
+    this.menu.enable(false);
+  }
 
   ngOnInit() {
     this.updateSchedule();

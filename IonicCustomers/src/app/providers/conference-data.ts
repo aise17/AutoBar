@@ -133,7 +133,7 @@ export class ConferenceData {
           console.log(category);
         });
 
-        return  data.forEach((category: string) =>{
+        return  data.forEach((category: any) =>{
           const aName = category.name.split(' ').pop();
           const bName = category.name.split(' ').pop();
           return aName.localeCompare(bName);

@@ -26,7 +26,7 @@ export class LoginPage {
     private toastCtrl: ToastController,
     public menu: MenuController
   ) { 
-    this.menu.enable(false);
+    //this.menu.enable(false);
   }
 
    async onLogin(form: NgForm) {
