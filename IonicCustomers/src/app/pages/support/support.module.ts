@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { SupportPage } from './support';
+
 import { SupportPageRoutingModule } from './support-routing.module';
+
+import { SupportPage } from './support.page';
 
 @NgModule({
   imports: [
@@ -12,8 +15,6 @@ import { SupportPageRoutingModule } from './support-routing.module';
     IonicModule,
     SupportPageRoutingModule
   ],
-  declarations: [
-    SupportPage,
-  ]
+  declarations: [SupportPage]
 })
-export class SupportModule { }
+export class SupportPageModule {}

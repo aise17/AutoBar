@@ -1,32 +1,52 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { RouteReuseStrategy } from '@angular/router';
+
+import {  IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicModule } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { SecurityService } from './providers/security.service'
+import { MapsService } from './providers/maps.service'
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
+import { GoogleMaps } from '@ionic-native/google-maps';
+
+
+
+
+
 
 @NgModule({
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    BrowserModule, 
+    IonicModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    IonicModule.forRoot(),
+    AppRoutingModule,
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
   ],
-  declarations: [AppComponent],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
-  bootstrap: [AppComponent]
+  providers: [
+    QRScanner,
+    GoogleMaps,
+    MapsService,
+    StatusBar,
+    SecurityService,
+    SplashScreen,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

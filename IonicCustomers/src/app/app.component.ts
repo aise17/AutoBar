@@ -9,25 +9,24 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Storage } from '@ionic/storage';
 
-import { UserData } from './providers/user-data';
-import { Security } from './providers/security';
+import { UserService } from './providers/user.service';
+import { SecurityService } from './providers/security.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   appPages = [
     {
       title: 'Pedir en bar',
-      url: '/app/tabs/schedule',
+      url: '/scanner',
       icon: 'cafe'
     },
     {
       title: 'Pedir a domicilio',
-      url: '/app/tabs/speakers',
+      url: '/mapa',
       icon: 'home'
     },
 
@@ -42,10 +41,10 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private userData: UserData,
+    private userData: UserService,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private security: Security
+    private security: SecurityService
   ) {
     this.initializeApp();
   }

@@ -1,10 +1,9 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserData } from './user-data';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +11,14 @@ import { UserData } from './user-data';
 export class ConferenceData {
   data: any;
 
-  constructor(public http: HttpClient, public user: UserData) {}
+  constructor(public http: HttpClient, public user: UserService) {}
 
   load(): any {
     if (this.data) {
       return of(this.data);
     } else {
       return this.http
-        .get('http://lacentro.my-domain.com:8080/inventary/product_list?format=json')
+        .get('assets/data/data.json')
         .pipe(map(this.processData, this));
     }
   }
@@ -28,21 +27,31 @@ export class ConferenceData {
     // just some good 'ol JS fun with objects and arrays
     // build up the data by linking speakers to sessions
     this.data = data;
-    console.log('Datos  ' + JSON.stringify(data));
 
     // loop through each day in the schedule
-    this.data.forEach((category: any) => {
-      console.log('Datos' + JSON.stringify(category['name']));
+    this.data.schedule.forEach((day: any) => {
       // loop through each timeline group in the day
-      category.products.forEach((product: any) => {
+      day.groups.forEach((group: any) => {
         // loop through each session in the timeline group
-        console.log('Datos' + JSON.stringify(product['name']));
-        
+        group.sessions.forEach((session: any) => {
+          session.speakers = [];
+          if (session.speakerNames) {
+            session.speakerNames.forEach((speakerName: any) => {
+              const speaker = this.data.speakers.find(
+                (s: any) => s.name === speakerName
+              );
+              if (speaker) {
+                session.speakers.push(speaker);
+                speaker.sessions = speaker.sessions || [];
+                speaker.sessions.push(session);
+              }
+            });
+          }
+        });
       });
     });
 
     return this.data;
-
   }
 
   getTimeline(
@@ -53,31 +62,28 @@ export class ConferenceData {
   ) {
     return this.load().pipe(
       map((data: any) => {
-        data.forEach((category: any) => {
-        const day = category;
-        
+        const day = data.schedule[dayIndex];
+        day.shownSessions = 0;
 
         queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
         const queryWords = queryText.split(' ').filter(w => !!w.trim().length);
 
-        day.products.forEach((products: any) => {
-          products.hide = true;
-          console.log('LLegamos')
+        day.groups.forEach((group: any) => {
+          group.hide = true;
 
-        //  products.sessions.forEach((session: any) => {
+          group.sessions.forEach((session: any) => {
             // check if this session should show or not
-            this.filterSession(products, queryWords, excludeTracks, segment);
+            this.filterSession(session, queryWords, excludeTracks, segment);
 
-            if (!products.hide) {
+            if (!session.hide) {
               // if this session is not hidden then this group should show
-              products.hide = false;
+              group.hide = false;
               day.shownSessions++;
             }
-          //});
+          });
         });
-      });
-      console.log('End')
-        return data;
+
+        return day;
       })
     );
   }
@@ -104,11 +110,11 @@ export class ConferenceData {
     // if any of the sessions tracks are not in the
     // exclude tracks then this session passes the track test
     let matchesTracks = false;
-
-      if (excludeTracks.indexOf(name) === -1) {
+    session.tracks.forEach((trackName: string) => {
+      if (excludeTracks.indexOf(trackName) === -1) {
         matchesTracks = true;
       }
-    
+    });
 
     // if the segment is 'favorites', but session is not a user favorite
     // then this session does not pass the segment test
@@ -128,14 +134,9 @@ export class ConferenceData {
   getSpeakers() {
     return this.load().pipe(
       map((data: any) => {
-
-        data.forEach((category: string) =>{
-          console.log(category);
-        });
-
-        return  data.forEach((category: any) =>{
-          const aName = category.name.split(' ').pop();
-          const bName = category.name.split(' ').pop();
+        return data.speakers.sort((a: any, b: any) => {
+          const aName = a.name.split(' ').pop();
+          const bName = b.name.split(' ').pop();
           return aName.localeCompare(bName);
         });
       })
