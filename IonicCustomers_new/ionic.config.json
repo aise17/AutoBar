@@ -1,0 +1,7 @@
+{
+  "name": "IonicCustomers_new",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

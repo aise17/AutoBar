@@ -64,7 +64,7 @@ export class SchedulePage implements OnInit {
       this.shownSessions = data.shownSessions;
       console.log(data.shownSessions);
       this.groups = data;
-      console.log('sada  ->' + data[0]);
+
     });
     
   }
