@@ -38,6 +38,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
+    
   ],
   providers: [
     QRScanner,

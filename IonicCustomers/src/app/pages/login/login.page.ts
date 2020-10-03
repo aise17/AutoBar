@@ -27,7 +27,17 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit(){
+    //this.menu.enable(false);
+  }
+
+  ionViewWillEnter() {
+
     this.menu.enable(false);
+  }
+
+  ionViewDidLeave() {
+    // enable the root left menu when leaving the tutorial page
+    this.menu.enable(true);
   }
 
    async onLogin(form: NgForm) {
@@ -52,7 +62,7 @@ export class LoginPage implements OnInit {
                 const toast = this.createToast('Get token Successful!', 'success');
                 await (await toast).present();
                 this.security.setToken(res.access_token);
-                this.router.navigateByUrl('/tutorial');
+                this.router.navigateByUrl('/app/tab/scanner');
 
                 }else{
                   const toast = this.createToast('Get token Error! ' + res.error , 'danger');
@@ -66,7 +76,7 @@ export class LoginPage implements OnInit {
         }else{
           const toast = this.createToast('Sin Conexion', 'danger');
           await (await toast).present();
-          this.router.navigateByUrl('/tutorial');
+          this.router.navigateByUrl('/app/tab/scanner');
         }
       });
     }

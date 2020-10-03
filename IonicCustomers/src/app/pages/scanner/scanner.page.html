@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons *ngIf="!showSearchbar" slot="start">
+    <ion-buttons menuToggle slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
       <ion-title>
@@ -10,15 +10,22 @@
 </ion-header>
 
 <ion-content>
+   <ion-card style="height: 50%">
+        <div class="cameraView" style="height: 100%;width: 100%" id="map_canvas"></div> 
+    </ion-card>
   <div class="ion-padding">
       <ion-button (click)="startScanning()" expand="full">qrscanner</ion-button>
       <p *ngIf="qrText">QR Scan text: {{ qrText }}</p>
   </div>
   <div class="scanner"></div>
 
-  <ion-button fill="clear" (click)="goToCarta()">
-    Continue
-    <ion-icon slot="end" name="arrow-forward"></ion-icon>
-  </ion-button>
+
+  
 
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="goToCarta()" >Siguiente
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ion-footer>

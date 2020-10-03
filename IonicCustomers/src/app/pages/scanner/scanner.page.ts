@@ -22,12 +22,15 @@ export class ScannerPage implements OnInit {
     ) {
       this.platform.backButton.subscribeWithPriority(0, () => {
         document.getElementsByTagName('body')[0].style.opacity = '1';
+        this.qrScanner.hide();
         this.scanSub.unsubscribe();
+        this.qrScanner.destroy();
       });
      }
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    //this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+
   }
 
   goToCarta(){
@@ -35,17 +38,25 @@ export class ScannerPage implements OnInit {
     .navigateByUrl('/carta', { replaceUrl: true })
   }
 
+
+  ionViewWillLeave() {
+    this.closeScanner();
+  }
+
+  
+
   startScanning() {
     // Optionally request the permission early
+    
     this.qrScanner.prepare().
       then((status: QRScannerStatus) => {
         if (status.authorized) {
           this.qrScanner.show();
-          this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
+          this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0'
           
           this.scanSub = this.qrScanner.scan()
             .subscribe((textFound: string) => {
-              document.getElementsByTagName('body')[0].style.opacity = '1';
+              document.getElementsByTagName('body')[0].style.opacity = '1'
               this.qrScanner.hide();
               this.scanSub.unsubscribe();
 
@@ -62,5 +73,11 @@ export class ScannerPage implements OnInit {
       .catch((e: any) => console.log('Error is', e));
   }
 
+  closeScanner() {
+    document.getElementsByTagName('body')[0].style.opacity = '1';
+    this.qrScanner.hide();
+
+    this.qrScanner.destroy();
+  }
 
 }

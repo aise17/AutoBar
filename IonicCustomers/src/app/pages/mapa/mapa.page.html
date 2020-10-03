@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
     <ion-title>
       Mapa
     </ion-title>
@@ -7,15 +10,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-content>
+
+
     <ion-card style="height: 50%">
         <div style="height: 100%;width: 100%" id="map_canvas"></div> 
     </ion-card>
     <ion-item>{{position}}</ion-item>
-
-  <ion-footer>
-    <ion-button expand="block" (click)="goToCarta()" >Siguiente</ion-button>
-  </ion-footer>
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="localizar()">
@@ -23,3 +23,9 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="goToCarta()" >Siguiente
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ion-footer>
