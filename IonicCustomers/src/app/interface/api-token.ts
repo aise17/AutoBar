@@ -1,5 +1,7 @@
 export class ApiToken {
-    
+    access_token:string
+    error: string;
+    error_description: string;
     grant_type: string;
     username: string;
     password: string;

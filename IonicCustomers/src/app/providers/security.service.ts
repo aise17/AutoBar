@@ -14,9 +14,9 @@ export class SecurityService {
   HAS_LOGGED_IN = 'hasLoggedIn';
     HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
-    private loginUrl = 'http://my-domain.com:8000/users/loginApi/';
-    private registerUrl = 'http://my-domain.com:8000/users/register';
-    private createApiTokenUrl = 'http://my-domain.com:8000/users/o/token/';
+    private loginUrl = 'http://my-domain.com:8080/users/loginApi/';
+    private registerUrl = 'http://my-domain.com:8080/users/register';
+    private createApiTokenUrl = 'http://my-domain.com:8080/users/o/token/';
     private cartaUrl = 'http://lacentro.my-domain.com:8080/inventary/product_list?format=json'
 
     constructor(
@@ -26,6 +26,10 @@ export class SecurityService {
 
 
     public loginRequest(user: UserOptions): Observable<UserOptions> {
+
+
+      
+
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Methods', 'POST');
         headers.append('Access-Control-Allow-Origin', '*');
@@ -55,14 +59,14 @@ export class SecurityService {
         );
     }
     
-    public tokenRequest (usuario: string, pass: string): Observable<Response> {
+    public tokenRequest (usuario: string, pass: string): Observable<ApiToken> {
     
         let token = new ApiToken(usuario.toString(), pass.toString());
 
     
-        return this.http.post<Response>(this.createApiTokenUrl, token ).pipe(
+        return this.http.post<ApiToken>(this.createApiTokenUrl, token ).pipe(
           tap((res) => this.log(`get token=${res['access_token']}`)),
-          catchError(this.handleError<Response>('getToken'))
+          catchError(this.handleError<ApiToken>('getToken'))
         );
     }
 

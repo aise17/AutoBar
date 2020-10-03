@@ -16,7 +16,7 @@ import { MenuController, IonSlides } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  login: UserOptions = { username: '', password: '', email: '' };
+  login: UserOptions = { username: '', password: '', email: '', ok: '', error: '' };
   submitted = false;
 
   constructor(
@@ -33,32 +33,53 @@ export class LoginPage implements OnInit {
    async onLogin(form: NgForm) {
     this.submitted = true;
 
+
     
 
     if (form.valid) {
       this.security.login(this.login.username, this.login.password);
 
-      this.security.loginRequest(this.login).subscribe(res => {
-        console.log(res['datos']['username']);
-        this.security.tokenRequest(this.login.username, this.login.password).subscribe(res => {
-          console.log('Respuesta de Token ->'  + res);
-          this.security.setToken(res['access_token'])
-          
-        });
+      this.security.loginRequest(this.login).subscribe(async res => {
+        if(res){
+          if(res.ok){
+            console.log(res['datos']['username']);
+            const toast = this.createToast('Login Successful!', 'success');
+            await (await toast).present();
+
+            this.security.tokenRequest(this.login.username, this.login.password).subscribe(async res => {
+
+              if(!res.error){
+                const toast = this.createToast('Get token Successful!', 'success');
+                await (await toast).present();
+                this.security.setToken(res.access_token);
+                this.router.navigateByUrl('/tutorial');
+
+                }else{
+                  const toast = this.createToast('Get token Error! ' + res.error , 'danger');
+                  await (await toast).present();
+                }
+            });
+          }else{
+            const toast = this.createToast('Login Error! ' + res.error, 'danger');
+            await (await toast).present();
+          }
+        }else{
+          const toast = this.createToast('Sin Conexion', 'danger');
+          await (await toast).present();
+          this.router.navigateByUrl('/tutorial');
+        }
       });
-
-      const toast = await this.toastCtrl.create({
-        message: 'Login successful!',
-        color: 'success',
-        position: 'bottom',
-        duration: 3000,
-      });
-
-      await toast.present();
-
-      
-      this.router.navigateByUrl('/tutorial');
     }
+  }
+
+  async createToast(message: string, color: string){
+    const toast = await this.toastCtrl.create({
+      message: message,
+      color: color,
+      position: 'bottom',
+      duration: 3000,
+    });
+    return toast
   }
 
   onSignup() {

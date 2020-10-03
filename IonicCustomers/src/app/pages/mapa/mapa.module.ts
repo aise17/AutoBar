@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { MapaPageRoutingModule } from './mapa-routing.module';
 
 import { MapaPage } from './mapa.page';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
+
     CommonModule,
     FormsModule,
     IonicModule,

@@ -1,13 +1,17 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-toolbar color="primary">
     <ion-title>
-      Demo 111
+      Mapa
     </ion-title>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="map_canvas"></div>
+  <ion-content>
+    <ion-card style="height: 50%">
+        <div style="height: 100%;width: 100%" id="map_canvas"></div> 
+    </ion-card>
+</ion-content>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="localizar()">
       <ion-icon name="pin"></ion-icon>

@@ -42,7 +42,7 @@ export class ScannerPage implements OnInit {
         if (status.authorized) {
           this.qrScanner.show();
           this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
-          debugger
+          
           this.scanSub = this.qrScanner.scan()
             .subscribe((textFound: string) => {
               document.getElementsByTagName('body')[0].style.opacity = '1';
