@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar >
     <ion-title>
       Mapa
     </ion-title>
@@ -11,8 +11,13 @@
     <ion-card style="height: 50%">
         <div style="height: 100%;width: 100%" id="map_canvas"></div> 
     </ion-card>
-</ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-item>{{position}}</ion-item>
+
+  <ion-footer>
+    <ion-button expand="block" (click)="goToCarta()" >Siguiente</ion-button>
+  </ion-footer>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="localizar()">
       <ion-icon name="pin"></ion-icon>
     </ion-fab-button>

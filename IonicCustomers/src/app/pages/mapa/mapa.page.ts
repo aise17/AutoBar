@@ -10,7 +10,7 @@ import {
 } from "@ionic-native/google-maps";
 
 import { Platform, LoadingController, ToastController } from "@ionic/angular";
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mapa',
@@ -19,13 +19,16 @@ import { Platform, LoadingController, ToastController } from "@ionic/angular";
 })
 export class MapaPage  {
 
+  position:string;
+
   map: GoogleMap;
   loading: any;
 
   constructor(
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    private platform: Platform
+    private platform: Platform,
+    public router: Router,
   ) {}
 
   async ngOnInit() {
@@ -78,7 +81,7 @@ export class MapaPage  {
       .then((location: MyLocation) => {
         // Una vez obtenida la ubicación cerramos el mensaje de diálogo
         this.loading.dismiss();
-
+        this.position= '' + location.latLng;
         // Movemos la camara a nuestra ubicación con una pequeña animación
         this.map.animateCamera({
           target: location.latLng,
@@ -109,6 +112,11 @@ export class MapaPage  {
         this.loading.dismiss();
         this.showToast(error.error_message);
       });
+  }
+
+  goToCarta(){
+    this.router
+    .navigateByUrl('/carta', { replaceUrl: true })
   }
 
   // Función que muestra un Toast en la parte inferior
