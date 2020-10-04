@@ -9,6 +9,8 @@ import { UserOptions } from '../../interface/user-options';
 import { SecurityService } from '../../providers/security.service';
 import { MenuController, IonSlides } from '@ionic/angular';
 
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -23,7 +25,8 @@ export class LoginPage implements OnInit {
     public router: Router,
     public security: SecurityService,
     private toastCtrl: ToastController,
-    public menu: MenuController
+    public menu: MenuController,
+    public storage: Storage
   ) { }
 
   ngOnInit(){
@@ -62,7 +65,17 @@ export class LoginPage implements OnInit {
                 const toast = this.createToast('Get token Successful!', 'success');
                 await (await toast).present();
                 this.security.setToken(res.access_token);
-                this.router.navigateByUrl('/app/tab/scanner');
+
+                this.storage.get('ion_did_tutorial').then(res => {
+                  if (res === true) {
+                    this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+                  }else{
+                    this.router.navigateByUrl('/tutorial', { replaceUrl: true });
+                  }
+                });
+
+
+                //this.router.navigateByUrl('/tutorial');
 
                 }else{
                   const toast = this.createToast('Get token Error! ' + res.error , 'danger');
@@ -76,7 +89,14 @@ export class LoginPage implements OnInit {
         }else{
           const toast = this.createToast('Sin Conexion', 'danger');
           await (await toast).present();
-          this.router.navigateByUrl('/app/tab/scanner');
+          this.storage.get('ion_did_tutorial').then(res => {
+            if (res === true) {
+              this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+            }else{
+              this.router.navigateByUrl('/tutorial', { replaceUrl: true });
+            }
+          });
+          //this.router.navigateByUrl('/tutorial');
         }
       });
     }

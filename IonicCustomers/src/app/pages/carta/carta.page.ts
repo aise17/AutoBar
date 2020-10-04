@@ -146,7 +146,7 @@ export class CartaPage implements OnInit {
 async getCarta(){
 
  this.security.getCarta().subscribe(res => {
-   var a;
+
    console.log(res);
 
    this.groups = res

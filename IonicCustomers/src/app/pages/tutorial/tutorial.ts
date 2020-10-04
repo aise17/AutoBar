@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MenuController, IonSlides } from '@ionic/angular';
@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'tutorial.html',
   styleUrls: ['./tutorial.scss'],
 })
-export class TutorialPage {
+export class TutorialPage implements OnInit {
   showSkip = true;
 
   @ViewChild('slides', { static: true }) slides: IonSlides;
@@ -21,9 +21,17 @@ export class TutorialPage {
     public storage: Storage
   ) {}
 
+  ngOnInit(){
+    this.storage.get('ion_did_tutorial').then(res => {
+      if (res === true) {
+        this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+      }
+    });
+  }
+
   startApp() {
     this.router
-      .navigateByUrl('/scanner', { replaceUrl: true })
+      .navigateByUrl('/app/tab/mapa', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 
@@ -36,7 +44,7 @@ export class TutorialPage {
   ionViewWillEnter() {
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
-        this.router.navigateByUrl('/scanner', { replaceUrl: true });
+        this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
       }
     });
 

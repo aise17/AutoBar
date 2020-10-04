@@ -32,21 +32,21 @@ export class MapaPage  {
   ) {}
 
   async ngOnInit() {
-    // Debido ngOnInit() inicia antes del evento
-    // deviceready, debemos detectar cuando este evento se
-    // ejecute para en ese momento cargar nuestro mapa sin problema alguno
+
+  }
+
+  async ionViewWillEnter() {
+
     await this.platform.ready();
     await this.loadMap();
   }
 
-  loadMap() {
-    // Esta función inicializa la propiedad de clase
-    // map
-    // que va a contener el control de nuestro mapa de google
+  ionViewDidLeave() {
+    // enable the root left menu when leaving the tutorial page
+  }
 
-    // Para crear nuestro mapa debemos enviar como parametros
-    // el id del div en donde se va a renderizar el mapa (paso anterior)
-    // y las opciones que configuran nuestro mapa
+  loadMap() {
+
     this.map = GoogleMaps.create("map_canvas", {
       camera: {
         target: {

@@ -21,12 +21,12 @@ export class AppComponent {
   appPages = [
     {
       title: 'Pedir en bar',
-      url: '/scanner',
+      url: '/app/tab/scanner',
       icon: 'cafe'
     },
     {
       title: 'Pedir a domicilio',
-      url: '/mapa',
+      url: '/app/tab/mapa',
       icon: 'home'
     },
 
