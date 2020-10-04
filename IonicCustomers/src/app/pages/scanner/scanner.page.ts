@@ -35,7 +35,7 @@ export class ScannerPage implements OnInit {
 
   goToCarta(){
     this.router
-    .navigateByUrl('/carta', { replaceUrl: true })
+    .navigateByUrl('/carta', { replaceUrl: true });
   }
 
 
@@ -48,15 +48,18 @@ export class ScannerPage implements OnInit {
   startScanning() {
     // Optionally request the permission early
     
+
+    
     this.qrScanner.prepare().
       then((status: QRScannerStatus) => {
         if (status.authorized) {
+
           this.qrScanner.show();
-          this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0'
+          this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
           
           this.scanSub = this.qrScanner.scan()
             .subscribe((textFound: string) => {
-              document.getElementsByTagName('body')[0].style.opacity = '1'
+              document.getElementsByTagName('body')[0].style.opacity = '1';
               this.qrScanner.hide();
               this.scanSub.unsubscribe();
 

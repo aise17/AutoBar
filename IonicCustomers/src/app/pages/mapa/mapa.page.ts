@@ -43,6 +43,8 @@ export class MapaPage  {
 
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
+    this.map.destroy();
+    
   }
 
   loadMap() {

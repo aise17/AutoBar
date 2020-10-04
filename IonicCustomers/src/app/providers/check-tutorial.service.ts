@@ -6,12 +6,15 @@ import { CanLoad, Router } from '@angular/router';
 })
 export class CheckTutorialService implements CanLoad {
 
-  constructor(private storage: Storage, private router: Router) {}
+  constructor(
+    private storage: Storage,
+     private router: Router
+     ) {}
 
   canLoad() {
     return this.storage.get('ion_did_tutorial').then(res => {
       if (res) {
-        this.router.navigate(['/app', 'tabs', 'schedule']);
+        this.router.navigate(['/app', 'tab', 'mapa']);
         return false;
       } else {
         return true;

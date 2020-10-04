@@ -18,6 +18,7 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { CheckTutorialService } from './providers/check-tutorial.service';
 
 
 
@@ -42,6 +43,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
   ],
   providers: [
     QRScanner,
+    Storage,
+    CheckTutorialService,
     GoogleMaps,
     MapsService,
     StatusBar,
