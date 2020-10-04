@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CheckTutorialService } from './providers/check-tutorial.service';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'tutorial',
-    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialModule)
+    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialModule),
+    canLoad: [CheckTutorialService]
   },
   {
     path: 'scanner',

@@ -160,4 +160,6 @@ export class SecurityService {
     private log(entrada: string) {
         console.log(entrada);
     }
+
+    
 }
