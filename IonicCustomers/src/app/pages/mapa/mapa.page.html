@@ -15,15 +15,20 @@
     <ion-card style="height: 50%">
         <div style="height: 100%;width: 100%;" id="map_canvas"></div> 
     </ion-card>
-    <ion-label position="stacked" color="primary">Direccion elegida</ion-label>
+   
 
-    <ion-item >{{position}}</ion-item>
+    <ion-item >
+      <ion-label position="stacked" color="primary">Direccion elegida</ion-label>
+      {{position}}
+    </ion-item>
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="localizar()">
       <ion-icon name="pin"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+<ion-card><ion-card-content>
 
 
 
@@ -65,7 +70,7 @@
     </ion-button>
  
   </form>
-
+</ion-card-content></ion-card>
 
 
 </ion-content>
