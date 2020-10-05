@@ -6,7 +6,10 @@ from rest_framework import permissions
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.viewsets import ViewSet
 
-
+from rest_framework import generics, permissions, serializers, views, status
+from django.http import JsonResponse
+import json
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -30,13 +33,29 @@ class GetOrdersView(ListAPIView):
     queryset = Orders.objects.all()
 
 
-class CreateOrdersView(CreateAPIView):
+
+class CreateOrdersView(generics.ListCreateAPIView):
 
     model = OrdersProducts
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
     serializer_class = OrderProductsSerializer
+
+    def post(self, request, *args, **kwargs):
+        salida = dict()
+
+        user = request.data["user"]
+        user: User = User.objects.get(pk=user)
+
+        order = Orders.objects.create(user= user)
+
+        for product in request.data["product"]:
+            serializer = CreateOrderSerializer().create(validated_data= product, user= user,order= order)
+
+        salida['ok'] = True
+        salida['user'] = user.id
+        return JsonResponse(salida, status=status.HTTP_200_OK)
 
 
 class CreatecategoryView(CreateAPIView):

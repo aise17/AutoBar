@@ -35,11 +35,11 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 
     product = ProductsSerializer(many=False)
 
-    def create(self, validated_data):
+    def create(self, validated_data, user, order):
         
-        user: User = User.objects.filter(username='autobar').first()
-        order = Orders.objects.create(user= user)
-        product_instance = Product.objects.get(id=validated_data['product']['id'])
+        #_user: User = User.objects.filter(pk=user).first()
+        #order = Orders.objects.create(user= _user)
+        product_instance = Product.objects.get(id=validated_data['id'])
         ordersProducts = OrdersProducts.objects.create(product=product_instance, order_product=order)
 
         return ordersProducts
