@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Category, Orders, Product
-from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer
+from .models import Category, Orders, Product, OrdersProducts
+from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer
 
 from rest_framework import permissions
 from rest_framework.generics import ListAPIView, CreateAPIView
@@ -9,7 +9,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 # Create your views here.
 
 
-class CreateUserView(ListAPIView):
+class CategoryView(ListAPIView):
 
     model = Category
     permission_classes = [
@@ -31,11 +31,11 @@ class GetOrdersView(ListAPIView):
 
 class CreateOrdersView(CreateAPIView):
 
-    model = Orders
+    model = OrdersProducts
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
-    serializer_class = OrderListSerializer
+    serializer_class = CreateOrderSerializer
 
 
 class CreatecategoryView(CreateAPIView):

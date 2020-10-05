@@ -11,6 +11,7 @@ export class CheckTutorialService implements CanLoad {
      private router: Router
      ) {}
 
+
   canLoad() {
     return this.storage.get('ion_did_tutorial').then(res => {
       if (res) {

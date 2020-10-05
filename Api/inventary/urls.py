@@ -3,12 +3,12 @@ from . import views
 
 from django.contrib import admin
 
-app_name = "users"
+app_name = "inventary"
 
 urlpatterns = [
 
 
-    path('product_list', views.CreateUserView.as_view(), name='ProductList'),
+    path('product_list', views.CategoryView.as_view(), name='ProductList'),
     path('orders_list', views.GetOrdersView.as_view(), name='OrdersList'),
     path('create_orders', views.CreateOrdersView.as_view(), name='CretaeOrder'),
     path('create_category', views.CreatecategoryView.as_view(), name='CretaeCategory'),

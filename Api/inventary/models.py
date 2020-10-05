@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -11,6 +12,7 @@ class Category(models.Model):
     modification_date = models.DateTimeField(null=True, blank=True)
     unpublish_date= models.DateTimeField(null=True, blank=True)
     
+
     
     def __str__(self):
         return "Categoria - %s" % self.name 
@@ -29,7 +31,7 @@ class Product(models.Model):
     modification_date = models.DateTimeField(null=True, blank=True)
     unpublish_date= models.DateTimeField(null=True, blank=True)
 
-
+ 
 
     def __str__(self):
         return "Producto - %s" % self.name 
@@ -38,7 +40,8 @@ class Orders(models.Model):
     user = models.ForeignKey(User, models.CASCADE, null=True, related_name='user')
     creation_date = models.DateTimeField(null=True, blank=True)
     
-
+    def __str__(self):
+        return "Orders - {0} - {1}".format(self.id, self.user )
 
 
 class OrdersProducts(models.Model):
@@ -46,4 +49,8 @@ class OrdersProducts(models.Model):
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
     creation_date = models.DateTimeField(null=True, blank=True)
 
+ 
 
+    def __str__(self):
+        name = self.product
+        return "OrdersProducts - {0} - {1}".format( self.id, name )

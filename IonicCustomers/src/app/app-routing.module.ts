@@ -18,8 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'tutorial',
-    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialModule),
-    canLoad: [CheckTutorialService]
+    loadChildren: () => import('./pages/tutorial/tutorial.module').then( m => m.TutorialModule)
+    // canLoad: [CheckTutorialService]
   },
   {
     path: 'scanner',
