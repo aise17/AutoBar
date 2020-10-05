@@ -45,7 +45,7 @@ class Orders(models.Model):
 
 
 class OrdersProducts(models.Model):
-    product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product')
+    product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product',)
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
     creation_date = models.DateTimeField(null=True, blank=True)
 

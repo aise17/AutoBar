@@ -10,18 +10,18 @@ admin.site.index_title = 'Administración'
 admin.site.site_title = 'HTML title from adminsitration'
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-    list_filter = ('name',)
+    list_display = ['id', 'name', 'price','publish_date', 'publish' ]
+    list_filter = ('name','publish_date', 'publish')
     search_fields = ['name']
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-    list_filter = ('name',)
+    list_display = ['id', 'name','publish_date', 'publish']
+    list_filter = ('name', 'publish_date', 'publish')
     search_fields = ['name']
 
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ['id', 'creation_date']
-    list_filter = ('creation_date',)
+    list_display = ['id', 'user', 'creation_date']
+    list_filter = ('creation_date', 'user')
     search_fields = ['creation_date']
 
 class OrdersProductsAdmin(admin.ModelAdmin):

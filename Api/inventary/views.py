@@ -4,6 +4,7 @@ from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderL
 
 from rest_framework import permissions
 from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.viewsets import ViewSet
 
 
 # Create your views here.
@@ -35,7 +36,7 @@ class CreateOrdersView(CreateAPIView):
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
-    serializer_class = CreateOrderSerializer
+    serializer_class = OrderProductsSerializer
 
 
 class CreatecategoryView(CreateAPIView):

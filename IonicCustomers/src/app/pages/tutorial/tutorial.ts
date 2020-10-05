@@ -42,13 +42,14 @@ export class TutorialPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.menu.enable(false);
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
         this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
       }
     });
 
-    this.menu.enable(false);
+
   }
 
   ionViewDidLeave() {

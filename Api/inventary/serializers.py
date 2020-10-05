@@ -38,11 +38,8 @@ class CreateOrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         
         user: User = User.objects.filter(username='autobar').first()
-
         order = Orders.objects.create(user= user)
-
         product_instance = Product.objects.get(id=validated_data['product']['id'])
-    
         ordersProducts = OrdersProducts.objects.create(product=product_instance, order_product=order)
 
         return ordersProducts
@@ -51,17 +48,18 @@ class CreateOrderSerializer(serializers.ModelSerializer):
         model = OrdersProducts
 
         fields = '__all__' 
+        
 
 
 class ProductsListSerializer(serializers.ModelSerializer):
-    products = ProductsSerializer(many=True)
+    products = ProductsSerializer(many=True) 
 
 
 
     class Meta:
         model = Category
-
         fields = '__all__'
+        #depth = 1
 
 
 class OrderProductsSerializer(serializers.ModelSerializer):
