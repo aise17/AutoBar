@@ -45,11 +45,11 @@ class CreateOrdersView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         salida = dict()
 
-        user = request.data["user"]
+        _user = request.data["user"]
 
         try:
 
-            user: User = User.objects.get(pk=user)
+            user: User = User.objects.get(pk=_user)
 
             order = Orders.objects.create(user= user)
 
@@ -58,9 +58,9 @@ class CreateOrdersView(generics.ListCreateAPIView):
 
             salida['ok'] = True
             salida['user'] = user.id
-        except:
-            salida['ok'] = True
-            salida['user'] = user.id
+        except ValueError as ex:
+            salida['ok'] = False
+            salida['error'] = ex
 
         return JsonResponse(salida, status=status.HTTP_200_OK)
 

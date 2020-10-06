@@ -9,8 +9,8 @@ admin.autodiscover()
 
 from django.contrib.auth import get_user_model  # If used custom user model
 from rest_framework import serializers
-from django.utils import timezone
 
+from datetime import timezone
 # first we define the serializers
 import logging
 

@@ -10,8 +10,9 @@ import { SecurityService } from '../../providers/security.service';
 import { InventaryService } from "../../providers/inventary.service";
 import { Product } from 'src/app/interface/product';
 import { Category } from 'src/app/interface/category';
-import { PurchaseOrder } from "../../interface/purchase-order";
+import {  PurchaseOrder } from "../../interface/purchase-order";
 import { ThrowStmt } from '@angular/compiler';
+import { ok } from 'assert';
 
 @Component({
   selector: 'app-carta',
@@ -199,9 +200,10 @@ async getCarta(){
             this.ordenCompra = {
               user: id,
               product: []
+              
             }
             this.carro.forEach(x  =>{
-              this.ordenCompra.product.push( x.id);
+              this.ordenCompra.product.push(x);
             })
 
             console.log(this.ordenCompra);
@@ -225,8 +227,8 @@ async getCarta(){
     this.inventary.enviarOrdenPedido(this.ordenCompra).subscribe(res => {
       if(res){
         if(res.ok){
-          console.log("Peticion enviada")
-        }else{
+          console.log("Peticion enviada -> " + res.ok)
+        }else if(res.error){
           console.log("Error -> " + res.error);
         }
       }else{

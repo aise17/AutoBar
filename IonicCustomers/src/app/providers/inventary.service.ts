@@ -29,7 +29,7 @@ export class InventaryService {
 
 
     return this.http.post<PurchaseOrder>(this.ordenPedidoURL, ordenCompra ).pipe(
-      tap((res) => this.log(`get token=${res['access_token']}`)),
+      tap((res) => this.log(`Pedido=${res.ok}`)),
       catchError(this.handleError<PurchaseOrder>('getToken'))
     );
 
