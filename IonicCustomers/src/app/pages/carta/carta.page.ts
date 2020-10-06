@@ -7,6 +7,9 @@ import { ConferenceData } from '../../providers/conference-data';
 import { UserService } from '../../providers/user.service';
 import {MenuController} from '@ionic/angular';
 import { SecurityService } from '../../providers/security.service';
+import { InventaryService } from "../../providers/inventary.service";
+import { Product } from 'src/app/interface/product';
+import { Category } from 'src/app/interface/category';
 
 @Component({
   selector: 'app-carta',
@@ -24,7 +27,9 @@ export class CartaPage implements OnInit {
  segment = 'all';
  excludeTracks: any = [];
  shownSessions: any = [];
- groups: any = [];
+ products: Category[] = [];
+ carro: Product[] = [];
+
  confDate: string;
  showSearchbar: boolean;
 
@@ -39,7 +44,8 @@ export class CartaPage implements OnInit {
    public user: UserService,
    public config: Config,
    private menu: MenuController,
-   public security: SecurityService
+   public security: SecurityService,
+   public inventary: InventaryService
  ) { 
    //this.menu.enable(false);
  }
@@ -61,12 +67,7 @@ export class CartaPage implements OnInit {
      this.scheduleList.closeSlidingItems();
    }
 
-   this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
-     this.shownSessions = data.shownSessions;
-     console.log(data.shownSessions);
-     this.groups = data;
-
-   });
+   this.getCarta();
    
  }
 
@@ -76,20 +77,30 @@ export class CartaPage implements OnInit {
    
  }
 
- async addFavorite(slidingItem: HTMLIonItemSlidingElement, sessionData: any) {
-   if (this.user.hasFavorite(sessionData.name)) {
+ hasCarro( prodect: Product){
+  return  this.carro.filter( x => x.id === prodect.id).length != 0 ? true : false; 
+ }
+
+
+ async addFavorite(slidingItem: HTMLIonItemSlidingElement, product: Product) {
+   slidingItem.close();
+   if (this.hasCarro( product)) {
+
      // Prompt to remove favorite
-     this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
+     //this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
+     
+
    } else {
      // Add as a favorite
-     this.user.addFavorite(sessionData.name);
+     console.log('producto: ' + product)
+     this.carro.push(product)
 
      // Close the open item
      slidingItem.close();
 
      // Create a toast
      const toast = await this.toastCtrl.create({
-       header: `${sessionData.name} was successfully added as a favorite.`,
+       header: 'was successfully added as a favorite.',
        duration: 3000,
        buttons: [{
          text: 'Close',
@@ -103,9 +114,9 @@ export class CartaPage implements OnInit {
 
  }
 
- async removeFavorite(slidingItem: HTMLIonItemSlidingElement, sessionData: any, title: string) {
+ async removeFavorite(slidingItem: HTMLIonItemSlidingElement, product: Product) {
    const alert = await this.alertCtrl.create({
-     header: title,
+     header: product.name,
      message: 'Would you like to remove this session from your favorites?',
      buttons: [
        {
@@ -120,8 +131,11 @@ export class CartaPage implements OnInit {
          text: 'Remove',
          handler: () => {
            // they want to remove this session from their favorites
-           this.user.removeFavorite(sessionData.name);
-           this.updateSchedule();
+           
+           const index =this.carro.findIndex(x => x.id === product.id);
+          //delete this.carro[index];
+          this.carro.splice(index);
+
 
            // close the sliding item and hide the option buttons
            slidingItem.close();
@@ -145,11 +159,11 @@ export class CartaPage implements OnInit {
 
 async getCarta(){
 
- this.security.getCarta().subscribe(res => {
+ this.inventary.getCarta().subscribe(res => {
 
    console.log(res);
 
-   this.groups = res
+   this.products =  res;
    
  });
 

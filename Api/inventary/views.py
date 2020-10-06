@@ -46,15 +46,22 @@ class CreateOrdersView(generics.ListCreateAPIView):
         salida = dict()
 
         user = request.data["user"]
-        user: User = User.objects.get(pk=user)
 
-        order = Orders.objects.create(user= user)
+        try:
 
-        for product in request.data["product"]:
-            serializer = CreateOrderSerializer().create(validated_data= product, user= user,order= order)
+            user: User = User.objects.get(pk=user)
 
-        salida['ok'] = True
-        salida['user'] = user.id
+            order = Orders.objects.create(user= user)
+
+            for product in request.data["product"]:
+                serializer = CreateOrderSerializer().create(validated_data= product, user= user,order= order)
+
+            salida['ok'] = True
+            salida['user'] = user.id
+        except:
+            salida['ok'] = True
+            salida['user'] = user.id
+
         return JsonResponse(salida, status=status.HTTP_200_OK)
 
 
