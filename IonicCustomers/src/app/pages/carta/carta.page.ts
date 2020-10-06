@@ -29,6 +29,7 @@ export class CartaPage implements OnInit {
  shownSessions: any = [];
  products: Category[] = [];
  carro: Product[] = [];
+ total_price:number = 0;
 
  confDate: string;
  showSearchbar: boolean;
@@ -94,7 +95,7 @@ export class CartaPage implements OnInit {
      // Add as a favorite
      console.log('producto: ' + product)
      this.carro.push(product)
-
+    this.total_price += Number.parseInt(product.price);
      // Close the open item
      slidingItem.close();
 
