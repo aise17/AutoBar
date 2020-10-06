@@ -80,18 +80,20 @@ export class SecurityService {
       );
   }
     
-  public  login(username: string, password: string): Promise<any> {
+  public login(username: string, password: string, id: number): Promise<any> {
         return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
           this.setUsername(username);
           this.setPassword(password);
+          this.setIdUsername(id);
           return window.dispatchEvent(new CustomEvent('user:login'));
         });
     }
     
-    signup(username: string, password: string): Promise<any> {
+    signup(username: string, password: string, id: number): Promise<any> {
         return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
           this.setUsername(username);
           this.setPassword(password);
+          this.setIdUsername(id);
           return window.dispatchEvent(new CustomEvent('user:signup'));
         });
     }
@@ -100,6 +102,7 @@ export class SecurityService {
         return this.storage.remove(this.HAS_LOGGED_IN).then(() => {
           this.storage.remove('username');
           this.storage.remove('password');
+          this.storage.remove('id');
           this.storage.remove('token');
         }).then(() => {
           window.dispatchEvent(new CustomEvent('user:logout'));
@@ -109,6 +112,10 @@ export class SecurityService {
     public setUsername(username: string): Promise<any> {
         return this.storage.set('username', username);
     }
+
+    public setIdUsername(id: number): Promise<any> {
+      return this.storage.set('id', id);
+  }
     
     
     public getUsername(): Promise<string> {

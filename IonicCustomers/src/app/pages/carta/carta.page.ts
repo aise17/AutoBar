@@ -29,7 +29,7 @@ export class CartaPage implements OnInit {
  shownSessions: any = [];
  products: Category[] = [];
  carro: Product[] = [];
- total_price:number = 0;
+ total_price: number = 0.0;
 
  confDate: string;
  showSearchbar: boolean;
@@ -95,7 +95,7 @@ export class CartaPage implements OnInit {
      // Add as a favorite
      console.log('producto: ' + product)
      this.carro.push(product)
-    this.total_price += Number.parseInt(product.price);
+    this.total_price += parseFloat(product.price) ;
      // Close the open item
      slidingItem.close();
 
@@ -134,8 +134,10 @@ export class CartaPage implements OnInit {
            // they want to remove this session from their favorites
            
            const index =this.carro.findIndex(x => x.id === product.id);
+           this.total_price -= parseFloat(product.price);
           //delete this.carro[index];
-          this.carro.splice(index);
+          this.carro.splice(index, 1);
+          console.log(index);
 
 
            // close the sliding item and hide the option buttons

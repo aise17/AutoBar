@@ -50,12 +50,13 @@ export class LoginPage implements OnInit {
     
 
     if (form.valid) {
-      this.security.login(this.login.username, this.login.password);
 
       this.security.loginRequest(this.login).subscribe(async res => {
         if(res){
           if(res.ok){
-            console.log(res['datos']['username']);
+            console.log(res['datos']['id']);
+            this.security.login(this.login.username, this.login.password, res['datos']['id']);
+
             const toast = this.createToast('Login Successful!', 'success');
             await (await toast).present();
 
