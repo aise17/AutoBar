@@ -21,7 +21,7 @@ export class SupportPage  {
   async ionViewDidEnter() {
     const toast = await this.toastCtrl.create({
       message: 'This does not actually send a support request.',
-      duration: 3000
+      duration: 1000
     });
     await toast.present();
   }
@@ -35,7 +35,7 @@ export class SupportPage  {
 
       const toast = await this.toastCtrl.create({
         message: 'Your support request has been sent.',
-        duration: 3000
+        duration: 1000
       });
       await toast.present();
     }

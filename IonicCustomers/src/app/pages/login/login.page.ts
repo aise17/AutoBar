@@ -108,7 +108,7 @@ export class LoginPage implements OnInit {
       message: message,
       color: color,
       position: 'bottom',
-      duration: 3000,
+      duration: 1000,
     });
     return toast
   }

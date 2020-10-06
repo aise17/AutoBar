@@ -85,7 +85,7 @@ export class SchedulePage implements OnInit {
       // Create a toast
       const toast = await this.toastCtrl.create({
         header: `${sessionData.name} was successfully added as a favorite.`,
-        duration: 3000,
+        duration: 1000,
         buttons: [{
           text: 'Close',
           role: 'cancel'

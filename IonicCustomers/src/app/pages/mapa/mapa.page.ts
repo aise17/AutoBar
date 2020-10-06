@@ -126,7 +126,7 @@ export class MapaPage  {
   async showToast(mensaje) {
     let toast = await this.toastCtrl.create({
       message: mensaje,
-      duration: 2000,
+      duration: 1000,
       position: "bottom"
     });
 
