@@ -106,9 +106,14 @@
 
     <ion-label >
       PrecioTotal <ion-item > {{total_price}} </ion-item>
+
+      <ion-button expand="block" (click)="crearPedido()" >Siguiente
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+
     </ion-label>
     
-  <ion-list-header [hidden]="!carro">
+  <ion-list-header [hidden]="carro">
     No Product Found
   </ion-list-header>
   </ion-list>

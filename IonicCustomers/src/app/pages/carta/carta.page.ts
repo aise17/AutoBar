@@ -10,6 +10,8 @@ import { SecurityService } from '../../providers/security.service';
 import { InventaryService } from "../../providers/inventary.service";
 import { Product } from 'src/app/interface/product';
 import { Category } from 'src/app/interface/category';
+import { PurchaseOrder } from "../../interface/purchase-order";
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-carta',
@@ -33,6 +35,7 @@ export class CartaPage implements OnInit {
 
  confDate: string;
  showSearchbar: boolean;
+ ordenCompra: PurchaseOrder ;
 
  constructor(
    public alertCtrl: AlertController,
@@ -46,7 +49,8 @@ export class CartaPage implements OnInit {
    public config: Config,
    private menu: MenuController,
    public security: SecurityService,
-   public inventary: InventaryService
+   public inventary: InventaryService,
+   public userService: UserService
  ) { 
    //this.menu.enable(false);
  }
@@ -85,13 +89,7 @@ export class CartaPage implements OnInit {
 
  async addFavorite(slidingItem: HTMLIonItemSlidingElement, product: Product) {
    slidingItem.close();
-   if (this.hasCarro( product)) {
 
-     // Prompt to remove favorite
-     //this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
-     
-
-   } else {
      // Add as a favorite
      console.log('producto: ' + product)
      this.carro.push(product)
@@ -111,7 +109,7 @@ export class CartaPage implements OnInit {
 
      // Present the toast at the bottom of the page
      await toast.present();
-   }
+   
 
  }
 
@@ -173,5 +171,68 @@ async getCarta(){
 
 }
 
+  async crearPedido(){
+
+
+
+
+
+
+    const alert = await this.alertCtrl.create({
+      header: 'pepe',
+      message: 'Realizar pedido actual',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+ 
+            // they clicked the cancel button, do not remove the session
+            // close the sliding item and hide the option buttons
+   
+          }
+        },
+        {
+          text: 'Seguir',
+          handler: async () => {
+            const id = parseInt(await this.security.getIdUsername());
+
+            this.ordenCompra = {
+              user: id,
+              product: []
+            }
+            this.carro.forEach(x  =>{
+              this.ordenCompra.product.push( x.id);
+            })
+
+            console.log(this.ordenCompra);
+            // they want to remove this session from their favorites
+            this.carro.splice(0);
+            this.total_price = 0;
+
+            this.enviarOrdenCompra();
+
+          }
+        }
+      ]
+    });
+    // now present the alert on top of all other content
+    await alert.present();
+
+  }
+
+
+  enviarOrdenCompra(){
+    this.inventary.enviarOrdenPedido(this.ordenCompra).subscribe(res => {
+      if(res){
+        if(res.ok){
+          console.log("Peticion enviada")
+        }else{
+          console.log("Error -> " + res.error);
+        }
+      }else{
+        console.log("Fallo de conexion");
+      }
+    });
+  }
 
 }

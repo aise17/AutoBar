@@ -5,6 +5,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Category } from '../interface/category';
+import { PurchaseOrder } from '../interface/purchase-order';
 
 
 @Injectable({
@@ -15,12 +16,24 @@ export class InventaryService {
 
 
   private cartaUrl = 'http://lacentro.my-domain.com:8080/inventary/product_list?format=json'
+  private ordenPedidoURL = 'http://lacentro.my-domain.com:8080/inventary/create_orders'
 
 
   constructor(
     public http: HttpClient,
     public storage: Storage
   ) { }
+
+
+  public enviarOrdenPedido(ordenCompra: PurchaseOrder){
+
+
+    return this.http.post<PurchaseOrder>(this.ordenPedidoURL, ordenCompra ).pipe(
+      tap((res) => this.log(`get token=${res['access_token']}`)),
+      catchError(this.handleError<PurchaseOrder>('getToken'))
+    );
+
+  }
 
 
   public getCarta (): Observable<Category[]> {

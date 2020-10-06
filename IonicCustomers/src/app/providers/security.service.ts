@@ -134,6 +134,12 @@ export class SecurityService {
           return value;
         });
     }
+
+    public getIdUsername(): Promise<string> {
+      return this.storage.get('id').then((value) => {
+        return value;
+      });
+  }
     
     public setToken(password: string): Promise<any> {
         return this.storage.set('token', password);
