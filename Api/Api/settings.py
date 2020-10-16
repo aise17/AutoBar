@@ -36,20 +36,11 @@ SHARED_APPS = (
     
     'customers', # you must list the app where your tenant model resides in
 
-
-    # everything below here is optional
-    
-
-    #'django.contrib.admin',
-    
     
 )
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
-
-
-    # your tenant-specific apps
     "users",
     "inventary",
     'django.contrib.admin',
