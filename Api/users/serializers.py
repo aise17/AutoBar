@@ -1,10 +1,10 @@
-from .models import User
+
 from rest_framework import serializers
 
 
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User, Group, update_last_login
+from django.contrib.auth.models import Group, update_last_login
 from django.contrib import admin
 admin.autodiscover()
 

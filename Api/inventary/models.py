@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timezone
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -37,7 +38,7 @@ class Product(models.Model):
         return "Producto - %s" % self.name 
 
 class Orders(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, null=True, related_name='user')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
     creation_date = models.DateTimeField(null=True, blank=True)
     
     def __str__(self):

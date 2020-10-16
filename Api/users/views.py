@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-#from .models import User
+
 from .serializers import UserSerializer, UserLoginSerializer
 
 
@@ -9,14 +9,14 @@ from pprint import pformat
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
-#from django.contrib.auth.models import User
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
 
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import  Group
 from django.contrib import admin
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -32,7 +32,9 @@ from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth import get_user_model # If used custom user model
 
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 
 
