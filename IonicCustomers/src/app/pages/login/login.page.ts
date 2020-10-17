@@ -69,7 +69,7 @@ export class LoginPage implements OnInit {
 
                 this.storage.get('ion_did_tutorial').then(res => {
                   if (res === true) {
-                    this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+                    this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
                   }else{
                     this.router.navigateByUrl('/tutorial', { replaceUrl: true });
                   }

@@ -30,6 +30,36 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'support',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../support/support.module').then(m => m.SupportPageModule)
+          }
+          
+        ]
+      },
+      {
+        path: 'inicio',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../inicio/inicio.module').then(m => m.InicioPageModule)
+          }
+          
+        ]
+      },
+      {
+        path: 'carta',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../carta/carta.module').then(m => m.CartaPageModule)
+          }
+          
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tab/mapa',
         pathMatch: 'full'
