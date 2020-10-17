@@ -7,9 +7,14 @@ from django.conf import settings
 class PreparationSite(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
 
+    def __str__(self):
+        return "Sitio de preparacion - %s" % self.name 
 
 class Mesa(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return "Mesa - %s" % self.name 
 
 
 class Category(models.Model):
@@ -46,6 +51,8 @@ class Product(models.Model):
 class Orders(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
     creation_date = models.DateTimeField(null=True, blank=True)
+    mesa = models.ForeignKey(Mesa, models.CASCADE, null=True, related_name='mesa')
+
     
     def __str__(self):
         return "Orders - {0} - {1}".format(self.id, self.user )
@@ -55,7 +62,6 @@ class OrdersProducts(models.Model):
     product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product',)
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
     creation_date = models.DateTimeField(null=True, blank=True)
-    mesa = models.ForeignKey(Mesa, models.CASCADE, null=True, related_name='mesa')
  
     def __str__(self):
         name = self.product

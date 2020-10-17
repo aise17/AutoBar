@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 
-from .models import Product, Category, Orders, OrdersProducts
+from .models import Product, Category, Orders, OrdersProducts, Mesa, PreparationSite
 
 admin.site.site_header = 'Autobar'
 admin.site.index_title = 'Administración'
@@ -13,6 +13,19 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price','publish_date', 'publish' ]
     list_filter = ('name','publish_date', 'publish')
     search_fields = ['name']
+
+
+class SiteAdmin(admin.ModelAdmin):
+    list_display = ['name',]
+    list_filter = ('name',)
+    search_fields = ['name',]
+
+
+class MesaAdmin(admin.ModelAdmin):
+    list_display = [ 'name',]
+    list_filter = ('name',)
+    search_fields = ['name',]
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id', 'name','publish_date', 'publish']
@@ -33,3 +46,5 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Orders, OrdersAdmin)
 admin.site.register(OrdersProducts, OrdersProductsAdmin)
+admin.site.register(PreparationSite, SiteAdmin)
+admin.site.register(Mesa, MesaAdmin)

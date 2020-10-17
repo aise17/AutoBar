@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Category, Orders, Product, OrdersProducts
+from .models import Category, Orders, Product, OrdersProducts, Mesa
 from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer
 
 from rest_framework import permissions
@@ -48,12 +48,14 @@ class CreateOrdersView(generics.ListCreateAPIView):
         salida = dict()
 
         _user = request.data["user"]
+        _mesa = request.data["mesa"]
 
         try:
 
             user: User = User.objects.get(pk=_user)
+            mesa: Mesa = Mesa.objects.get(pk=_mesa)
 
-            order = Orders.objects.create(user= user)
+            order = Orders.objects.create(user= user, mesa=mesa)
 
             for product in request.data["product"]:
                 serializer = CreateOrderSerializer().create(validated_data= product, user= user,order= order)
