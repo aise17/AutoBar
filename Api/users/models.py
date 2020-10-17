@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserModel(AbstractUser):
    date_of_birth = models.DateField(blank=True, null=True)
+   image = models.TextField(null=True, blank=True)
 
 
 

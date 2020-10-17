@@ -21,7 +21,7 @@ class Category(models.Model):
     name = models.TextField(null=True, blank=True)
     publish = models.BooleanField(null=True, blank=True)
     publish_date = models.DateTimeField(null=True, blank=True)
-    creation_date = models.DateTimeField(null=True, blank=True)
+    creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     modification_date = models.DateTimeField(null=True, blank=True)
     unpublish_date= models.DateTimeField(null=True, blank=True)
       
@@ -40,7 +40,7 @@ class Product(models.Model):
     preparation_site = models.ForeignKey(PreparationSite, models.CASCADE, null=True, related_name='preparation_site')
     publish = models.BooleanField(null=True, blank=True)
     publish_date = models.DateTimeField(null=True, blank=True)
-    creation_date = models.DateTimeField(null=True, blank=True)
+    creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     modification_date = models.DateTimeField(null=True, blank=True)
     unpublish_date= models.DateTimeField(null=True, blank=True)
 
@@ -50,7 +50,7 @@ class Product(models.Model):
 
 class Orders(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
-    creation_date = models.DateTimeField(null=True, blank=True)
+    creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     mesa = models.ForeignKey(Mesa, models.CASCADE, null=True, related_name='mesa')
 
     
@@ -61,7 +61,7 @@ class Orders(models.Model):
 class OrdersProducts(models.Model):
     product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product',)
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
-    creation_date = models.DateTimeField(null=True, blank=True)
+    creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
  
     def __str__(self):
         name = self.product
