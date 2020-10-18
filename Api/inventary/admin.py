@@ -16,15 +16,16 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ['name',]
+    list_display = ['id','name',]
     list_filter = ('name',)
     search_fields = ['name',]
 
 
 class MesaAdmin(admin.ModelAdmin):
-    list_display = [ 'name',]
+    list_display = [ 'id','name',]
     list_filter = ('name',)
     search_fields = ['name',]
+
 
 
 class CategoryAdmin(admin.ModelAdmin):

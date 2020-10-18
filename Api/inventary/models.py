@@ -48,10 +48,14 @@ class Product(models.Model):
         return "Producto - %s" % self.name 
 
 
+
+
 class Orders(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
     creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     mesa = models.ForeignKey(Mesa, models.CASCADE, null=True, related_name='mesa')
+    orders_status_cocina = models.BooleanField(null=True, blank=True, default= False)
+    orders_status_barra = models.BooleanField(null=True, blank=True, default= False)
 
     
     def __str__(self):
@@ -65,7 +69,6 @@ class OrdersProducts(models.Model):
  
     def __str__(self):
         name = self.product
-        return "OrdersProducts - {0} - {1}".format( self.id, name )
-
+        return "Orders Products - {0} - {1}".format( self.id, name )
 
 
