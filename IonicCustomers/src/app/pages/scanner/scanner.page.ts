@@ -21,10 +21,10 @@ export class ScannerPage implements OnInit {
     public router: Router,
     ) {
       this.platform.backButton.subscribeWithPriority(0, () => {
-        document.getElementsByTagName('body')[0].style.opacity = '1';
-        this.qrScanner.hide();
-        this.scanSub.unsubscribe();
-        this.qrScanner.destroy();
+        // document.getElementsByTagName('body')[0].style.opacity = '1';
+        // this.qrScanner.hide();
+        // this.scanSub.unsubscribe();
+        // this.qrScanner.destroy();
       });
      }
 
@@ -51,8 +51,11 @@ export class ScannerPage implements OnInit {
       then((status: QRScannerStatus) => {
         if (status.authorized) {
 
-          this.qrScanner.show();
-          this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
+          //this.qrScanner.show();
+          //window.document.querySelector('ion-app').classList.add('cameraView');
+          //this.scanSub = document.getElementsByTagName('ion-content')[0].style.opacity = '0';
+          //this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
+          //this.scanSub = document.getElementsByTagName('ion-tabs')[0].style.opacity = '0';
           
           this.scanSub = this.qrScanner.scan()
             .subscribe((textFound: string) => {
