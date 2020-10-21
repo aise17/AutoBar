@@ -92,7 +92,7 @@ export class LoginPage implements OnInit {
           await (await toast).present();
           this.storage.get('ion_did_tutorial').then(res => {
             if (res === true) {
-              this.router.navigateByUrl('/app/tab/scanner', { replaceUrl: true });
+              this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
             }else{
               this.router.navigateByUrl('/tutorial', { replaceUrl: true });
             }

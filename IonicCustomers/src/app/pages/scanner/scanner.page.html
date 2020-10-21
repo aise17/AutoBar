@@ -9,10 +9,29 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content *ngIf="!isScannerOn">
+  <ion-card style="height: 50%">
+       <ion-title>Mesa seleccionada:</ion-title>
+       <h1>{{ qrText }}</h1>
+   </ion-card>
+ <div class="ion-padding">
+     <!-- <ion-button (click)="startScanning()" expand="full">qrscanner</ion-button> -->
+     <p *ngIf="qrText">QR Scan text: {{ qrText }}</p>
+ </div>
+
+</ion-content>
+
 
 <ion-footer>
-  <ion-button (click)="startScanning()" expand="full">qrscanner</ion-button>
+
+  <ion-button *ngIf="!isScannerOn" (click)="startScanning()" expand="full">Escanear
+    <ion-icon slot="end" name="scan-circle"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="isScannerOn" (click)="closeScanner()" expand="full">Parar Escaneo
+    <ion-icon slot="end" name="scan-circle"></ion-icon>
+  </ion-button>
   <ion-button expand="block" (click)="goToCarta()" >Siguiente
     <ion-icon slot="end" name="arrow-forward"></ion-icon>
   </ion-button>
+
 </ion-footer>

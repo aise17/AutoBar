@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, IonList, IonRouterOutlet, LoadingController, ModalController, ToastController, Config } from '@ionic/angular';
 
 
@@ -12,7 +12,7 @@ import { Product } from 'src/app/interface/product';
 import { Category } from 'src/app/interface/category';
 import {  PurchaseOrder } from "../../interface/purchase-order";
 import { ThrowStmt } from '@angular/compiler';
-import { ok } from 'assert';
+
 
 @Component({
   selector: 'app-carta',
@@ -38,6 +38,9 @@ export class CartaPage implements OnInit {
  showSearchbar: boolean;
  ordenCompra: PurchaseOrder ;
 
+ public mesaId: number;
+
+
  constructor(
    public alertCtrl: AlertController,
    public confData: ConferenceData,
@@ -51,13 +54,14 @@ export class CartaPage implements OnInit {
    private menu: MenuController,
    public security: SecurityService,
    public inventary: InventaryService,
-   public userService: UserService
+   public userService: UserService,
+   private route: ActivatedRoute,
  ) { 
    //this.menu.enable(false);
  }
 
  ngOnInit() {
-   this.updateSchedule();
+   this.updateCarta();
    
    this.ios = this.config.get('mode') === 'ios';
 
@@ -65,9 +69,16 @@ export class CartaPage implements OnInit {
    
  }
 
+ ionViewWillEnter() {
+   if(this.route.snapshot.paramMap.has('mesaid')){
+  this.mesaId = parseInt(this.route.snapshot.paramMap.get('mesaId'));
+   }
+  console.log(this.mesaId);
+}
 
 
- updateSchedule() {
+
+ updateCarta() {
    // Close any open sliding items when the schedule updates
    if (this.scheduleList) {
      this.scheduleList.closeSlidingItems();
@@ -79,9 +90,8 @@ export class CartaPage implements OnInit {
 
  async presentFilter() {
    
-
-   
  }
+ 
 
  hasCarro( prodect: Product){
   return  this.carro.filter( x => x.id === prodect.id).length != 0 ? true : false; 
@@ -174,21 +184,13 @@ async getCarta(){
 
   async crearPedido(){
 
-
-
-
-
-
     const alert = await this.alertCtrl.create({
-      header: 'pepe',
-      message: 'Realizar pedido actual',
+      header: 'Confiramcion de pedido',
+      message: '¿Realizar pedido actual?',
       buttons: [
         {
           text: 'Cancel',
           handler: () => {
- 
-            // they clicked the cancel button, do not remove the session
-            // close the sliding item and hide the option buttons
    
           }
         },
@@ -199,7 +201,8 @@ async getCarta(){
 
             this.ordenCompra = {
               user: id,
-              product: []
+              product: [],
+              mesa: this.mesaId
               
             }
             this.carro.forEach(x  =>{

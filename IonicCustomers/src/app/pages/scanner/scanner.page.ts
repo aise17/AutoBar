@@ -1,41 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router,  } from '@angular/router';
 
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.page.html',
   styleUrls: ['./scanner.page.scss'],
 })
-export class ScannerPage implements OnInit {
-  public folder: string;
+export class ScannerPage  {
   public scanSub: any;
   public qrText: string;
+  public isScannerOn:boolean;
 
   constructor(
-    private activatedRoute: ActivatedRoute, 
     private qrScanner: QRScanner,
     private platform: Platform,
     public router: Router,
     ) {
       this.platform.backButton.subscribeWithPriority(0, () => {
-        // document.getElementsByTagName('body')[0].style.opacity = '1';
-        // this.qrScanner.hide();
-        // this.scanSub.unsubscribe();
-        // this.qrScanner.destroy();
+        //document.getElementsByTagName('body')[0].style.opacity = '1';
+        this.qrScanner.hide();
+        this.scanSub.unsubscribe();
+        this.qrScanner.destroy();
       });
-     }
 
-  ngOnInit() {
-    //this.folder = this.activatedRoute.snapshot.paramMap.get('id');
-
+      this.isScannerOn = false;
   }
+
 
   goToCarta(){
     this.router
-    .navigateByUrl('/carta', { replaceUrl: true });
+    .navigateByUrl('/app/tab/carta/'+ this.qrText, { replaceUrl: true });
   }
 
 
@@ -43,40 +39,33 @@ export class ScannerPage implements OnInit {
     this.closeScanner();
   }
 
-  
 
   startScanning() {
     // Optionally request the permission early
     this.qrScanner.prepare().
       then((status: QRScannerStatus) => {
         if (status.authorized) {
-
+          this.isScannerOn = true;
           //this.qrScanner.show();
-          //window.document.querySelector('ion-app').classList.add('cameraView');
-          //this.scanSub = document.getElementsByTagName('ion-content')[0].style.opacity = '0';
-          //this.scanSub = document.getElementsByTagName('body')[0].style.opacity = '0';
-          //this.scanSub = document.getElementsByTagName('ion-tabs')[0].style.opacity = '0';
-          
           this.scanSub = this.qrScanner.scan()
             .subscribe((textFound: string) => {
-              //document.getElementsByTagName('body')[0].style.opacity = '1';
-              this.closeScanner()
+              
+              this.closeScanner();
 
               this.qrText = textFound;
+              this.isScannerOn = false;
             }, (err) => {
               alert(JSON.stringify(err));
             });
 
         } else if (status.denied) {
-        } else {
-
         }
       })
       .catch((e: any) => console.log('Error is', e));
   }
 
   closeScanner() {
-    document.getElementsByTagName('body')[0].style.opacity = '1';
+    this.isScannerOn = false;
     this.qrScanner.hide();
 
     this.qrScanner.destroy();

@@ -9,6 +9,7 @@ constructor(id:number){
     product?: Product[];
     ok?: boolean;
     error?: string;
+    mesa?: number;
 }
 
 export class Product{

@@ -18,8 +18,8 @@
    
 
     <ion-item >
-      <ion-label position="stacked" color="primary">Direccion elegida</ion-label>
-      {{position}}
+      <ion-label  position="stacked" color="primary">Direccion elegida</ion-label>
+      {{direccion.calle}}
     </ion-item>
 
   <ion-fab vertical="top" horizontal="end" slot="fixed">
@@ -28,23 +28,22 @@
     </ion-fab-button>
   </ion-fab>
 
-<ion-card><ion-card-content>
-
-
+<ion-card>
+  <ion-card-content>
 
   <form novalidate>
 
     <ion-item>
       <ion-row>
         <ion-col>
-          <ion-label position="stacked" color="primary">Numero:</ion-label>
-          <ion-input name="numero" type="text"  spellcheck="false" autocapitalize="off"
+          <ion-label  position="stacked" color="primary">Numero:</ion-label>
+          <ion-input [(ngModel)]="direccion.numero"  name="numero" type="text"  spellcheck="false" autocapitalize="off"
             required>
           </ion-input>
         </ion-col>
         <ion-col>
-          <ion-label position="stacked" color="primary">Portal:</ion-label>
-          <ion-input name="portal" type="text"  spellcheck="false" autocapitalize="off"
+          <ion-label   position="stacked" color="primary">Portal:</ion-label>
+          <ion-input [(ngModel)]="direccion.portal" name="portal" type="text"  spellcheck="false" autocapitalize="off"
             required>
           </ion-input>
         </ion-col>
@@ -52,13 +51,13 @@
       <ion-row>
         <ion-col>
           <ion-label position="stacked" color="primary">Piso:</ion-label>
-          <ion-input name="piso" type="text"  spellcheck="false" autocapitalize="off"
+          <ion-input [(ngModel)]="direccion.piso" name="piso" type="text"  spellcheck="false" autocapitalize="off"
             required>
           </ion-input>
         </ion-col>
         <ion-col>
           <ion-label position="stacked" color="primary">Puerta</ion-label>
-          <ion-input name="puerta" type="text"  spellcheck="false" autocapitalize="off"
+          <ion-input [(ngModel)]="direccion.puerta" name="puerta" type="text"  spellcheck="false" autocapitalize="off"
             required>
           </ion-input>
         </ion-col>

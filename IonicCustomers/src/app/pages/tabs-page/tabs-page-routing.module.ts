@@ -26,7 +26,6 @@ const routes: Routes = [
             path: '',
             loadChildren: () => import('../scanner/scanner.module').then(m => m.ScannerPageModule)
           }
-          
         ]
       },
       {
@@ -45,6 +44,26 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () => import('../inicio/inicio.module').then(m => m.InicioPageModule)
+          }
+          
+        ]
+      },
+      {
+        path: 'carta/:mesaId',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../carta/carta.module').then(m => m.CartaPageModule)
+          }
+          
+        ]
+      },
+      {
+        path: 'carta/:localidad/:calle/:numero/:piso/:portal/:puerta',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../carta/carta.module').then(m => m.CartaPageModule)
           }
           
         ]

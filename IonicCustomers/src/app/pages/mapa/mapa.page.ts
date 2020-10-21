@@ -6,11 +6,15 @@ import {
   GoogleMapsEvent,
   Marker,
   GoogleMapsAnimation,
-  MyLocation
+  MyLocation,
+  Geocoder
 } from "@ionic-native/google-maps";
 
 import { Platform, LoadingController, ToastController } from "@ionic/angular";
 import { Router } from '@angular/router';
+import { stringify } from 'querystring';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Direccion } from "../../interface/direccion";
 
 @Component({
   selector: 'app-mapa',
@@ -19,21 +23,31 @@ import { Router } from '@angular/router';
 })
 export class MapaPage  {
 
-  position:string;
+  direccion: Direccion = {calle:'', longitud: '', latitud: '', localidad:'', piso: 0, portal:0,  puerta:0, numero:0};
 
   map: GoogleMap;
   loading: any;
+
+  options: NativeGeocoderOptions = {
+    useLocale: true,
+    maxResults: 5
+};
+
+
+  calle: string = '';
+  latitud:string = '';
+  longitud: string = '';
 
   constructor(
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private platform: Platform,
     public router: Router,
+
+    private nativeGeocoder: NativeGeocoder,
   ) {}
 
-  async ngOnInit() {
 
-  }
 
   async ionViewWillEnter() {
 
@@ -61,13 +75,25 @@ export class MapaPage  {
     });
   }
 
+
+  getAddressFromCoords( lat: number, long: number) {
+    console.log('traduciendo direccion...')
+    this.nativeGeocoder.reverseGeocode(lat, long, this.options)
+    .then((result: NativeGeocoderResult[]) => {
+      console.log('Direccion ' + JSON.stringify(result[0]))
+      this.direccion.calle = result[0]['thoroughfare'];
+      this.direccion.numero = parseInt(result[0]['subThoroughfare']);
+      this.direccion.localidad = result[0]['locality']
+      
+    })
+    .catch((error: any) => console.log('direccion error ' +error));
+
+  }
+
+
   async localizar() {
     // Limpiamos todos los elementos de nuestro mapa
     this.map.clear();
-
-    // Creamos un componente de Ionic para mostrar un mensaje
-    // mientras obtenemos esperamos que termine el proceso de
-    // obtener la ubicación
     this.loading = await this.loadingCtrl.create({
       message: "Espera por favor..."
     });
@@ -75,15 +101,15 @@ export class MapaPage  {
     // Presentamos el componente creado en el paso anterior
     await this.loading.present();
 
-    // Ejecutamos el método getMyLocation de nuestra propiedad de clase
-    // map
-    // para obtener nuestra ubicación actual
     this.map
       .getMyLocation()
       .then((location: MyLocation) => {
         // Una vez obtenida la ubicación cerramos el mensaje de diálogo
         this.loading.dismiss();
-        this.position= '' + location.latLng;
+        this.direccion.latitud = '' + location.latLng.lat;
+        this.direccion.longitud = '' + location.latLng.lng;
+        this.getAddressFromCoords(location.latLng.lat, location.latLng.lng);
+
         // Movemos la camara a nuestra ubicación con una pequeña animación
         this.map.animateCamera({
           target: location.latLng,
@@ -91,10 +117,12 @@ export class MapaPage  {
           tilt: 30
         });
 
+
+
         // Agregamos un nuevo marcador
         let marker: Marker = this.map.addMarkerSync({
           title: "Estoy aquí!",
-          snippet: "This plugin is awesome!",
+          snippet: this.direccion.calle,
           position: location.latLng,
           animation: GoogleMapsAnimation.BOUNCE
         });
@@ -114,11 +142,16 @@ export class MapaPage  {
         this.loading.dismiss();
         this.showToast(error.error_message);
       });
+      
   }
+
 
   goToCarta(){
     this.router
-    .navigateByUrl('/carta', { replaceUrl: true })
+    .navigateByUrl('/app/tab/carta/'+ this.direccion.localidad + '/' + 
+    this.direccion.calle + '/' + this.direccion.numero + '/' +
+     this.direccion.piso + '/' + this.direccion.portal + '/' +
+     this.direccion.puerta, { replaceUrl: true });
   }
 
   // Función que muestra un Toast en la parte inferior
