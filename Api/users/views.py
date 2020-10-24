@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from .serializers import UserSerializer, UserLoginSerializer
+from .serializers import UserSerializer, UserLoginSerializer, ChangePasswordSerializer, ChangeImageSerializer
 
 
 import json
@@ -29,7 +29,7 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, Token
 from rest_framework.decorators import permission_classes
 
 from rest_framework import permissions
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from django.contrib.auth import get_user_model # If used custom user model
 
 from django.contrib.auth import get_user_model
@@ -78,6 +78,57 @@ class CreateUserView(CreateAPIView):
         permissions.AllowAny # Or anon users can't register
     ]
     serializer_class = UserSerializer
+
+
+class ChangePassword(UpdateAPIView):
+
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def update(self, request, *args, **kwargs):
+
+        salida=dict()
+        salida['ok'] = False
+        salida['datos'] = str(request)
+
+        user = authenticate(username=request.data['username'], password=request.data['old_password'])
+        if user:
+
+            serializer = ChangePasswordSerializer().update(request.data)
+    
+            salida['ok'] = True
+            salida['datos'] = str(request)
+
+
+        return JsonResponse(salida, status=status.HTTP_200_OK)
+
+
+
+class ChangeImage(UpdateAPIView):
+
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def update(self, request, *args, **kwargs):
+
+        salida=dict()
+        salida['ok'] = False
+        salida['datos'] = str(request)
+
+        user = authenticate(username=request.data['username'], password=request.data['password'])
+        if user:
+
+            serializer = ChangeImageSerializer().update(request.data)
+    
+            salida['ok'] = True
+            salida['datos'] = str(request)
+
+
+        return JsonResponse(salida, status=status.HTTP_200_OK)
+
+
 
 def logout(request):
     salida = dict()

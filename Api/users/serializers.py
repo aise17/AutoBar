@@ -21,6 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
 
+    
+
     def create(self, validated_data):
 
         user = UserModel.objects.create(
@@ -34,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        # Tuple of serialized model fields (see link [2])
+        
         fields = ( "id", "username", "password", 'email' )
 
 class UserLoginSerializer(serializers.Serializer):
@@ -42,3 +44,46 @@ class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=128)
     username = serializers.CharField(max_length=255)
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+
+    def update(self, validated_data):
+        
+        user = authenticate(username=validated_data['username'], password=validated_data['old_password'])
+        user.set_password(validated_data['new_password'])
+        user.save()
+
+        return user
+    
+        
+
+    class Meta:
+        model = UserModel
+        fields = ( "id", "username", "password", 'email' )
+
+
+
+class ChangeImageSerializer(serializers.Serializer):
+
+    image = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+
+    def update(self, validated_data):
+        
+        user = authenticate(username=validated_data['username'], password=validated_data['password'])
+        user.image = validated_data['image']
+        user.save()
+
+        return user
+    
+        
+
+    class Meta:
+        model = UserModel
+        fields = ( "id", "username", "password", 'email' )
