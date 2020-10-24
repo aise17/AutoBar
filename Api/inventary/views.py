@@ -93,11 +93,11 @@ class CreateProductView(CreateAPIView):
 
 class OrderBarModule(generics.ListAPIView):
 
-    model = Orders
+
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
     ]
-    serializer_class = OrderListSerializer
+
 
 
     def get(self, request, *args, **kwargs):
