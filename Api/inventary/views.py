@@ -94,9 +94,7 @@ class CreateProductView(CreateAPIView):
 @csrf_exempt
 def snippet_list(request):
 
-
     if request.method == 'GET':
-
         
         orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=False, product__preparation_site=2).values()
 
@@ -109,14 +107,11 @@ def snippet_list(request):
         
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])
-            product_ids = getObject( order_product_of_order.values_list('product', flat=True))
+            product_ids = order_product_of_order.values_list('product', flat=True)
             order['order_products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
-       
-        
-
+            
     return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
-    
 
 def getObject(obj):
     return [o for o in obj]
