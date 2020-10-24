@@ -21,8 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
 
-    
-
     def create(self, validated_data):
 
         user = UserModel.objects.create(
@@ -60,8 +58,6 @@ class ChangePasswordSerializer(serializers.Serializer):
 
         return user
     
-        
-
     class Meta:
         model = UserModel
         fields = ( "id", "username", "password", 'email' )
@@ -82,8 +78,6 @@ class ChangeImageSerializer(serializers.Serializer):
 
         return user
     
-        
-
     class Meta:
         model = UserModel
         fields = ( "id", "username", "password", 'email' )

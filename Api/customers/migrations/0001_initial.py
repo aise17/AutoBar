@@ -7,7 +7,7 @@ from customers.models import Client
 from django.conf import settings
 
 def load_fixture(apps, schema_editor):
-    tenant = Client(domain_url='my-domain.com', 
+    tenant = Client(domain_url='autobar.tk', 
                     schema_name='public',
                     name='Schemas Inc.',
                     paid_until='2016-12-05',
@@ -15,7 +15,7 @@ def load_fixture(apps, schema_editor):
 
     tenant.save()
 
-    tenant = Client(domain_url='lacentro.my-domain.com', # don't add your port or www here!
+    tenant = Client(domain_url='lacentro.autobar.tk', # don't add your port or www here!
                     schema_name='lacentro',
                     name='lacentro',
                     paid_until='2014-12-05',
@@ -23,7 +23,7 @@ def load_fixture(apps, schema_editor):
 
     tenant.save()
 
-    tenant = Client(domain_url='ellibra.my-domain.com', # don't add your port or www here!
+    tenant = Client(domain_url='ellibra.autobar.tk', # don't add your port or www here!
                     schema_name='ellibra',
                     name='el libra',
                     paid_until='2014-12-05',
