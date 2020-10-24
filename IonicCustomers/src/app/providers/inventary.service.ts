@@ -15,8 +15,8 @@ export class InventaryService {
 
 
 
-  private cartaUrl = 'http://lacentro.my-domain.com:8080/inventary/product_list?format=json'
-  private ordenPedidoURL = 'http://lacentro.my-domain.com:8080/inventary/create_orders'
+  private cartaUrl = 'http://lacentro.autobar.tk:8080/inventary/product_list?format=json'
+  private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
 
 
   constructor(
