@@ -91,3 +91,16 @@ class OrderListSerializer(serializers.ModelSerializer):
         model = Orders
         optional_fields = ['order_product', ]
         fields = '__all__'
+
+class OrderSerialicer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Orders
+
+        fields = '__all__'
+        depth = 2
+
+class Test(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    order_product = OrderProductsSerializer()
+

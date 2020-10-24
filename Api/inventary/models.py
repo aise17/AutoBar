@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import timezone
 from django.conf import settings
+from typing import List
 
 
 class PreparationSite(models.Model):
@@ -36,7 +37,6 @@ class Product(models.Model):
     allergy = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     category = models.ForeignKey(Category, models.CASCADE, null=True, related_name='products')
-    category = models.ForeignKey(Category, models.CASCADE, null=True, related_name='products')
     preparation_site = models.ForeignKey(PreparationSite, models.CASCADE, null=True, related_name='preparation_site')
     publish = models.BooleanField(null=True, blank=True)
     publish_date = models.DateTimeField(null=True, blank=True)
@@ -70,5 +70,39 @@ class OrdersProducts(models.Model):
     def __str__(self):
         name = self.product
         return "Orders Products - {0} - {1}".format( self.id, name )
+
+
+class ProductObject():
+    id: int
+    name: str
+    image:str
+    description: str
+    allergy:str
+    price: int
+    category:int
+    preparation_site:int
+
+
+class OrderProductObject():
+
+    product: List[ProductObject]
+    orden: int
+
+
+    def addProduct(self, product: ProductObject):
+        self.product.append(product)
+
+
+class OrderObject():
+    id: int
+    user:str
+    mesa: int
+    orders_status_cocina:bool
+    orders_status_barra:bool
+    order_product: List[OrderProductObject]
+
+    def addOrderProduct(self, order_product:OrderProductObject):
+        self.order_product.append(order_product)
+
 
 
