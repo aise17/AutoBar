@@ -91,26 +91,34 @@ class CreateProductView(CreateAPIView):
     serializer_class = ProductsSerializer
 
 
-@csrf_exempt
-def snippet_list(request):
+class OrderBarModule(generics.ListAPIView):
 
-    if request.method == 'GET':
-        
-        orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=False, product__preparation_site=2).values()
+    model = Orders
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = OrderListSerializer
 
-        ids_order_product = orders_products.values_list('order_product', flat=True)
-        ids_products = orders_products.values_list('product', flat=True)
 
-        products = Product.objects.filter(preparation_site=2,pk__in= ids_products)
+    def get(self, request, *args, **kwargs):
 
-        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
-        
-        for order in orders:
-            order_product_of_order = orders_products.filter(order_product=order['id'])
-            product_ids = order_product_of_order.values_list('product', flat=True)
-            order['order_products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
+        if request.method == 'GET':
             
-    return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
+            orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=False, product__preparation_site=2).values()
+
+            ids_order_product = orders_products.values_list('order_product', flat=True)
+            ids_products = orders_products.values_list('product', flat=True)
+
+            products = Product.objects.filter(preparation_site=2,pk__in= ids_products)
+
+            orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+            
+            for order in orders:
+                order_product_of_order = orders_products.filter(order_product=order['id'])
+                product_ids = order_product_of_order.values_list('product', flat=True)
+                order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
+                
+        return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
 
 def getObject(obj):
