@@ -134,12 +134,13 @@ class CreateListAddress(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         salida=dict()
         ser = AddressSerialicer(data=request.data)
-        if ser.is_valid():
+
+        try:
             ser.save()
             salida['ok'] = True
             salida['user'] = ser.data
 
-        else:
+        except:
             salida['ok'] = False
             salida['user'] = ser.data
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
