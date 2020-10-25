@@ -138,11 +138,11 @@ class CreateListAddress(generics.ListCreateAPIView):
             ser = AddressSerialicer.create(request.data)
 
             salida['ok'] = True
-            salida['user'] = ser.data
+
 
         except Exception as ex:
             salida['ok'] = False
-            salida['user'] = ex
+            salida['error'] = ex.
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
