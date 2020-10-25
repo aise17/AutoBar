@@ -135,6 +135,7 @@ class CreateListAddress(generics.ListCreateAPIView):
         salida=dict()
 
         try:
+            request.data['user'] = UserModel.objects.get(request.data['user'])
             ser = AddressSerialicer().create(request.data)
 
             salida['ok'] = True
