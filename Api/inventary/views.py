@@ -133,10 +133,10 @@ class CreateListAddress(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         salida=dict()
-        ser = AddressSerialicer.create(**request.data)
 
         try:
-            ser.save()
+            ser = AddressSerialicer.create(**request.data)
+
             salida['ok'] = True
             salida['user'] = ser.data
 
