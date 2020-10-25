@@ -107,9 +107,17 @@ class Test(serializers.ModelSerializer):
 
 class AddressSerialicer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        
+    name = serializers.CharField(required=True)
+    calle = serializers.CharField(required=True)
+    numero = serializers.IntegerField()
+    portal = serializers.IntegerField()
+    piso = serializers.IntegerField()
+    puerta = serializers.IntegerField()
+
+    def create(self, validated_data, user):
+
         address = Address.objects.create(**validated_data)
+        address.user=user
         return address
 
     class Meta:
