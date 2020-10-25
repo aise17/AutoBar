@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 
 
@@ -20,13 +20,15 @@ export class LoginPage implements OnInit {
 
   login: UserOptions = { username: '', password: '', email: '', ok: '', error: '' };
   submitted = false;
-
+  loading: any;
+  
   constructor(
     public router: Router,
     public security: SecurityService,
     private toastCtrl: ToastController,
     public menu: MenuController,
-    public storage: Storage
+    public storage: Storage,
+    public loadingCtrl: LoadingController,
   ) { }
 
   ngOnInit(){
@@ -49,8 +51,12 @@ export class LoginPage implements OnInit {
    async onLogin(form: NgForm) {
     this.submitted = true;
 
+    this.loading = await this.loadingCtrl.create({
+      message: "Espera por favor..."
+    });
 
-    
+    // Presentamos el componente creado en el paso anterior
+    await this.loading.present();
 
     if (form.valid) {
 
