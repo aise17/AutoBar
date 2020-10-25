@@ -103,6 +103,24 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-item-group>
+    
+    <ion-label *ngIf="mesaId">
+      Lugar de entrega 
+      <ion-item>
+        <ion-badge slot="end">{{mesaId}}</ion-badge>
+        <ion-label>Nº mesa</ion-label>
+      </ion-item> 
+    </ion-label>
+
+    <ion-label *ngIf="direccion">
+      Lugar de entrega 
+        <ion-item>Direccion {{direccion.name}}
+        </ion-item>
+    </ion-label>
+
+    <ion-item *ngIf="!direccion && !mesaId">
+       <ion-item > Añadir lugar de entrega </ion-item>
+    </ion-item>
 
     <ion-label >
       PrecioTotal <ion-item > {{total_price}} </ion-item>

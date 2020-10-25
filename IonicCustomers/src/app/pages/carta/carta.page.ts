@@ -10,8 +10,8 @@ import { SecurityService } from '../../providers/security.service';
 import { InventaryService } from "../../providers/inventary.service";
 import { Product } from 'src/app/interface/product';
 import { Category } from 'src/app/interface/category';
-import {  PurchaseOrder } from "../../interface/purchase-order";
-import { ThrowStmt } from '@angular/compiler';
+import { PurchaseOrder } from "../../interface/purchase-order";
+import { Direccion } from 'src/app/interface/direccion';
 
 
 @Component({
@@ -38,7 +38,9 @@ export class CartaPage implements OnInit {
  showSearchbar: boolean;
  ordenCompra: PurchaseOrder ;
 
- public mesaId: number;
+ public mesaId: number = null;
+
+ public direccion:Direccion = null;
 
 
  constructor(
