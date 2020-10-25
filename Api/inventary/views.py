@@ -127,9 +127,9 @@ class CreateListAddress(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         id = request.GET['id']
-        address = Address.objects.filter(user__id=id)
+        address = Address.objects.filter(user__pk=id)
         return JsonResponse(address, safe=False, status=status.HTTP_200_OK)
-        
+
 
     def post(self, request, *args, **kwargs):
         salisa=dict()

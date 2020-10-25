@@ -45,7 +45,7 @@ class OrdersProductsAdmin(admin.ModelAdmin):
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = [ 'id','name']
+    list_display = [ 'id','name', 'user']
     list_filter = ('name',)
     search_fields = ['name',]
 

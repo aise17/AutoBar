@@ -54,6 +54,7 @@ class Address(models.Model):
     portal = models.PositiveIntegerField()
     piso = models.PositiveIntegerField()
     puerta = models.PositiveIntegerField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user_addres')
 
     def __str__(self):
         return "Direccion - {0} - {1}".format( self.id, name )
@@ -76,7 +77,7 @@ class OrdersProducts(models.Model):
     product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product',)
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
     creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
+    
  
     def __str__(self):
         name = self.product
