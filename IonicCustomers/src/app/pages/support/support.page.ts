@@ -19,11 +19,11 @@ export class SupportPage  {
   ) { }
 
   async ionViewDidEnter() {
-    const toast = await this.toastCtrl.create({
-      message: 'This does not actually send a support request.',
-      duration: 1000
-    });
-    await toast.present();
+    // const toast = await this.toastCtrl.create({
+    //   message: 'This does not actually send a support request.',
+    //   duration: 1000
+    // });
+    // await toast.present();
   }
 
   async submit(form: NgForm) {
