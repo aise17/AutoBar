@@ -106,6 +106,11 @@ class Test(serializers.ModelSerializer):
 
 
 class AddressSerialicer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        address = Address.objects.create(**validated_data)
+        return address
+
     class Meta:
         model = Address
         fields = '__all__'
