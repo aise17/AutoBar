@@ -112,8 +112,12 @@ class AddressSerialicer(serializers.ModelSerializer):
     numero = serializers.IntegerField()
     portal = serializers.IntegerField()
     piso = serializers.IntegerField()
-    puerta = serializers.IntegerField()
-
+    puerta = serializers.CharField(required=True)
+    localidad = serializers.CharField(required=True)
+    latitud = serializers.CharField(required=True)
+    longitud = serializers.CharField(required=True)
+    user = serializers.IntegerField()
+    
     def create(self, validated_data, user):
 
         address = Address(**validated_data)

@@ -53,8 +53,11 @@ class Address(models.Model):
     numero = models.PositiveIntegerField()
     portal = models.PositiveIntegerField()
     piso = models.PositiveIntegerField()
-    puerta = models.PositiveIntegerField()
+    puerta = models.CharField(max_length=255, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user_addres')
+    localidad = models.CharField(max_length=255, null=True, blank=True)
+    latitud = models.CharField(max_length=255, null=True, blank=True)
+    longitud = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return "Direccion - {0} - {1}".format( self.id, name )

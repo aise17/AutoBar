@@ -135,7 +135,7 @@ export class SecurityService {
         });
     }
 
-    public getIdUsername(): Promise<string> {
+    public getIdUsername(): Promise<number> {
       return this.storage.get('id').then((value) => {
         return value;
       });

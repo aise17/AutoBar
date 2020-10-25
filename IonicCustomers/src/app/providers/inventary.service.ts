@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { UserOptions } from '../interface/user-options';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Category } from '../interface/category';
 import { PurchaseOrder } from '../interface/purchase-order';
+import { Direccion } from '../interface/direccion';
+
 
 
 @Injectable({
@@ -17,6 +19,8 @@ export class InventaryService {
 
   private cartaUrl = 'http://lacentro.autobar.tk:8080/inventary/product_list?format=json'
   private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
+  private AddressesURL = 'http://lacentro.autobar.tk:8080/inventary/address'
+
 
 
   constructor(
@@ -40,10 +44,30 @@ export class InventaryService {
     
 
     return this.http.get<Category[]>(this.cartaUrl ).pipe(
-      tap((res) => this.log(`get token=${res['access_token']}`)),
-      catchError(this.handleError<Category[]>('getToken'))
+      tap((res) => this.log(`get carta=${res['access_token']}`)),
+      catchError(this.handleError<Category[]>('getCarta'))
     );
 }
+
+  public getAddress(id:number): Observable<Direccion[]>{
+
+    let params = new HttpParams().set('id', id.toString());
+
+    return this.http.get<Direccion[]>(this.AddressesURL, { params: params }).pipe(
+      tap((res) => this.log(`get address=${res}`)),
+      catchError(this.handleError<Direccion[]>('direccion'))
+    );
+  }
+
+  public setAddress(adrress: Direccion){
+
+
+    return this.http.post<Direccion>(this.AddressesURL, adrress ).pipe(
+      tap((res) => this.log(`Pedido=${res}`)),
+      catchError(this.handleError<Direccion>('getToken'))
+    );
+
+  }
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

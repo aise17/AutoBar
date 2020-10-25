@@ -47,13 +47,18 @@ export class ScannerPage  {
         if (status.authorized) {
           this.isScannerOn = true;
           //this.qrScanner.show();
-          this.scanSub = this.qrScanner.scan()
-            .subscribe((textFound: string) => {
+          this.scanSub = this.qrScanner.scan().subscribe((textFound: string) => {
               
-              this.closeScanner();
 
               this.qrText = textFound;
+              //this.closeScanner();
+              //this.qrScanner.hide(); // hide camera preview
+              this.scanSub.unsubscribe(); // stop scanning
+              this.qrScanner.destroy();
               this.isScannerOn = false;
+
+              this.goToCarta();
+              
             }, (err) => {
               alert(JSON.stringify(err));
             });
@@ -62,6 +67,7 @@ export class ScannerPage  {
         }
       })
       .catch((e: any) => console.log('Error is', e));
+
   }
 
   closeScanner() {

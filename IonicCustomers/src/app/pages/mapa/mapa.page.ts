@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Direccion } from "../../interface/direccion";
+import { InventaryService } from 'src/app/providers/inventary.service';
+import { SecurityService } from 'src/app/providers/security.service';
 
 @Component({
   selector: 'app-mapa',
@@ -23,7 +25,7 @@ import { Direccion } from "../../interface/direccion";
 })
 export class MapaPage  {
 
-  direccion: Direccion = {calle:'', longitud: '', latitud: '', localidad:'', piso: 0, portal:0,  puerta:0, numero:0};
+  direccion: Direccion = {user:0, name:'', calle:'', longitud: '', latitud: '', localidad:'', piso: 0, portal:0,  puerta:'', numero:0};
 
   map: GoogleMap;
   loading: any;
@@ -43,7 +45,8 @@ export class MapaPage  {
     public toastCtrl: ToastController,
     private platform: Platform,
     public router: Router,
-
+    public inventaryService: InventaryService,
+    public securityService: SecurityService,
     private nativeGeocoder: NativeGeocoder,
   ) {}
 
@@ -75,11 +78,23 @@ export class MapaPage  {
     });
   }
 
+  async sendDireccion(){
+    console.log("direccion a enviar ->")
+    console.log(this.direccion)
+
+    this.direccion.user = await this.securityService.getIdUsername()
+
+    this.inventaryService.setAddress(this.direccion).subscribe(res => {
+      console.log(res)
+    });
+  }
+
 
   getAddressFromCoords( lat: number, long: number) {
     console.log('traduciendo direccion...')
     this.nativeGeocoder.reverseGeocode(lat, long, this.options)
     .then((result: NativeGeocoderResult[]) => {
+
       console.log('Direccion ' + JSON.stringify(result[0]))
       this.direccion.calle = result[0]['thoroughfare'];
       this.direccion.numero = parseInt(result[0]['subThoroughfare']);

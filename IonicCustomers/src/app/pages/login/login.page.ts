@@ -31,6 +31,9 @@ export class LoginPage implements OnInit {
 
   ngOnInit(){
     //this.menu.enable(false);
+    // if(this.security.isLoggedIn()){
+    //   this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
+    // }
   }
 
   ionViewWillEnter() {

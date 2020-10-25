@@ -3,8 +3,10 @@ export interface Direccion {
     numero: number,
     portal: number,
     piso: number,
-    puerta: number,
+    puerta: string,
     localidad: string,
     latitud: string,
-    longitud: string
+    longitud: string,
+    name:string,
+    user:number
 }

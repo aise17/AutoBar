@@ -142,7 +142,7 @@ class CreateListAddress(generics.ListCreateAPIView):
 
 
     def post(self, request, *args, **kwargs):
-        salida=dict()
+        salida=dict()   
 
         try:
             user = User.objects.get(pk=request.data['user'])

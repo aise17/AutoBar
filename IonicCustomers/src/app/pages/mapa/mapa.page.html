@@ -35,6 +35,12 @@
 
     <ion-item>
       <ion-row>
+        <ion-label  position="stacked" color="primary">Nombre:</ion-label>
+        <ion-input [(ngModel)]="direccion.name"  name="name" type="text"  spellcheck="false" autocapitalize="off"
+          required>
+        </ion-input>
+      </ion-row>
+      <ion-row>
         <ion-col>
           <ion-label  position="stacked" color="primary">Numero:</ion-label>
           <ion-input [(ngModel)]="direccion.numero"  name="numero" type="text"  spellcheck="false" autocapitalize="off"
@@ -64,7 +70,7 @@
       </ion-row>
     </ion-item>
 
-    <ion-button expand="block" (click)="goToCarta()" >Siguiente
+    <ion-button expand="block" (click)="sendDireccion()" >Añadir
       <ion-icon slot="end" name="arrow-forward"></ion-icon>
     </ion-button>
  

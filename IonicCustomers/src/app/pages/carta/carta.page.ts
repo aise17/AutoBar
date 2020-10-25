@@ -70,10 +70,10 @@ export class CartaPage implements OnInit {
  }
 
  ionViewWillEnter() {
-   if(this.route.snapshot.paramMap.has('mesaid')){
+
   this.mesaId = parseInt(this.route.snapshot.paramMap.get('mesaId'));
-   }
-  console.log(this.mesaId);
+  console.log('Mesa Seleccionada -> ' + this.mesaId);
+
 }
 
 
@@ -197,7 +197,7 @@ async getCarta(){
         {
           text: 'Seguir',
           handler: async () => {
-            const id = parseInt(await this.security.getIdUsername());
+            const id = parseInt( await this.security.getIdUsername().then(x => x.toString()));
 
             this.ordenCompra = {
               user: id,

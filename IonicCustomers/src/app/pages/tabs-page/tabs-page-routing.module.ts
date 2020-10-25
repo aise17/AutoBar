@@ -79,6 +79,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'direcciones',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../direcciones/direcciones.module').then(m => m.DireccionesPageModule)
+          }
+          
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tab/mapa',
         pathMatch: 'full'
