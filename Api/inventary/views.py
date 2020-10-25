@@ -127,7 +127,7 @@ class CreateListAddress(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         id = request.GET['id']
-        address = getObject(Address.objects.filter(user__pk=id))
+        address = getObject(Address.objects.filter(user__pk=id).values())
         return JsonResponse(address, safe=False, status=status.HTTP_200_OK)
 
 
