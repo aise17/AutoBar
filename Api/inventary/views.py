@@ -136,7 +136,7 @@ class CreateListAddress(generics.ListCreateAPIView):
 
         try:
             user = User.objects.get(pk=request.data['user'])
-
+            del request.data['user']
             AddressSerialicer().create(request.data , user)
 
             salida['ok'] = True
