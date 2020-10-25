@@ -135,14 +135,14 @@ class CreateListAddress(generics.ListCreateAPIView):
         salida=dict()
 
         try:
-            ser = AddressSerialicer.create(**request.data)
+            ser = AddressSerialicer.create(request.data)
 
             salida['ok'] = True
             salida['user'] = ser.data
 
-        except:
+        except Exception as ex:
             salida['ok'] = False
-            salida['user'] = ser.data
+            salida['user'] = ex
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
