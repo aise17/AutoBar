@@ -15,6 +15,7 @@ export class DireccionesPage implements OnInit {
 
   ios: boolean;
   list_addresses: Direccion[];
+  loading: any;
 
   constructor(
     public inventaryService: InventaryService,
@@ -23,11 +24,18 @@ export class DireccionesPage implements OnInit {
     public modalCtrl: ModalController,
     public config: Config,
     public router: Router,
+    public loadingCtrl: LoadingController,
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ios = this.config.get('mode') === 'ios';
     this.getAddresses();
+    this.loading = await this.loadingCtrl.create({
+      message: "Espera por favor..."
+    });
+  
+    // Presentamos el componente creado en el paso anterior
+    await this.loading.present();
   }
 
 

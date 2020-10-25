@@ -41,7 +41,7 @@ export class CartaPage implements OnInit {
  public mesaId: number = null;
 
  public direccion:Direccion = null;
-
+ loading:any;
 
  constructor(
    public alertCtrl: AlertController,
@@ -62,7 +62,15 @@ export class CartaPage implements OnInit {
    //this.menu.enable(false);
  }
 
- ngOnInit() {
+ async ngOnInit() {
+
+  this.loading = await this.loadingCtrl.create({
+    message: "Espera por favor..."
+  });
+
+  // Presentamos el componente creado en el paso anterior
+  await this.loading.present();
+
    this.updateCarta();
    
    this.ios = this.config.get('mode') === 'ios';
@@ -228,7 +236,13 @@ async getCarta(){
   }
 
 
-  enviarOrdenCompra(){
+  async enviarOrdenCompra(){
+    this.loading = await this.loadingCtrl.create({
+      message: "Espera por favor..."
+    });
+  
+    // Presentamos el componente creado en el paso anterior
+    await this.loading.present();
     this.inventary.enviarOrdenPedido(this.ordenCompra).subscribe(res => {
       if(res){
         if(res.ok){

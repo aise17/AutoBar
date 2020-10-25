@@ -24,14 +24,14 @@ export class TutorialPage implements OnInit {
   ngOnInit(){
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
-        this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+        this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
       }
     });
   }
 
   startApp() {
     this.router
-      .navigateByUrl('/app/tab/mapa', { replaceUrl: true })
+      .navigateByUrl('/app/tab/inicio', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 
@@ -45,7 +45,7 @@ export class TutorialPage implements OnInit {
     this.menu.enable(false);
     this.storage.get('ion_did_tutorial').then(res => {
       if (res === true) {
-        this.router.navigateByUrl('/app/tab/mapa', { replaceUrl: true });
+        this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
       }
     });
 
