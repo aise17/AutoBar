@@ -142,7 +142,7 @@ class CreateListAddress(generics.ListCreateAPIView):
 
         except Exception as ex:
             salida['ok'] = False
-            salida['error'] = ex.
+            salida['error'] = ex
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
