@@ -135,7 +135,7 @@ class CreateListAddress(generics.ListCreateAPIView):
         salida=dict()
 
         try:
-            ser = AddressSerialicer.create(request.data)
+            ser = AddressSerialicer().create(request.data)
 
             salida['ok'] = True
 
