@@ -102,8 +102,8 @@ export class MapaPage  {
             this.inventaryService.setAddress(this.direccion).subscribe(res => {
               console.log(res)
             });
-
-            this.router.navigateByUrl('/app/tab/direcciones/', { replaceUrl: true });
+            this.router.navigateByUrl('/app/tab/direcciones', { replaceUrl: true });
+            
   
           }
         }
@@ -111,6 +111,7 @@ export class MapaPage  {
     });
     // now present the alert on top of all other content
     await alert.present();
+    
   }
 
 
