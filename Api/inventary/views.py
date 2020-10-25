@@ -138,11 +138,11 @@ class CreateListAddress(generics.ListCreateAPIView):
             ser.save()
             salida['ok'] = True
             salida['user'] = ser.data
-            return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
+
         else:
             salida['ok'] = False
             salida['user'] = ser.data
-        return JsonResponse(salida, safe=False, status=status.HTTP_304_NOT_MODIFIED)
+        return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
 def getObject(obj):
