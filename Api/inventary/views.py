@@ -126,9 +126,19 @@ class CreateListAddress(generics.ListCreateAPIView):
     serializer_class = AddressSerialicer
 
     def get(self, request, *args, **kwargs):
+        salida= dict()
+
         id = request.GET['id']
         address = getObject(Address.objects.filter(user__pk=id).values())
-        return JsonResponse(address, safe=False, status=status.HTTP_200_OK)
+
+        if len(address) > 0:
+            salida['ok']=True
+            salida['datos'] = address
+        else:
+            salida['ok']=False
+            salida['error'] = "No hay registros para este usuario"
+
+        return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)
 
 
     def post(self, request, *args, **kwargs):
