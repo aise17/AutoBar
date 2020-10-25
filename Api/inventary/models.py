@@ -47,13 +47,23 @@ class Product(models.Model):
     def __str__(self):
         return "Producto - %s" % self.name 
 
+class Address(models.Model):
+    name = models.CharField(max_length=50, null=True, blank=True)
+    calle = models.CharField(max_length=255, null=True, blank=True)
+    numero = models.PositiveIntegerField()
+    portal = models.PositiveIntegerField()
+    piso = models.PositiveIntegerField()
+    puerta = models.PositiveIntegerField()
 
+    def __str__(self):
+        return "Direccion - {0} - {1}".format( self.id, name )
 
 
 class Orders(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
     creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
     mesa = models.ForeignKey(Mesa, models.CASCADE, null=True, related_name='mesa')
+    address = models.ForeignKey(Address, models.CASCADE, null=True, related_name='address')
     orders_status_cocina = models.BooleanField(null=True, blank=True, default= False)
     orders_status_barra = models.BooleanField(null=True, blank=True, default= False)
 
@@ -66,43 +76,11 @@ class OrdersProducts(models.Model):
     product = models.ForeignKey(Product, models.CASCADE, null=True, related_name='product',)
     order_product = models.ForeignKey(Orders, models.CASCADE, null=True, related_name='order_product')
     creation_date = models.DateTimeField(null=True, blank=True, auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, null=True, related_name='user')
  
     def __str__(self):
         name = self.product
         return "Orders Products - {0} - {1}".format( self.id, name )
-
-
-class ProductObject():
-    id: int
-    name: str
-    image:str
-    description: str
-    allergy:str
-    price: int
-    category:int
-    preparation_site:int
-
-
-class OrderProductObject():
-
-    product: List[ProductObject]
-    orden: int
-
-
-    def addProduct(self, product: ProductObject):
-        self.product.append(product)
-
-
-class OrderObject():
-    id: int
-    user:str
-    mesa: int
-    orders_status_cocina:bool
-    orders_status_barra:bool
-    order_product: List[OrderProductObject]
-
-    def addOrderProduct(self, order_product:OrderProductObject):
-        self.order_product.append(order_product)
 
 
 

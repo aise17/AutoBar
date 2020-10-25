@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group, update_last_login
 from rest_framework import serializers
 
-from .models import Category, Orders, OrdersProducts, Product
+from .models import Category, Orders, OrdersProducts, Product, Address
 
 admin.autodiscover()
 
@@ -103,4 +103,10 @@ class OrderSerialicer(serializers.ModelSerializer):
 class Test(serializers.ModelSerializer):
     id = serializers.IntegerField()
     order_product = OrderProductsSerializer()
+
+
+class AddressSerialicer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'
 

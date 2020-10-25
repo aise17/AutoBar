@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 
-from .models import Product, Category, Orders, OrdersProducts, Mesa, PreparationSite
+from .models import Product, Category, Orders, OrdersProducts, Mesa, PreparationSite, Address
 
 admin.site.site_header = 'Autobar'
 admin.site.index_title = 'Administración'
@@ -43,9 +43,17 @@ class OrdersProductsAdmin(admin.ModelAdmin):
     list_filter = ('creation_date',)
     search_fields = ['creation_date']
 
+
+class AddressAdmin(admin.ModelAdmin):
+    list_display = [ 'id','name','user']
+    list_filter = ('name',)
+    search_fields = ['name',]
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Orders, OrdersAdmin)
 admin.site.register(OrdersProducts, OrdersProductsAdmin)
 admin.site.register(PreparationSite, SiteAdmin)
 admin.site.register(Mesa, MesaAdmin)
+admin.site.register(Address, AddressAdmin)

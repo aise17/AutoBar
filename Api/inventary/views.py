@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Category, Orders, Product, OrdersProducts, Mesa, OrderObject
-from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer, OrderSerialicer, Test
+from .models import Category, Orders, Product, OrdersProducts, Mesa, Address
+from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer, OrderSerialicer, Test, AddressSerialicer
 from rest_framework import permissions
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.viewsets import ViewSet
@@ -115,6 +115,33 @@ class OrderBarModule(generics.ListAPIView):
             order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
                 
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
+
+
+class CreateListAddress(generics.ListCreateAPIView):
+
+    model = Address
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = AddressSerialicer
+
+    def get(self, request, *args, **kwargs):
+        id = request.GET['id']
+        address = Address.objects.filter(user__id=id)
+        return JsonResponse(address, safe=False, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        salisa=dict()
+        ser = AddressSerialicer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            salida['ok'] = True
+            salida['user'] = ser.data
+            return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
+        else:
+            salida['ok'] = False
+            salida['user'] = ser.data
+        return JsonResponse(salida, safe=False, status=status.HTTP_304_NOT_MODIFIED)
 
 
 def getObject(obj):
