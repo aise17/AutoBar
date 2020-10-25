@@ -116,8 +116,9 @@ class AddressSerialicer(serializers.ModelSerializer):
 
     def create(self, validated_data, user):
 
-        address = Address.objects.create(**validated_data)
+        address = Address(**validated_data)
         address.user=user
+        address.save()
         return address
 
     class Meta:
