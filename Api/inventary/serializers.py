@@ -108,8 +108,8 @@ class Test(serializers.ModelSerializer):
 class AddressSerialicer(serializers.ModelSerializer):
 
     def create(self, validated_data):
-        user = UserModel.objects.get(validated_data['user'])
-        address = Address.objects.create(**validated_data, user=user)
+        validated_data['user'] = UserModel.objects.get(validated_data['user'])
+        address = Address.objects.create(**validated_data)
         return address
 
     class Meta:
