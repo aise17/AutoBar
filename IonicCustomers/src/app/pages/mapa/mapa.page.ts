@@ -10,7 +10,7 @@ import {
   Geocoder
 } from "@ionic-native/google-maps";
 
-import { Platform, LoadingController, ToastController } from "@ionic/angular";
+import { Platform, LoadingController, ToastController, AlertController } from "@ionic/angular";
 import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
@@ -48,6 +48,7 @@ export class MapaPage  {
     public inventaryService: InventaryService,
     public securityService: SecurityService,
     private nativeGeocoder: NativeGeocoder,
+    public alertCtrl: AlertController,
   ) {}
 
 
@@ -79,14 +80,37 @@ export class MapaPage  {
   }
 
   async sendDireccion(){
-    console.log("direccion a enviar ->")
-    console.log(this.direccion)
+    const alert = await this.alertCtrl.create({
+      header: 'Confiramcion de direccion',
+      message: '¿Guardar direcion?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+   
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: async () => {
+           
+            console.log("direccion a enviar ->")
+            console.log(this.direccion)
+        
+            this.direccion.user = await this.securityService.getIdUsername()
+        
+            this.inventaryService.setAddress(this.direccion).subscribe(res => {
+              console.log(res)
+            });
 
-    this.direccion.user = await this.securityService.getIdUsername()
-
-    this.inventaryService.setAddress(this.direccion).subscribe(res => {
-      console.log(res)
+            this.router.navigateByUrl('/app/tab/direcciones/', { replaceUrl: true });
+  
+          }
+        }
+      ]
     });
+    // now present the alert on top of all other content
+    await alert.present();
   }
 
 
@@ -180,4 +204,16 @@ export class MapaPage  {
 
     toast.present();
   }
+
+ 
+
+
+
+
+
+
+
+
+
+
 }
