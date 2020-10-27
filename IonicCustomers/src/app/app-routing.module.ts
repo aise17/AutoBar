@@ -57,6 +57,10 @@ const routes: Routes = [
     path: 'direcciones',
     loadChildren: () => import('./pages/direcciones/direcciones.module').then( m => m.DireccionesPageModule)
   },
+  {
+    path: 'historico-pedidos',
+    loadChildren: () => import('./pages/historico-pedidos/historico-pedidos.module').then( m => m.HistoricoPedidosPageModule)
+  },
 ];
 
 @NgModule({

@@ -35,14 +35,9 @@ export class DireccionesPage implements OnInit {
 
     this.ios = this.config.get('mode') === 'ios';
     this.getAddresses();
-
   }
 
-  
-
-
   goMap(){
-    //this.router.navigateByUrl('/mapa', { replaceUrl: true });
     this.navCtrl.navigateRoot('/mapa');
   }
 
@@ -52,8 +47,6 @@ export class DireccionesPage implements OnInit {
       duration: 600
      };
     this.nativePageTransitions.curl(options);
-    // let navigationExtras: NavigationExtras = { state: { address: address } };
-    // this.router.navigate(['/app/tab/carta'],navigationExtras);
 
     let navigationExtras: NavigationExtras = {
       state: {
