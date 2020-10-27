@@ -170,12 +170,13 @@ class CreateListAddress(generics.ListCreateAPIView, generics.RetrieveDestroyAPIV
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, id, *args, **kwargs):
         salida=dict()  
-        
+        print(serializers.serialize('json', request))
+
         try:
             #_id =request.data['id']
-            _id =request.data['id']
+            _id =id
             Address.objects.get(pk=_id).delete()
             salida['ok'] = True
         except Exception as ex:
