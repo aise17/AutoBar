@@ -130,7 +130,7 @@ class OrderBarModule(generics.ListAPIView):
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
 
-class CreateListAddress(generics.ListCreateAPIView):
+class CreateListAddress(generics.ListCreateAPIView, generics.RetrieveDestroyAPIView):
 
     model = Address
     permission_classes = [
@@ -170,6 +170,16 @@ class CreateListAddress(generics.ListCreateAPIView):
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
+    def delete(self, request, *args, **kwargs):
+        salida=dict()  
+        _id =request.data['id']
+        try:
+            Address.objects.get(pk=_id).delete()
+            salida['ok'] = True
+        except:
+            salida['ok'] = False
+            salida['error'] = str(ex)
+        return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 def getObject(obj):
     return [o for o in obj]
