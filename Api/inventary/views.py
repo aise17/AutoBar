@@ -176,7 +176,7 @@ class CreateListAddress(generics.ListCreateAPIView, generics.RetrieveDestroyAPIV
         try:
             Address.objects.get(pk=_id).delete()
             salida['ok'] = True
-        except:
+        except Exception as ex:
             salida['ok'] = False
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
