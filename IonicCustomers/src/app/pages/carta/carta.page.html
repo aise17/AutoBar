@@ -127,8 +127,15 @@
       </ion-item>
 
       <ion-item padding *ngIf="!direccion && !mesaId"(click)="presentChoseSite()">
-       <ion-icon slot="start" text="Añadir" name="add-circle"></ion-icon>
+        <ion-label *ngIf="!showSearchbar" (click)="presentFilter()">
+          <span>Añadir</span>
+            <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+        </ion-label>
       </ion-item>
+
+
+
+
     </ion-col>
 
   </ion-row>
