@@ -76,7 +76,7 @@ export class InventaryService {
     let options = { params: httpParams };
 
 
-    return this.http.delete<Direccion>(this.AddressesURL, options ).pipe(
+    return this.http.delete<Direccion>(this.AddressesURL+'/' +id ).pipe(
       tap((res) => this.log(`Pedido=${res}`)),
       catchError(this.handleError<Direccion>('getToken'))
     );
