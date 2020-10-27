@@ -49,18 +49,20 @@ class CreateOrdersView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         salida = dict()
-
-        _user = request.data["user"]
-        if 'mesa' in request.data:
-            _mesa = request.data["mesa"]
-        if 'address' in request.data:
-            _address = request.data["address"]
+        mesa: Mesa = None
+        address: Address = None
 
         try:
 
+            _user = request.data["user"]
             user: User = User.objects.get(pk=_user)
-            mesa: Mesa = Mesa.objects.get(pk=_mesa)
-            address: Address = Address.objects.get(pk=_address)
+
+            if 'mesa' in request.data:
+                _mesa = request.data["mesa"]
+                mesa = Mesa.objects.get(pk=_mesa)
+            if 'address' in request.data:
+                _address = request.data["address"]
+                address = Address.objects.get(pk=_address)
 
             if mesa and address is None:
                 order = Orders.objects.create(user= user, mesa=mesa)
