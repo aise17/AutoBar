@@ -51,8 +51,10 @@ class CreateOrdersView(generics.ListCreateAPIView):
         salida = dict()
 
         _user = request.data["user"]
-        _mesa = request.data["mesa"]
-        _address = request.data["address"]
+        if 'mesa' in request.data:
+            _mesa = request.data["mesa"]
+        if 'address' in request.data:
+            _address = request.data["address"]
 
         try:
 
