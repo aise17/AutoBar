@@ -171,7 +171,7 @@ class CreateListAddress(APIView):
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
-    def delete(self, request, id, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         salida=dict()  
         print(serializers.serialize('json', request))
 
