@@ -179,8 +179,7 @@ class CreateListAddress(APIView):
             salida['ok'] = True
         except Exception as ex:
             salida['ok'] = False
-            salida['request'] = request.data
-            salida['error'] = str(ex)
+            salida['error'] = 'error'+ str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
@@ -192,17 +191,20 @@ class DeleteAddress(APIView):
     serializer_class = AddressSerialicer
 
     def get(self, request, *args, **kwargs):
-        salida=dict()  
+        salida= dict()
 
         try:
-            _id =request.GET['id']
-            Address.objects.get(pk=_id).delete()
-            salida['ok'] = True
+            id = request.GET['id']
+            address = Address.objects.get(pk=id)
+            address.delete()
+            salida['ok']=True
+
         except Exception as ex:
-            salida['ok'] = False
-            salida['request'] = request.data
-            salida['error'] = str(ex)
-        return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
+            salida['ok']=False
+            salida['error'] = "Error" + ex
+
+        return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)
+
 
 def getObject(obj):
     return [o for o in obj]

@@ -73,13 +73,11 @@ export class InventaryService {
 
   public deleteAddress(id:number){
 
-    let httpParams = new HttpParams().set('id', id.toString());   
-    let options = { params: httpParams };
+    let params = new HttpParams().set('id', id.toString());   
 
-
-    return this.http.delete(this.AddressDeleteURL, options).pipe(
-      tap((res) => this.log(`Direccion eliminada=${res}`)),
-      catchError(this.handleError('Direccion eliminada'))
+    return this.http.get<Direccion[]>(this.AddressDeleteURL, { params: params }).pipe(
+      tap((res) => this.log(`get address=${res}`)),
+      catchError(this.handleError<Direccion[]>('direccion'))
     );
 
   }

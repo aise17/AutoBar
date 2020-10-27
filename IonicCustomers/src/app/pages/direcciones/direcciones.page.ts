@@ -82,7 +82,7 @@ export class DireccionesPage implements OnInit {
   }
 
 
-  async deleteAddresses(slidingItem: HTMLIonItemSlidingElement, id:number){
+  async deleteAddresses(slidingItem: HTMLIonItemSlidingElement, id){
     const toast = await this.toastCtrl.create({
       header: 'Direccion Eliminada',
       duration: 1000,
@@ -94,20 +94,16 @@ export class DireccionesPage implements OnInit {
 
     slidingItem.close()
 
-    this.loading = await this.loadingCtrl.create({
-      message: "Cargando mis direcciones ..."
-    });
-    await this.loading.present();
-
     this.inventaryService.deleteAddress(id)
-      .subscribe(async res => {
-        if(res['ok']){
-          console.log(res['ok'])
-          await toast.present();
+      .subscribe(res => {
+        if(res){
+          if(res['ok']){
+            console.log(res['datos'])
+          
+          }
         }
       });
 
-    this.loading.dismiss();
   }
 
   slidePage() {
