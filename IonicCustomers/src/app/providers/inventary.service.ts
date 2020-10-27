@@ -7,6 +7,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { Category } from '../interface/category';
 import { PurchaseOrder } from '../interface/purchase-order';
 import { Direccion } from '../interface/direccion';
+import { DireccionesPage } from '../pages/direcciones/direcciones.page';
 
 
 
@@ -63,6 +64,18 @@ export class InventaryService {
 
 
     return this.http.post<Direccion>(this.AddressesURL, adrress ).pipe(
+      tap((res) => this.log(`Pedido=${res}`)),
+      catchError(this.handleError<Direccion>('getToken'))
+    );
+
+  }
+
+  public deleteAddress(id:number){
+
+    let httpParams = new HttpParams().set('id', id.toString());   
+    let options = { params: httpParams };
+
+    return this.http.delete<Direccion>(this.AddressesURL, options ).pipe(
       tap((res) => this.log(`Pedido=${res}`)),
       catchError(this.handleError<Direccion>('getToken'))
     );

@@ -81,6 +81,35 @@ export class DireccionesPage implements OnInit {
     this.loading.dismiss();
   }
 
+
+  async deleteAddresses(slidingItem: HTMLIonItemSlidingElement, id:number){
+    const toast = await this.toastCtrl.create({
+      header: 'Direccion Eliminada',
+      duration: 1000,
+      buttons: [{
+        text: 'Close',
+        role: 'cancel'
+      }]
+    });
+
+    slidingItem.close()
+
+    this.loading = await this.loadingCtrl.create({
+      message: "Cargando mis direcciones ..."
+    });
+    await this.loading.present();
+
+    this.inventaryService.deleteAddress(id)
+      .subscribe(async res => {
+        if(res['ok']){
+          console.log(res['ok'])
+          await toast.present();
+        }
+      });
+
+    this.loading.dismiss();
+  }
+
   slidePage() {
     let options: NativeTransitionOptions = {
       direction: 'left',
