@@ -16,7 +16,6 @@ from typing import List
 User = get_user_model()
 # Create your views here.
 from django.core import serializers
-from rest_framework.views import APIView
 
 
 class CategoryView(ListAPIView):
@@ -131,7 +130,7 @@ class OrderBarModule(generics.ListAPIView):
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
 
-class CreateListAddress(APIView):
+class CreateListAddress(generics.ListCreateAPIView, generics.DestroyAPIView):
 
     model = Address
     permission_classes = [
