@@ -173,7 +173,6 @@ class CreateListAddress(APIView):
 
     def delete(self, request, *args, **kwargs):
         salida=dict()  
-        print(serializers.serialize('json', request))
 
         try:
             #_id =request.data['id']
