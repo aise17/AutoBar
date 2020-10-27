@@ -178,6 +178,7 @@ class CreateListAddress(generics.ListCreateAPIView, generics.RetrieveDestroyAPIV
             salida['ok'] = True
         except Exception as ex:
             salida['ok'] = False
+            salida['request'] = request.data
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
