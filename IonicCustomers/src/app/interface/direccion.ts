@@ -9,5 +9,5 @@ export interface Direccion {
     longitud: string,
     name:string,
     user:number,
-    id:number
+    id?:number
 }

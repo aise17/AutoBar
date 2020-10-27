@@ -275,19 +275,22 @@ async getCarta(){
   
     // Presentamos el componente creado en el paso anterior
     await this.loading.present();
-    this.inventary.enviarOrdenPedido(this.ordenCompra).subscribe(res => {
+    this.inventary.enviarOrdenPedido(this.ordenCompra).subscribe(async res => {
       if(res){
         if(res.ok){
           console.log("Peticion enviada -> " + res.ok)
+          await this.loading.onWillDismiss();
           
         }else if(res.error){
           console.log("Error -> " + res.error);
+          await this.loading.onWillDismiss();
         }
       }else{
         console.log("Fallo de conexion");
+        await this.loading.onWillDismiss();
       }
     });
-    await this.loading.onWillDismiss();
+    
   }
 
   goDireccion(){
