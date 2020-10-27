@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 
 import { UserService } from '../../providers/user.service';
 import { SecurityService } from '../../providers/security.service';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 @Component({
   selector: 'app-account',
@@ -20,8 +21,8 @@ export class AccountPage  {
     public alertCtrl: AlertController,
     public router: Router,
     public userData: UserService,
-    public security: SecurityService
-
+    public security: SecurityService,
+    private nativePageTransitions: NativePageTransitions
   ) { }
 
   ngAfterViewInit() {
@@ -114,6 +115,26 @@ export class AccountPage  {
   support() {
     this.router.navigateByUrl('/support');
   }
+
+  back(){
+    this.flipPage();
+  }
+
+  flipPage() {
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 600
+     };
+ 
+    this.nativePageTransitions.slide(options);
+    this.goDirecciones();
+  }
+  goDirecciones() {
+    this.router
+    this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
+  }
+
+
 }
 
 

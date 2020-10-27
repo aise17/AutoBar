@@ -57,6 +57,7 @@ export class SignupPage  {
 
 
     }
+    await this.loading.onWillDismiss();
   }
 
 

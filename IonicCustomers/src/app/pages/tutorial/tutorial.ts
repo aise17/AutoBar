@@ -33,6 +33,7 @@ export class TutorialPage implements OnInit {
     this.router
       .navigateByUrl('/app/tab/inicio', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
+      
   }
 
   onSlideChangeStart(event) {
@@ -48,8 +49,6 @@ export class TutorialPage implements OnInit {
         this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
       }
     });
-
-
   }
 
   ionViewDidLeave() {

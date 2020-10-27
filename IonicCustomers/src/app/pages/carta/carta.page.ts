@@ -12,6 +12,8 @@ import { Product } from 'src/app/interface/product';
 import { Category } from 'src/app/interface/category';
 import { PurchaseOrder } from "../../interface/purchase-order";
 import { Direccion } from 'src/app/interface/direccion';
+import { ActionSheetController } from '@ionic/angular';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 
 @Component({
@@ -58,6 +60,9 @@ export class CartaPage implements OnInit {
    public inventary: InventaryService,
    public userService: UserService,
    private route: ActivatedRoute,
+   private actionSheetController: ActionSheetController,
+   private nativePageTransitions: NativePageTransitions
+
  ) { 
    //this.menu.enable(false);
  }
@@ -67,15 +72,18 @@ export class CartaPage implements OnInit {
   this.loading = await this.loadingCtrl.create({
     message: "Espera por favor..."
   });
+  this.carro.length
 
   // Presentamos el componente creado en el paso anterior
-  await this.loading.present();
+   await this.loading.present();
 
    this.updateCarta();
    
    this.ios = this.config.get('mode') === 'ios';
 
    this.getCarta();
+
+   this.loading.dismiss();
    
  }
 
@@ -120,7 +128,7 @@ export class CartaPage implements OnInit {
 
      // Create a toast
      const toast = await this.toastCtrl.create({
-       header: 'was successfully added as a favorite.',
+       header: 'Producto añadido al pedido',
        duration: 1000,
        buttons: [{
          text: 'Close',
@@ -137,7 +145,7 @@ export class CartaPage implements OnInit {
  async removeFavorite(slidingItem: HTMLIonItemSlidingElement, product: Product) {
    const alert = await this.alertCtrl.create({
      header: product.name,
-     message: 'Would you like to remove this session from your favorites?',
+     message: 'Producto eliminado de la lista de pedidos?',
      buttons: [
        {
          text: 'Cancel',
@@ -238,7 +246,7 @@ async getCarta(){
 
   async enviarOrdenCompra(){
     this.loading = await this.loadingCtrl.create({
-      message: "Espera por favor..."
+      message: "Enviando pedido..."
     });
   
     // Presentamos el componente creado en el paso anterior
@@ -247,6 +255,7 @@ async getCarta(){
       if(res){
         if(res.ok){
           console.log("Peticion enviada -> " + res.ok)
+          
         }else if(res.error){
           console.log("Error -> " + res.error);
         }
@@ -254,6 +263,57 @@ async getCarta(){
         console.log("Fallo de conexion");
       }
     });
+    await this.loading.onWillDismiss();
   }
+
+  goDireccion(){
+    this.router.navigateByUrl('/app/tab/direcciones', { replaceUrl: true });
+  }
+
+  goScanner(){
+    this.router.navigateByUrl('/app/tab/scanner', { replaceUrl: true });
+  }
+
+
+  async presentChoseSite() {
+    
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 400,
+      slowdownfactor: -1,
+      iosdelay: 50
+     };
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Lugares de entrega:',
+      cssClass: 'my-custom-class',
+      buttons: [ 
+      {
+        text: 'Tomar en el bar',
+        icon: 'cafe',
+        handler: () => {
+          console.log('Share clicked');
+          actionSheet.dismiss();
+         
+          this.nativePageTransitions.slide(options);
+          this.goScanner();
+
+        }
+      }, {
+        text: 'Entrega en el domicilio',
+        icon: 'car',
+        handler: () => {
+          console.log('Favorite clicked');
+          actionSheet.dismiss();
+       //TODO  REVISAR PORQUE ESTO ROMPE MAPA
+          this.nativePageTransitions.curl(options);
+          this.goDireccion();
+
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
 
 }

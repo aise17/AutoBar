@@ -17,10 +17,11 @@ import { environment } from '../environments/environment';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-import { GoogleMaps, Geocoder } from '@ionic-native/google-maps';
+import { GoogleMaps } from '@ionic-native/google-maps';
 import { CheckTutorialService } from './providers/check-tutorial.service';
 
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 
 
 
@@ -47,6 +48,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
     CheckTutorialService,
     GoogleMaps,
     NativeGeocoder,
+    NativePageTransitions,
     MapsService,
     StatusBar,
     SecurityService,

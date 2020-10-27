@@ -1,7 +1,8 @@
 
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -15,7 +16,9 @@ export class SupportPage  {
 
   constructor(
     public alertCtrl: AlertController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private nativePageTransitions: NativePageTransitions,
+    private router: Router
   ) { }
 
   async ionViewDidEnter() {
@@ -41,6 +44,25 @@ export class SupportPage  {
     }
   }
 
+
+
+  back(){
+    this.flipPage();
+  }
+
+  flipPage() {
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 600
+     };
+ 
+    this.nativePageTransitions.slide(options);
+    this.goDirecciones();
+  }
+  goDirecciones() {
+    this.router
+    this.router.navigateByUrl('/app/tab/inicio', { replaceUrl: true });
+  }
   // If the user enters text in the support question and then navigates
   // without submitting first, ask if they meant to leave the page
   // async ionViewCanLeave(): Promise<boolean> {

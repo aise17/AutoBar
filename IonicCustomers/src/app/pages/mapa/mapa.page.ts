@@ -17,13 +17,15 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { Direccion } from "../../interface/direccion";
 import { InventaryService } from 'src/app/providers/inventary.service';
 import { SecurityService } from 'src/app/providers/security.service';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.page.html',
   styleUrls: ['./mapa.page.scss'],
 })
-export class MapaPage  {
+export class MapaPage implements OnInit {
 
   direccion: Direccion = {user:0, name:'', calle:'', longitud: '', latitud: '', localidad:'', piso: 0, portal:0,  puerta:'', numero:0};
 
@@ -49,15 +51,16 @@ export class MapaPage  {
     public securityService: SecurityService,
     private nativeGeocoder: NativeGeocoder,
     public alertCtrl: AlertController,
+    private nativePageTransitions: NativePageTransitions,
   ) {}
-
-
-
-  async ionViewWillEnter() {
-
+  async ngOnInit() {
     await this.platform.ready();
     await this.loadMap();
+    this.localizar();  
   }
+
+
+  async ionViewWillEnter() {}
 
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
@@ -206,6 +209,24 @@ export class MapaPage  {
     toast.present();
   }
 
+  back(){
+    this.fadePage();
+  }
+
+  fadePage() {
+    let options: NativeTransitionOptions = {
+        direction: 'down',
+        duration: 400,
+        slowdownfactor: -1,
+        iosdelay: 50
+      }
+    this.nativePageTransitions.slide(options);
+    this.goDirecciones();
+  }
+  goDirecciones() {
+    this.router
+    this.router.navigateByUrl('/app/tab/direcciones', { replaceUrl: true });
+  }
  
 
 

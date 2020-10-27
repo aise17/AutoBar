@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
   login: UserOptions = { username: '', password: '', email: '', ok: '', error: '' };
   submitted = false;
   loading: any;
-  
+
   constructor(
     public router: Router,
     public security: SecurityService,
@@ -75,6 +75,8 @@ export class LoginPage implements OnInit {
                 const toast = this.createToast('Get token Successful!', 'success');
                 await (await toast).present();
                 this.security.setToken(res.access_token);
+
+                this.loading.dismiss();
 
                 this.storage.get('ion_did_tutorial').then(res => {
                   if (res === true) {
