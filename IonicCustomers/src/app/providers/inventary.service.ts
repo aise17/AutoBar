@@ -21,6 +21,7 @@ export class InventaryService {
   private cartaUrl = 'http://lacentro.autobar.tk:8080/inventary/product_list?format=json'
   private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
   private AddressesURL = 'http://lacentro.autobar.tk:8080/inventary/address'
+  private AddressDeleteURL = 'http://lacentro.autobar.tk:8080/inventary/address/delete'
 
 
 
@@ -71,10 +72,12 @@ export class InventaryService {
   }
 
   public deleteAddress(id:number){
-    
-    const url = `${this.AddressesURL}/${id}`;
 
-    return this.http.delete(url).pipe(
+    let httpParams = new HttpParams().set('id', id.toString());   
+    let options = { params: httpParams };
+
+
+    return this.http.delete(this.AddressDeleteURL, options).pipe(
       tap((res) => this.log(`Direccion eliminada=${res}`)),
       catchError(this.handleError('Direccion eliminada'))
     );

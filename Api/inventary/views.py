@@ -164,8 +164,6 @@ class CreateListAddress(APIView):
             AddressSerialicer().create(request.data , user)
 
             salida['ok'] = True
-
-
         except Exception as ex:
             salida['ok'] = False
             salida['error'] = str(ex)
@@ -177,6 +175,27 @@ class CreateListAddress(APIView):
         try:
             #_id =request.data['id']
             _id =kwargs['id']
+            Address.objects.get(pk=_id).delete()
+            salida['ok'] = True
+        except Exception as ex:
+            salida['ok'] = False
+            salida['request'] = request.data
+            salida['error'] = str(ex)
+        return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
+
+
+class DeleteAddress(APIView):
+    model = Address
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = AddressSerialicer
+
+    def get(self, request, *args, **kwargs):
+        salida=dict()  
+
+        try:
+            _id =request.data['id']
             Address.objects.get(pk=_id).delete()
             salida['ok'] = True
         except Exception as ex:
