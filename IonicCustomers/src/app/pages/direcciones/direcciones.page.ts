@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Direccion } from 'src/app/interface/direccion';
 import { InventaryService } from "../../providers/inventary.service";
 import { SecurityService } from "../../providers/security.service";
@@ -14,6 +14,7 @@ import { MapaPage } from "../mapa/mapa.page";
   styleUrls: ['./direcciones.page.scss'],
 })
 export class DireccionesPage implements OnInit {
+  @ViewChild('address_list', { static: true }) address_list: IonList;
 
   ios: boolean;
   list_addresses: Direccion[];
@@ -79,6 +80,9 @@ export class DireccionesPage implements OnInit {
 
     }
     this.loading.dismiss();
+
+    
+
   }
 
 
@@ -103,6 +107,16 @@ export class DireccionesPage implements OnInit {
         }
       });
 
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+      
+    }, 2000);
   }
 
   slidePage() {

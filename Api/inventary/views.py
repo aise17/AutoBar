@@ -169,19 +169,6 @@ class CreateListAddress(APIView):
             salida['error'] = str(ex)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
-    def delete(self, request, *args, **kwargs):
-        salida=dict()  
-
-        try:
-            #_id =request.data['id']
-            _id =kwargs['id']
-            Address.objects.get(pk=_id).delete()
-            salida['ok'] = True
-        except Exception as ex:
-            salida['ok'] = False
-            salida['error'] = 'error'+ str(ex)
-        return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
-
 
 class DeleteAddress(APIView):
     model = Address
