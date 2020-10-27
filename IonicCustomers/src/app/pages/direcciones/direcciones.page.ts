@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Direccion } from 'src/app/interface/direccion';
 import { InventaryService } from "../../providers/inventary.service";
 import { SecurityService } from "../../providers/security.service";
-import { IonList, LoadingController, ModalController, ToastController,Config, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { IonList, LoadingController, ModalController, ToastController,Config } from '@ionic/angular';
+import { NavigationExtras, Router } from '@angular/router';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+import { NavController, NavParams } from '@ionic/angular';
+import { MapaPage } from "../mapa/mapa.page";
 
 @Component({
   selector: 'app-direcciones',
@@ -25,7 +27,8 @@ export class DireccionesPage implements OnInit {
     public config: Config,
     public router: Router,
     public loadingCtrl: LoadingController,
-    private nativePageTransitions: NativePageTransitions
+    private nativePageTransitions: NativePageTransitions,
+    public navCtrl: NavController
     ) { }
 
   async ngOnInit() {    
@@ -39,7 +42,25 @@ export class DireccionesPage implements OnInit {
 
 
   goMap(){
-    this.router.navigateByUrl('/mapa', { replaceUrl: true });
+    //this.router.navigateByUrl('/mapa', { replaceUrl: true });
+    this.navCtrl.navigateRoot('/mapa');
+  }
+
+  selectAddress(address: Direccion){
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 600
+     };
+    this.nativePageTransitions.curl(options);
+    // let navigationExtras: NavigationExtras = { state: { address: address } };
+    // this.router.navigate(['/app/tab/carta'],navigationExtras);
+
+    let navigationExtras: NavigationExtras = {
+      state: {
+        address: address
+      }
+    };
+  this.navCtrl.navigateRoot(['app/tab/carta'], navigationExtras);
   }
 
 

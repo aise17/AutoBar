@@ -19,7 +19,7 @@
 <ion-content>
 
   <ion-list *ngIf="list_addresses">
-    <ion-card *ngFor="let address of list_addresses" #address_list routerLink="/app/tabs/schedule/session/{{address.id}}">
+    <ion-card *ngFor="let address of list_addresses" #address_list (click)="selectAddress(address)">
         <ion-card-header>
          
           <ion-card-title>{{address.name}}</ion-card-title>

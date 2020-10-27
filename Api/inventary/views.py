@@ -61,7 +61,7 @@ class CreateOrdersView(generics.ListCreateAPIView):
                 _mesa = request.data["mesa"]
                 mesa = Mesa.objects.get(pk=_mesa)
             if 'address' in request.data:
-                _address = request.data["address"]
+                _address = request.data["address"]["id"]
                 address = Address.objects.get(pk=_address)
 
             if mesa and address is None:

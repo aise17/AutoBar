@@ -59,7 +59,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'carta/:localidad/:calle/:numero/:piso/:portal/:puerta',
+        path: 'carta/:queryParams',
         children: [
           {
             path: '',

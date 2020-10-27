@@ -8,5 +8,6 @@ export interface Direccion {
     latitud: string,
     longitud: string,
     name:string,
-    user:number
+    user:number,
+    id:number
 }

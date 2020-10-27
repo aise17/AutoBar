@@ -117,13 +117,14 @@
 
 
     <ion-col >
-      <ion-item padding *ngIf="mesaId">
+      <ion-item padding *ngIf="mesaId" (click)="goMesa()">
         <ion-label>Nº mesa</ion-label>
           <ion-badge>{{mesaId}}</ion-badge>
       </ion-item> 
 
-      <ion-item padding *ngIf="direccion">
+      <ion-item padding *ngIf="direccion" (click)="goDireccion()">
           <ion-label>Direccion {{direccion.name}}</ion-label>
+          <ion-label>Direccion {{direccion.calle}}</ion-label>
       </ion-item>
 
       <ion-item padding *ngIf="!direccion && !mesaId"(click)="presentChoseSite()">

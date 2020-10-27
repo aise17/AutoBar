@@ -16,6 +16,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
 
 
+
 @Component({
   selector: 'app-carta',
   templateUrl: './carta.page.html',
@@ -45,6 +46,13 @@ export class CartaPage implements OnInit {
  public direccion:Direccion = null;
  loading:any;
 
+ options: NativeTransitionOptions = {
+  direction: 'up',
+  duration: 400,
+  slowdownfactor: -1,
+  iosdelay: 50
+ };
+
  constructor(
    public alertCtrl: AlertController,
    public confData: ConferenceData,
@@ -62,9 +70,15 @@ export class CartaPage implements OnInit {
    private route: ActivatedRoute,
    private actionSheetController: ActionSheetController,
    private nativePageTransitions: NativePageTransitions
+   
 
  ) { 
    //this.menu.enable(false);
+   this.route.queryParams.subscribe(params => {
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.direccion = this.router.getCurrentNavigation().extras.state.address;
+    }
+  });
  }
 
  async ngOnInit() {
@@ -81,7 +95,7 @@ export class CartaPage implements OnInit {
    
    this.ios = this.config.get('mode') === 'ios';
 
-   this.getCarta();
+   //this.getCarta();
 
    this.loading.dismiss();
    
@@ -91,6 +105,9 @@ export class CartaPage implements OnInit {
 
   this.mesaId = parseInt(this.route.snapshot.paramMap.get('mesaId'));
   console.log('Mesa Seleccionada -> ' + this.mesaId);
+
+
+
 
 }
 
@@ -217,12 +234,19 @@ async getCarta(){
           handler: async () => {
             const id = parseInt( await this.security.getIdUsername().then(x => x.toString()));
 
+            if(this.mesaId){
             this.ordenCompra = {
               user: id,
               product: [],
               mesa: this.mesaId
-              
             }
+          }else if(this.direccion){
+            this.ordenCompra = {
+              user: id,
+              product: [],
+              address: this.direccion
+            }
+          }
             this.carro.forEach(x  =>{
               this.ordenCompra.product.push(x);
             })
@@ -267,22 +291,19 @@ async getCarta(){
   }
 
   goDireccion(){
+    this.nativePageTransitions.curl(this.options);
     this.router.navigateByUrl('/app/tab/direcciones', { replaceUrl: true });
   }
 
   goScanner(){
+    this.nativePageTransitions.slide(this.options);
     this.router.navigateByUrl('/app/tab/scanner', { replaceUrl: true });
   }
 
 
   async presentChoseSite() {
     
-    let options: NativeTransitionOptions = {
-      direction: 'up',
-      duration: 400,
-      slowdownfactor: -1,
-      iosdelay: 50
-     };
+
     const actionSheet = await this.actionSheetController.create({
       header: 'Lugares de entrega:',
       cssClass: 'my-custom-class',
@@ -294,7 +315,7 @@ async getCarta(){
           console.log('Share clicked');
           actionSheet.dismiss();
          
-          this.nativePageTransitions.slide(options);
+
           this.goScanner();
 
         }
@@ -305,7 +326,6 @@ async getCarta(){
           console.log('Favorite clicked');
           actionSheet.dismiss();
        //TODO  REVISAR PORQUE ESTO ROMPE MAPA
-          this.nativePageTransitions.curl(options);
           this.goDireccion();
 
         }

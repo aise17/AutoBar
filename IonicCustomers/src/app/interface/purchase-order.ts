@@ -1,3 +1,4 @@
+import { Direccion } from './direccion';
 
 export class PurchaseOrder {
 
@@ -10,6 +11,7 @@ constructor(id:number){
     ok?: boolean;
     error?: string;
     mesa?: number;
+    address?: Direccion;
 }
 
 export class Product{
