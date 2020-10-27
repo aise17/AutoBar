@@ -195,7 +195,7 @@ class DeleteAddress(APIView):
         salida=dict()  
 
         try:
-            _id =request.data['id']
+            _id =request.GET['id']
             Address.objects.get(pk=_id).delete()
             salida['ok'] = True
         except Exception as ex:
