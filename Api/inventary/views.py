@@ -172,8 +172,8 @@ class CreateListAddress(generics.ListCreateAPIView, generics.RetrieveDestroyAPIV
 
     def delete(self, request, *args, **kwargs):
         salida=dict()  
-        print(serializers.serialize("json", request))
-        _id =request.data['id']
+        #_id =request.data['id']
+        _id =request.GET['id']
         try:
             Address.objects.get(pk=_id).delete()
             salida['ok'] = True
