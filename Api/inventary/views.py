@@ -52,13 +52,22 @@ class CreateOrdersView(generics.ListCreateAPIView):
 
         _user = request.data["user"]
         _mesa = request.data["mesa"]
+        _address = request.data["address"]
 
         try:
 
             user: User = User.objects.get(pk=_user)
             mesa: Mesa = Mesa.objects.get(pk=_mesa)
+            address: Address = Address.objects.get(pk=_address)
 
-            order = Orders.objects.create(user= user, mesa=mesa)
+            if mesa and address is None:
+                order = Orders.objects.create(user= user, mesa=mesa)
+            elif mesa is None and address:
+                order = Orders.objects.create(user= user, address= address)
+            else:
+                salida['ok'] = False
+                salida['error'] = "la peticion no puede contener mesa y direccion"
+                return JsonResponse(salida, status=status.HTTP_400_BAD_REQUEST)
             
 
             for product in request.data["product"]:
