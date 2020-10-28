@@ -144,7 +144,36 @@ class OrderCocinaModule(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
             
-        orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=False, product__preparation_site=1).values()
+        orders_products = OrdersProducts.objects.filter(order_product__orders_status_cocina=False, product__preparation_site=1).values()
+
+        ids_order_product = orders_products.values_list('order_product', flat=True)
+        ids_products = orders_products.values_list('product', flat=True)
+
+        products = Product.objects.filter(preparation_site=1,pk__in= ids_products)
+
+        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+        
+        for order in orders:
+            order_product_of_order = orders_products.filter(order_product=order['id'])
+            product_ids = order_product_of_order.values_list('product', flat=True)
+            if order['address_id']:
+                order['address'] = getObject(Address.objects.filter(pk = order['address_id']).values())
+                del order['address_id']
+            order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
+                
+        return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
+
+
+class OrderCamareroModule(generics.ListAPIView):
+
+
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def get(self, request, *args, **kwargs):
+            
+        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_cocina=True) | Q(order_product__orders_status_cocina=True)).values()
 
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
