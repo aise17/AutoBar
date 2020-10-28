@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>HistoricoPedidos</ion-title>
+    <ion-title>Pedidos</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,6 +16,11 @@
   </ion-refresher>
 
   <ion-list>
+
+    <ion-list-header>
+      <ion-label>Pedidos activos</ion-label>
+      <ion-button>See All</ion-button>
+    </ion-list-header>
     
 
     <ion-card *ngFor="let order_active of list_order_active">
@@ -24,8 +29,66 @@
           <img src="">
         </ion-avatar>
         <ion-label>
-          <h3 *ngIf="order_active.mesa">{{order_active.mesa}}</h3>
-          <h3 *ngIf="order_active.address">{{order_active.address}}</h3>
+          <h3 *ngIf="order_active.mesa">{{order_active.mesa_id}}</h3>
+          <h3 *ngIf="order_active.address">{{order_active.address[0].name}}</h3>
+          <p>{{order_active.creation_date}}</p>
+        </ion-label>
+      </ion-item>
+    
+      <img src="" alt="ion">
+      <ion-card-header>
+        <ion-card-title>Hotel Panama Garden</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+      </ion-card-content>
+    
+      <ion-footer>
+        <ion-row>
+          <ion-col center text-center>
+            <button>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>1.5k Likes</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <button>
+              <ion-icon name="text"></ion-icon>
+              <div>4 Comments</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <button>
+              <ion-icon name="time"></ion-icon>
+              <div>11h ago</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
+    </ion-card>
+
+
+  </ion-list>
+
+
+
+
+  <ion-list>
+
+    <ion-list-header>
+      <ion-label>Historico de pedidos</ion-label>
+      <ion-button>See All</ion-button>
+    </ion-list-header>
+    
+
+    <ion-card *ngFor="let order_active of list_order_history">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="">
+        </ion-avatar>
+        <ion-label>
+          <h3 *ngIf="order_active.mesa">{{order_active.mesa_id}}</h3>
+          <h3 *ngIf="order_active.address">{{order_active.address[0].name}}</h3>
           <p>{{order_active.creation_date}}</p>
         </ion-label>
       </ion-item>

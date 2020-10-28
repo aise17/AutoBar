@@ -73,7 +73,7 @@
       <ion-item-sliding *ngFor="let product of category.products" #slidingItem>
         <ion-item routerLink="/app/tabs/schedule/session/{{product.id}}">
           <ion-avatar slot="start">
-            <ion-img  style="width: 100px; height: 100px;" [src]="product.image"></ion-img>
+            <ion-img [src]="product.image"></ion-img>
           </ion-avatar>
           <ion-label class="ion-margin">
             <h3>{{product.name}}</h3>
@@ -102,9 +102,11 @@
 
       <ion-item-sliding *ngFor="let products of carro" #slidingItem>
         <ion-item routerLink="/app/tabs/schedule/session/{{products.id}}" >
-          <ion-avatar slot="start">
-            <ion-img [src]="products.image"></ion-img>
-          </ion-avatar>
+ 
+            <ion-avatar slot="start">
+              <ion-img [src]="products.image"></ion-img>
+            </ion-avatar>
+
           <ion-label class="ion-margin">
             <h3>{{products.name}}</h3>
             <p >

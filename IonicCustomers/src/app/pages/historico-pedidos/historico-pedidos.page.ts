@@ -34,8 +34,8 @@ export class HistoricoPedidosPage implements OnInit {
         await this.securityService.getIdUsername().then(x => x.valueOf()))
         .subscribe(res => {
           if(res){
-            console.log(res)
-            this.list_order_active = res
+            this.list_order_active = res;
+            console.log(this.list_order_active);
             
           }
         });
@@ -53,8 +53,7 @@ export class HistoricoPedidosPage implements OnInit {
         await this.securityService.getIdUsername().then(x => x.valueOf()))
         .subscribe(res => {
           if(res){
-            console.log(res)
-            this.getOrdersHisory = res
+            this.list_order_history = res;
             
           }
         });
