@@ -20,6 +20,7 @@ urlpatterns = [
     path('address/delete', views.DeleteAddress.as_view(), name='deleteAddress'),
     path('order/orderactives', views.ActiveOrders.as_view(), name='activeOrders'),
     path('order/history', views.OrderHistory.as_view(), name='orderHistory'),
-    path('test', views.OrderBarModule.as_view(), name='OrderBarModule'),
+    path('order/bar', views.OrderBarModule.as_view(), name='OrderBarModule'),
+    path('order/cocina', views.OrderCocinaModule, name='OrderCocinaModule'),
 
 ]
