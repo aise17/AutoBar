@@ -5,6 +5,7 @@ from rest_framework import permissions
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.viewsets import ViewSet
 
+
 from rest_framework import generics, permissions, serializers, views, status
 from django.http import JsonResponse
 import json
@@ -315,3 +316,45 @@ class DeleteAddress(APIView):
 
 def getObject(obj):
     return [o for o in obj]
+
+class updateStatusBarra(generics.UpdateAPIView):
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def put(self, request, *args, **kwargs):
+        sal = dict()
+        try:
+            id = request.data['id']
+            ordenes = Orders.objects.get(pk=id)
+            ordenes.orders_status_barra=True
+            ordenes.save()
+            sal['ok'] = True
+        except Exception as ex: 
+            sal['ok'] = False   
+            sal['error'] = str(ex)
+
+        
+
+
+        return JsonResponse(sal,status=status.HTTP_200_OK)
+
+class updateStatusCocina(generics.UpdateAPIView):
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def put(self, request, *args, **kwargs):
+        sal = dict()
+        try:
+            id = request.data['id']
+            ordenes = Orders.objects.get(pk=id)
+            ordenes.orders_status_cocina=True
+            ordenes.save()
+            sal['ok'] = True
+        except Exception as ex: 
+            sal['ok'] = False   
+            sal['error'] = str(ex)
+
+        return JsonResponse(sal,status=status.HTTP_200_OK)
+

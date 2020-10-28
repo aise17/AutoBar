@@ -23,5 +23,6 @@ urlpatterns = [
     path('order/bar', views.OrderBarModule.as_view(), name='OrderBarModule'),
     path('order/cocina', views.OrderCocinaModule.as_view(), name='OrderCocinaModule'),
     path('order/camarero', views.OrderCamareroModule.as_view(), name='OrderCocinaModule'),
+    path('order/barra/status', views.updateStatusBarra.as_view(), name='barraAccept'),
 
 ]
