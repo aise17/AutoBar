@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>productsoforder</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-item *ngFor='let p of products'>
+{{p.name}}
+<ion-img [src]='p.image'></ion-img>
+
+</ion-item>
+
+</ion-content>
