@@ -115,7 +115,7 @@ export class DireccionesPage implements OnInit {
     setTimeout(() => {
       console.log('Async operation has ended');
       event.target.complete();
-      
+      this.getAddresses();
     }, 2000);
   }
 
