@@ -144,12 +144,12 @@ class OrderCocinaModule(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
             
-        orders_products = OrdersProducts.objects.filter(order_product__orders_status_cocina=False, product__preparation_site=1).values()
+        orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=False, product__preparation_site=2).values()
 
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
 
-        products = Product.objects.filter(preparation_site=1,pk__in= ids_products)
+        products = Product.objects.filter(preparation_site=2,pk__in= ids_products)
 
         orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
         
@@ -178,7 +178,7 @@ class OrderCamareroModule(generics.ListAPIView):
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
 
-        products = Product.objects.filter(,pk__in= ids_products)
+        products = Product.objects.filter(pk__in= ids_products)
 
         orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
         
