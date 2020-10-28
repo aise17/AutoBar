@@ -17,6 +17,7 @@ User = get_user_model()
 # Create your views here.
 from django.core import serializers
 from rest_framework.views import APIView
+from django.db.models import Q
 
 
 class CategoryView(ListAPIView):
@@ -130,6 +131,56 @@ class OrderBarModule(generics.ListAPIView):
                 
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
+
+class ActiveOrders(generics.ListAPIView):
+
+
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def get(self, request, *args, **kwargs):
+            
+        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_barra=False) | Q(order_product__orders_status_cocina=False)).values()
+
+        ids_order_product = orders_products.values_list('order_product', flat=True)
+        ids_products = orders_products.values_list('product', flat=True)
+
+        products = Product.objects.filter(pk__in= ids_products)
+
+        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+        
+        for order in orders:
+            order_product_of_order = orders_products.filter(order_product=order['id'])
+            product_ids = order_product_of_order.values_list('product', flat=True)
+            order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
+                
+        return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
+
+class OrderHistory(generics.ListAPIView):
+
+
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def get(self, request, *args, **kwargs):
+            
+        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_barra=False) | Q(order_product__orders_status_cocina=False)).values()
+
+        ids_order_product = orders_products.values_list('order_product', flat=True)
+        ids_products = orders_products.values_list('product', flat=True)
+
+        products = Product.objects.filter(pk__in= ids_products)
+
+        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+        
+        for order in orders:
+            order_product_of_order = orders_products.filter(order_product=order['id'])
+            product_ids = order_product_of_order.values_list('product', flat=True)
+            order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
+                
+        return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
 class CreateListAddress(APIView):
 

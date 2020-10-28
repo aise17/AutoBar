@@ -18,6 +18,8 @@ urlpatterns = [
     path('create_product', views.CreateProductView.as_view(), name='CretaeProduct'),
     path('address', views.CreateListAddress.as_view(), name='Address'),
     path('address/delete', views.DeleteAddress.as_view(), name='deleteAddress'),
+    path('order/active', views.ActiveOrders.as_view(), name='activeOrders'),
+    path('order/history', views.OrderHistory.as_view(), name='orderHistory'),
     path('test', views.OrderBarModule.as_view(), name='OrderBarModule'),
 
 ]
