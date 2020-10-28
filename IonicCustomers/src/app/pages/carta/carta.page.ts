@@ -279,15 +279,15 @@ async getCarta(){
       if(res){
         if(res.ok){
           console.log("Peticion enviada -> " + res.ok)
-          await this.loading.onWillDismiss();
+          await this.loading.dismiss();
           
         }else if(res.error){
           console.log("Error -> " + res.error);
-          await this.loading.onWillDismiss();
+          await this.loading.dismiss();
         }
       }else{
         console.log("Fallo de conexion");
-        await this.loading.onWillDismiss();
+        await this.loading.dismiss();
       }
     });
     

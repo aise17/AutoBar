@@ -154,6 +154,7 @@ class ActiveOrders(generics.ListAPIView):
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])
             product_ids = order_product_of_order.values_list('product', flat=True)
+            order['address'] = Address.objects.get(pk = order['address_id'])
             order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
                 
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
