@@ -127,6 +127,9 @@ class OrderBarModule(generics.ListAPIView):
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])
             product_ids = order_product_of_order.values_list('product', flat=True)
+            if order['address_id']:
+                del order['address_id']
+                order['address'] = getObject(Address.objects.filter(pk = order['address_id']).values())
             order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
                 
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
@@ -155,6 +158,7 @@ class ActiveOrders(generics.ListAPIView):
             order_product_of_order = orders_products.filter(order_product=order['id'])
             product_ids = order_product_of_order.values_list('product', flat=True)
             if order['address_id']:
+                del order['address_id']
                 order['address'] = getObject(Address.objects.filter(pk = order['address_id']).values())
             order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
                 
@@ -182,6 +186,9 @@ class OrderHistory(generics.ListAPIView):
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])
             product_ids = order_product_of_order.values_list('product', flat=True)
+            if order['address_id']:
+                del order['address_id']
+                order['address'] = getObject(Address.objects.filter(pk = order['address_id']).values())
             order['products']= getObject( Product.objects.filter(pk__in=product_ids).values() )
                 
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
