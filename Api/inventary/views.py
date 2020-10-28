@@ -178,7 +178,7 @@ class OrderCamareroModule(generics.ListAPIView):
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
 
-        products = Product.objects.filter(preparation_site=1,pk__in= ids_products)
+        products = Product.objects.filter(,pk__in= ids_products)
 
         orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
         
