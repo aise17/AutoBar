@@ -22,7 +22,7 @@ export class InventaryService {
   private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
   private AddressesURL = 'http://lacentro.autobar.tk:8080/inventary/address'
   private AddressDeleteURL = 'http://lacentro.autobar.tk:8080/inventary/address/delete'
-  private orderActiveURL = 'http:/lacentro.autobar.tk:8080/inventary/order/active'
+  private orderActiveURL = 'http://lacentro.autobar.tk:8080/inventary/order/orderactives'
   private orderHistoryURL = 'http://lacentro.autobar.tk:8080/inventary/order/history'
 
 
@@ -84,15 +84,14 @@ export class InventaryService {
 
   }
 
-  public getOrderActive(id:number): Observable<any>{
+  public getOrderActive(id:number): Observable<any> {
 
     let params = new HttpParams().set('id', id.toString());   
 
-    return this.http.get<any>(this.orderActiveURL, { params: params }).pipe(
-      tap((res) => this.log(`get order active=${res}`)),
-      catchError(this.handleError<any>('order active'))
+    return this.http.get<PurchaseOrder[]>(this.orderActiveURL, { params: params }).pipe(
+      tap((res) => this.log(`get oder history=${res}`)),
+      catchError(this.handleError<PurchaseOrder[]>('order history'))
     );
-
   }
 
   public getOrderHistory(id:number): Observable<any> {
@@ -103,7 +102,6 @@ export class InventaryService {
       tap((res) => this.log(`get oder history=${res}`)),
       catchError(this.handleError<PurchaseOrder[]>('order history'))
     );
-
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

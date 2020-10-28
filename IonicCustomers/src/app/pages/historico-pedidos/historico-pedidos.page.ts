@@ -19,9 +19,10 @@ export class HistoricoPedidosPage implements OnInit {
     private securityService: SecurityService
     ) {  }
 
-    
+
   ngOnInit() {
     this.getOrdersActives();
+    this.getOrdersHisory();
   }
 
 
@@ -53,7 +54,7 @@ export class HistoricoPedidosPage implements OnInit {
         .subscribe(res => {
           if(res){
             console.log(res)
-            
+            this.getOrdersHisory = res
             
           }
         });
