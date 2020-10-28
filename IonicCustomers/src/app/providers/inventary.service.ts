@@ -22,6 +22,8 @@ export class InventaryService {
   private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
   private AddressesURL = 'http://lacentro.autobar.tk:8080/inventary/address'
   private AddressDeleteURL = 'http://lacentro.autobar.tk:8080/inventary/address/delete'
+  private orderActiveURL = 'http:/lacentro.autobar.tk:8080/inventary/order/active'
+  private orderHistoryURL = 'http://lacentro.autobar.tk:8080/inventary/order/history'
 
 
 
@@ -36,7 +38,7 @@ export class InventaryService {
 
     return this.http.post<PurchaseOrder>(this.ordenPedidoURL, ordenCompra ).pipe(
       tap((res) => this.log(`Pedido=${res.ok}`)),
-      catchError(this.handleError<PurchaseOrder>('getToken'))
+      catchError(this.handleError<PurchaseOrder>('envio de pedido'))
     );
 
   }
@@ -47,7 +49,7 @@ export class InventaryService {
 
     return this.http.get<Category[]>(this.cartaUrl ).pipe(
       tap((res) => this.log(`get carta=${res['access_token']}`)),
-      catchError(this.handleError<Category[]>('getCarta'))
+      catchError(this.handleError<Category[]>('get carta'))
     );
 }
 
@@ -57,7 +59,7 @@ export class InventaryService {
 
     return this.http.get<Direccion[]>(this.AddressesURL, { params: params }).pipe(
       tap((res) => this.log(`get address=${res}`)),
-      catchError(this.handleError<Direccion[]>('direccion'))
+      catchError(this.handleError<Direccion[]>('get direccion'))
     );
   }
 
@@ -65,8 +67,8 @@ export class InventaryService {
 
 
     return this.http.post<Direccion>(this.AddressesURL, adrress ).pipe(
-      tap((res) => this.log(`Pedido=${res}`)),
-      catchError(this.handleError<Direccion>('getToken'))
+      tap((res) => this.log(`set address=${res}`)),
+      catchError(this.handleError<Direccion>('set address'))
     );
 
   }
@@ -76,8 +78,30 @@ export class InventaryService {
     let params = new HttpParams().set('id', id.toString());   
 
     return this.http.get<Direccion[]>(this.AddressDeleteURL, { params: params }).pipe(
-      tap((res) => this.log(`get address=${res}`)),
-      catchError(this.handleError<Direccion[]>('direccion'))
+      tap((res) => this.log(`delete address=${res}`)),
+      catchError(this.handleError<Direccion[]>('delete direccion'))
+    );
+
+  }
+
+  public getOrderActive(id:number): Observable<any>{
+
+    let params = new HttpParams().set('id', id.toString());   
+
+    return this.http.get<any>(this.orderActiveURL, { params: params }).pipe(
+      tap((res) => this.log(`get order active=${res}`)),
+      catchError(this.handleError<any>('order active'))
+    );
+
+  }
+
+  public getOrderHistory(id:number): Observable<any> {
+
+    let params = new HttpParams().set('id', id.toString());   
+
+    return this.http.get<PurchaseOrder[]>(this.orderHistoryURL, { params: params }).pipe(
+      tap((res) => this.log(`get oder history=${res}`)),
+      catchError(this.handleError<PurchaseOrder[]>('order history'))
     );
 
   }

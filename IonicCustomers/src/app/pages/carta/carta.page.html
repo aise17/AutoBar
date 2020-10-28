@@ -50,9 +50,9 @@
   </ion-refresher>
 
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <!-- <ion-toolbar>
       <ion-title size="large">Product</ion-title>
-    </ion-toolbar>
+    </ion-toolbar> -->
     <ion-toolbar>
       <ion-searchbar [(ngModel)]="queryText" (ionChange)="updateSchedule()" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
@@ -72,7 +72,9 @@
 
       <ion-item-sliding *ngFor="let product of category.products" #slidingItem>
         <ion-item routerLink="/app/tabs/schedule/session/{{product.id}}">
-          <ion-img  style="width: 100px; height: 100px;" [src]="product.image"></ion-img>
+          <ion-avatar slot="start">
+            <ion-img  style="width: 100px; height: 100px;" [src]="product.image"></ion-img>
+          </ion-avatar>
           <ion-label class="ion-margin">
             <h3>{{product.name}}</h3>
             <p >
@@ -100,9 +102,9 @@
 
       <ion-item-sliding *ngFor="let products of carro" #slidingItem>
         <ion-item routerLink="/app/tabs/schedule/session/{{products.id}}" >
-          <ion-thumbnail slot="start">
+          <ion-avatar slot="start">
             <ion-img [src]="products.image"></ion-img>
-          </ion-thumbnail>
+          </ion-avatar>
           <ion-label class="ion-margin">
             <h3>{{products.name}}</h3>
             <p >

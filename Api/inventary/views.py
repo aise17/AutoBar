@@ -148,7 +148,8 @@ class ActiveOrders(generics.ListAPIView):
 
         products = Product.objects.filter(pk__in= ids_products)
 
-        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+        user = User.objects.get(pk= request.GET['id'])
+        orders = getObject(Orders.objects.filter(id__in = ids_order_product, user= user.pk ).values())
         
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])
@@ -166,14 +167,15 @@ class OrderHistory(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
             
-        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_barra=False) | Q(order_product__orders_status_cocina=False)).values()
+        orders_products = OrdersProducts.objects.filter(order_product__orders_status_barra=True , order_product__orders_status_cocina=True).values()
 
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
 
         products = Product.objects.filter(pk__in= ids_products)
+        user = User.objects.get(pk= request.GET['id'])
 
-        orders = getObject(Orders.objects.filter(id__in = ids_order_product ).values())
+        orders = getObject(Orders.objects.filter(id__in = ids_order_product, user= user.pk ).values())
         
         for order in orders:
             order_product_of_order = orders_products.filter(order_product=order['id'])

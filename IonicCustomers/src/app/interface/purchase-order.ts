@@ -5,7 +5,7 @@ export class PurchaseOrder {
 constructor(id:number){
     this.user = id;
 }
-
+    id?: number
     user: number;
     product?: Product[];
     ok?: boolean;

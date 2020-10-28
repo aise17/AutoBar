@@ -89,6 +89,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'orderhistory',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../historico-pedidos/historico-pedidos.module').then(m => m.HistoricoPedidosPageModule)
+          }
+          
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tab/mapa',
         pathMatch: 'full'

@@ -18,19 +18,15 @@ import { SecurityService } from './providers/security.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  // appPages = [
-  //   {
-  //     title: 'Pedir en bar',
-  //     url: '/app/tab/scanner',
-  //     icon: 'cafe'
-  //   },
-  //   {
-  //     title: 'Pedir a domicilio',
-  //     url: '/app/tab/mapa',
-  //     icon: 'home'
-  //   },
+  appPages = [
+    {
+      title: 'direcciones',
+      url: '/app/tab/direcciones',
+      icon: 'car'
+    },
 
-  // ];
+
+  ];
   loggedIn = false;
   dark = true;
 
