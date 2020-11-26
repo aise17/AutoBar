@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group, update_last_login
 from rest_framework import serializers
 
-from .models import Category, Orders, OrdersProducts, Product, Address
+from .models import Category, Orders, OrdersProducts, Product, Address,Mesa
 
 admin.autodiscover()
 
@@ -83,7 +83,7 @@ class OrderListSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         orders = Orders.objects.create(**validated_data)
-        #product.save()
+        
 
         return orders
 
@@ -129,3 +129,13 @@ class AddressSerialicer(serializers.ModelSerializer):
         model = Address
         fields = '__all__'
 
+
+class TableSerializer(serializers.ModelSerializer):
+    id  = serializers.IntegerField()
+    name = serializers.CharField(required=True)
+    ejex = serializers.IntegerField()
+    ejey = serializers.IntegerField()
+
+    class Meta:
+        model = Mesa
+        fields = '__all__'

@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from .models import Category, Orders, Product, OrdersProducts, Mesa, Address
-from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer, OrderSerialicer, Test, AddressSerialicer
+from .serializers import ProductsListSerializer, OrderProductsSerializer, OrderListSerializer, ProductsSerializer,CreateOrderSerializer, OrderSerialicer, Test, AddressSerialicer, TableSerializer
 from rest_framework import permissions
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.viewsets import ViewSet
 
 
@@ -41,6 +41,14 @@ class GetOrdersView(ListAPIView):
     queryset = Orders.objects.all()
 
 
+class GetTablesView(ListAPIView):
+
+    model = Orders
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = TableSerializer
+    queryset = Mesa.objects.all()
 
 class CreateOrdersView(generics.ListCreateAPIView):
 
@@ -174,7 +182,7 @@ class OrderCamareroModule(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
             
-        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_cocina=True) | Q(order_product__orders_status_cocina=True)).values()
+        orders_products = OrdersProducts.objects.filter(Q(order_product__orders_status_barra=False)).values()
 
         ids_order_product = orders_products.values_list('order_product', flat=True)
         ids_products = orders_products.values_list('product', flat=True)
@@ -195,7 +203,6 @@ class OrderCamareroModule(generics.ListAPIView):
 
 
 class ActiveOrders(generics.ListAPIView):
-
 
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
@@ -224,7 +231,6 @@ class ActiveOrders(generics.ListAPIView):
         return JsonResponse(orders, safe=False, status=status.HTTP_200_OK)
 
 class OrderHistory(generics.ListAPIView):
-
 
     permission_classes = [
         permissions.AllowAny # Or anon users can't register
@@ -333,10 +339,7 @@ class updateStatusBarra(generics.UpdateAPIView):
         except Exception as ex: 
             sal['ok'] = False   
             sal['error'] = str(ex)
-
-        
-
-
+            
         return JsonResponse(sal,status=status.HTTP_200_OK)
 
 class updateStatusCocina(generics.UpdateAPIView):
@@ -358,3 +361,24 @@ class updateStatusCocina(generics.UpdateAPIView):
 
         return JsonResponse(sal,status=status.HTTP_200_OK)
 
+class updateStatusEMesas(generics.UpdateAPIView):
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    def get(self, request, *args, **kwargs):
+        salida= dict()
+
+        try:
+            id = request.GET['id']
+            mesas = Mesa.objects.get(pk=id)
+            mesas.ejex = request.GET['ejex']
+            mesas.ejey = request.GET['ejey']
+            mesas.save()
+            salida['ok']=True
+
+        except Exception as ex:
+            salida['ok']=False
+            salida['error'] = "Error" + ex
+
+        return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)

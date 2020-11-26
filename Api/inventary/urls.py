@@ -24,5 +24,7 @@ urlpatterns = [
     path('order/cocina', views.OrderCocinaModule.as_view(), name='OrderCocinaModule'),
     path('order/camarero', views.OrderCamareroModule.as_view(), name='OrderCocinaModule'),
     path('order/barra/status', views.updateStatusBarra.as_view(), name='barraAccept'),
+    path('order/mesa_update', views.updateStatusEMesas.as_view(), name='updatemesas'),
+    path('order/mesaList', views.GetTablesView.as_view(), name='listtables'),
 
 ]

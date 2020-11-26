@@ -13,6 +13,8 @@ class PreparationSite(models.Model):
 
 class Mesa(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
+    ejex = models.DecimalField(max_digits=1000, decimal_places=0, default=0, null=True, blank=True)
+    ejey = models.DecimalField(max_digits=1000 ,decimal_places=0, default=0, null=True, blank=True)
 
     def __str__(self):
         return "Mesa - %s" % self.name 

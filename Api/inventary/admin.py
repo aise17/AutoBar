@@ -24,7 +24,7 @@ class SiteAdmin(admin.ModelAdmin):
 class MesaAdmin(admin.ModelAdmin):
     list_display = [ 'id','name',]
     list_filter = ('name',)
-    search_fields = ['name',]
+    search_fields = ['name','ejex', 'ejey']
 
 
 
