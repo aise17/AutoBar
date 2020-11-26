@@ -13,3 +13,6 @@ __pycache__/
 
 
 *.pyc
+Api/Api/__pycache__/__init__.cpython-37.pyc
+Api/Api/__pycache__/settings.cpython-37.pyc
+Api/Api/__pycache__/wsgi.cpython-37.pyc
