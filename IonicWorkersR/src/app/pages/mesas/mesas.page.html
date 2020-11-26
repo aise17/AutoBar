@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>mesas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item *ngFor='let table of listtables'> 
+    {{table.id}}
+    {{table.name}}
+    {{table.ejex}}
+    {{table.ejey}}
+  </ion-item>
+
+</ion-content>

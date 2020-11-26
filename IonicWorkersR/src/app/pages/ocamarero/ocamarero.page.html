@@ -6,10 +6,10 @@
 
 <ion-content>
 <!--dejarlo bonito-->
-  <ion-item *ngFor='let orden of ordenesfinal' (click)='goToProducts(orden.products)' > 
+
+  <ion-item *ngFor='let orden of ordenesfinal' (click)='goToProducts(orden.products, orden.id)' > 
     {{orden.id}}
   </ion-item>
-
 
   <!--cuando pulse un boton, me tinee que aparecer otra pagina cuando pulse los productos-->
 
