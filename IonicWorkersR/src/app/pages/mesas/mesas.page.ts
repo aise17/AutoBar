@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Mesas } from 'src/app/interface/mesas';
 import { OrdenesService } from 'src/app/providers/ordenes.service';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
+
 
 @Component({
   selector: 'app-mesas',
@@ -29,7 +32,11 @@ export class MesasPage implements OnInit {
         console.log(this.listtables);
       }
     });
+  }
 
+  aniadirMesa(){
+    
+    
   }
     
 

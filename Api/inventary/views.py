@@ -86,13 +86,14 @@ class CreateOrdersView(generics.ListCreateAPIView):
             
 
             for product in request.data["product"]:
-                serializer = CreateOrderSerializer().create(validated_data= product, user= user,order= order)
+                serializer = CreateOrderSerializer().create(validated_data = product, user= user,order= order)
 
             salida['ok'] = True
             salida['user'] = user.id
         except ValueError as ex:
             salida['ok'] = False
             salida['error'] = ex
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse(salida, status=status.HTTP_200_OK)
 
@@ -278,6 +279,7 @@ class CreateListAddress(APIView):
         else:
             salida['ok']=False
             salida['error'] = "No hay registros para este usuario"
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)
 
@@ -294,6 +296,7 @@ class CreateListAddress(APIView):
         except Exception as ex:
             salida['ok'] = False
             salida['error'] = str(ex)
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
         return JsonResponse(salida, safe=False, status=status.HTTP_202_ACCEPTED)
 
 
@@ -316,6 +319,7 @@ class DeleteAddress(APIView):
         except Exception as ex:
             salida['ok']=False
             salida['error'] = "Error" + ex
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)
 
@@ -339,6 +343,7 @@ class updateStatusBarra(generics.UpdateAPIView):
         except Exception as ex: 
             sal['ok'] = False   
             sal['error'] = str(ex)
+            return JsonResponse(sal, safe=False, status=status.HTTP_400_BAD_REQUEST)
             
         return JsonResponse(sal,status=status.HTTP_200_OK)
 
@@ -358,6 +363,7 @@ class updateStatusCocina(generics.UpdateAPIView):
         except Exception as ex: 
             sal['ok'] = False   
             sal['error'] = str(ex)
+            return JsonResponse(sal, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse(sal,status=status.HTTP_200_OK)
 
@@ -380,5 +386,34 @@ class updateStatusEMesas(generics.UpdateAPIView):
         except Exception as ex:
             salida['ok']=False
             salida['error'] = "Error" + ex
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
+
+        return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)
+
+class updateMesas(generics.CreateAPIView):
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+
+    serializer_class = TableSerializer
+
+    def create(self, request, *args, **kwargs):
+        salida= dict()
+        
+        try: 
+            mesas = Mesa.objects.create(ejex=request.POST['ejex'],ejey=request.POST['ejey'])
+            nombre = 'mesa '
+            ident = mesas.pk
+            nombre = nombre + str(mesas.pk)
+            mesas.name = nombre
+            mesas.save()
+            
+            salida['ok']=True
+            salida['sal'] = 'mesa creada correctamente'
+
+        except Exception as ex:
+            salida['ok']=False
+            salida['error'] = "Error" + ex.__str__
+            return JsonResponse(salida, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         return JsonResponse(salida, safe=False, status=status.HTTP_200_OK)

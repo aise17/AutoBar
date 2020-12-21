@@ -10,7 +10,6 @@ app_name = "inventary"
 
 urlpatterns = [
 
-
     path('product_list', views.CategoryView.as_view(), name='ProductList'),
     path('orders_list', views.GetOrdersView.as_view(), name='OrdersList'),
     path('create_orders', views.CreateOrdersView.as_view(), name='CretaeOrder'),
@@ -26,5 +25,7 @@ urlpatterns = [
     path('order/barra/status', views.updateStatusBarra.as_view(), name='barraAccept'),
     path('order/mesa_update', views.updateStatusEMesas.as_view(), name='updatemesas'),
     path('order/mesaList', views.GetTablesView.as_view(), name='listtables'),
+    path('mesa/newmesa', views.updateMesas().as_view(), name='newmesa'),
+
 
 ]
