@@ -13,8 +13,8 @@ class PreparationSite(models.Model):
 
 class Mesa(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
-    ejex = models.DecimalField(max_digits=1000, decimal_places=0, default=0, null=True, blank=True)
-    ejey = models.DecimalField(max_digits=1000 ,decimal_places=0, default=0, null=True, blank=True)
+    ejex = models.DecimalField(max_digits=1000, decimal_places=2, default=0, null=True, blank=True)
+    ejey = models.DecimalField(max_digits=1000 ,decimal_places=2, default=0, null=True, blank=True)
 
     def __str__(self):
         return "Mesa - %s" % self.name 
@@ -62,7 +62,7 @@ class Address(models.Model):
     longitud = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return "Direccion - {0} - {1}".format( self.id, name )
+        return "Direccion - {0} - {1}".format( self.id, self.name )
 
 
 class Orders(models.Model):
@@ -85,8 +85,7 @@ class OrdersProducts(models.Model):
     
  
     def __str__(self):
-        name = self.product
-        return "Orders Products - {0} - {1}".format( self.id, name )
+        return "Orders Products - {0} - {1}".format( self.id, self.product )
 
 
 

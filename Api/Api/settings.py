@@ -210,3 +210,4 @@ MULTITENANT_STATICFILES_DIRS= [
     os.path.join(BASE_DIR, '..', "static"),  # dev only after collecting static schemas
 ]
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'

@@ -14,10 +14,10 @@ export class SecurityService {
   HAS_LOGGED_IN = 'hasLoggedIn';
     HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
-    private loginUrl = 'http://lacentro.autobar.tk:8080/users/loginApi/';
-    private registerUrl = 'http://lacentro.autobar.tk:8080/users/register';
-    private createApiTokenUrl = 'http://lacentro.autobar.tk:8080/users/o/token/';
-    private cartaUrl = 'http://lacentro.autobar.tk:8080/inventary/product_list?format=json'
+    private loginUrl = 'http://lacentro.lab-autobar.tk:8080/users/loginApi/';
+    private registerUrl = 'http://lacentro.lab-autobar.tk:8080/users/register';
+    private createApiTokenUrl = 'http://lacentro.lab-autobar.tk:8080/users/o/token/';
+    private cartaUrl = 'http://lacentro.lab-autobar.tk:8080/inventary/product_list?format=json'
 
     constructor(
         public http: HttpClient,
@@ -60,7 +60,9 @@ export class SecurityService {
     }
     
     public tokenRequest (usuario: string, pass: string): Observable<ApiToken> {
-    
+
+
+
         let token = new ApiToken(usuario.toString(), pass.toString());
 
     

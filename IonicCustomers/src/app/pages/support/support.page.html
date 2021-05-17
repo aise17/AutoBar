@@ -5,7 +5,7 @@
         <ion-icon slot="start" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Support</ion-title>
+    <ion-title>Contacto con antencion al cliente</ion-title>
   </ion-toolbar>
 
 </ion-header>
@@ -18,19 +18,19 @@
   <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
     <ion-list lines="none">
       <ion-item>
-        <ion-label position="stacked" color="primary">Enter your support message below</ion-label>
+        <ion-label position="stacked" color="primary">Introduzca su mensaje aqui</ion-label>
         <ion-textarea [(ngModel)]="supportMessage" name="supportQuestion" #supportQuestion="ngModel" rows="6" required></ion-textarea>
       </ion-item>
     </ion-list>
 
     <ion-text color="danger">
       <p [hidden]="supportQuestion.valid || submitted === false" class="ion-padding-start">
-        Support message is required
+        Es necesario escribir un mensaje para poder enviar su reclamacion.
       </p>
     </ion-text>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit">Submit</ion-button>
+      <ion-button expand="block" type="submit">Enviar</ion-button>
     </div>
   </form>
 </ion-content>

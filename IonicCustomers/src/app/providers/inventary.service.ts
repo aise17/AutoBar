@@ -18,12 +18,12 @@ export class InventaryService {
 
 
 
-  private cartaUrl = 'http://lacentro.autobar.tk:8080/inventary/product_list?format=json'
-  private ordenPedidoURL = 'http://lacentro.autobar.tk:8080/inventary/create_orders'
-  private AddressesURL = 'http://lacentro.autobar.tk:8080/inventary/address'
-  private AddressDeleteURL = 'http://lacentro.autobar.tk:8080/inventary/address/delete'
-  private orderActiveURL = 'http://lacentro.autobar.tk:8080/inventary/order/orderactives'
-  private orderHistoryURL = 'http://lacentro.autobar.tk:8080/inventary/order/history'
+  private cartaUrl = 'http://lacentro.lab-autobar.tk:8080/inventary/product_list?format=json'
+  private ordenPedidoURL = 'http://lacentro.lab-autobar.tk:8080/inventary/create_orders'
+  private AddressesURL = 'http://lacentro.lab-autobar.tk:8080/inventary/address'
+  private AddressDeleteURL = 'http://lacentro.lab-autobar.tk:8080/inventary/address/delete'
+  private orderActiveURL = 'http://lacentro.lab-autobar.tk:8080/inventary/order/orderactives'
+  private orderHistoryURL = 'http://lacentro.lab-autobar.tk:8080/inventary/order/history'
 
 
 

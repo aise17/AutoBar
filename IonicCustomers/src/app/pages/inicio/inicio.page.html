@@ -3,34 +3,44 @@
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>inicio</ion-title>
+    <ion-title>La Centro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
 
   <div class="ion-padding">
-    <ion-button (click)="startScanning()" expand="full">Realizar un pedido</ion-button>
-</div>
+    <ion-button color="transparent" (click)="goToCarta()" expand="full" style="height: 100px;">
+      <img src="assets/img/kisspng-waiter-cartoon-bartender.png" width="80" height="80"/>
+      Realizar un pedido
+    </ion-button>
+  </div>
 
-  <ion-card style="height: 50%">
-      
-   </ion-card>
-  <ion-item style="height: 30%">
-    <ion-label position="stacked" color="primary">Recomendaciones</ion-label>
+  <ion-card>
+    <img src="assets/img/contenido/contenido_promocion_inicio_1.jpg"/>
+  </ion-card>
 
-  </ion-item>
 
- <div class="ion-padding">
-     <ion-button (click)="startScanning()" expand="full">qrscanner</ion-button>
-     <p *ngIf="qrText">QR Scan text: {{ qrText }}</p>
- </div>
+  <!-- <ion-label position="stacked" color="primary">Recomendaciones</ion-label> -->
 
- <ion-card style="height: 50%">
-</ion-card>
+  <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }" >
+    <ion-slide *ngFor="let img of [1, 2, 3]">
+      <img src="assets/img/contenido/productos/contenido_producto_{{img}}.jpg">
+    </ion-slide>
+  </ion-slides>
 
-<ion-card style="height: 50%">
-</ion-card>
+
+  <div class="ion-padding">
+      <ion-button (click)="goToScanner()" expand="full">Escanerar codigo de mesa</ion-button>
+  </div>
+
+  <ion-card >
+    <img src="assets/img/contenido/contenido_promocion_inicio_3.jpg"/>
+  </ion-card>
+
+  <ion-card >
+    <img src="assets/img/contenido/contenido_promocion_inicio_5.jpg"/>
+  </ion-card>
  
-
 </ion-content>

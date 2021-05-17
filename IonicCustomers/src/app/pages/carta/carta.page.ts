@@ -338,5 +338,26 @@ async getCarta(){
   }
 
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+      this.getCarta()
+    }, 2000);
+  }
+
 
 }
+
+
+
+
+
+
+
+
+
+
+// docker run -d --name=bind --dns=127.0.0.1 --publish=127.0.0.1:53:53/udp --publish=127.0.0.1:10000:10000 --volume=/srv/docker/bind:/data --env='ROOT_PASSWORD=SecretPassword' sameersbn/bind:latest

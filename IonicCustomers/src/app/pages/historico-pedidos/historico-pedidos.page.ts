@@ -12,6 +12,7 @@ export class HistoricoPedidosPage implements OnInit {
 
   public list_order_active: PurchaseOrder[];
   public list_order_history: PurchaseOrder[];
+  show_product = false;
 
 
   constructor(
@@ -74,4 +75,11 @@ export class HistoricoPedidosPage implements OnInit {
     }, 2000);
   }
 
+
+  showProducts(){
+    if (this.show_product == false) this.show_product = true
+    else this.show_product = false
+  }
+
+  
 }

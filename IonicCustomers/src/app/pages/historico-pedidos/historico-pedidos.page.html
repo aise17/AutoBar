@@ -21,110 +21,115 @@
       <ion-label>Pedidos activos</ion-label>
     </ion-list-header>
 
+    <img src="assets/img/contenido/camarero.jpg">
+
     <ion-card *ngFor="let order_active of list_order_active">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="">
-        </ion-avatar>
-        <ion-label>
-          <h3 *ngIf="order_active.mesa">{{order_active.mesa_id}}</h3>
-          <h3 *ngIf="order_active.address">{{order_active.address[0].name}}</h3>
-          <p>{{order_active.creation_date}}</p>
-        </ion-label>
-      </ion-item>
-    
-      <img src="" alt="ion">
       <ion-card-header>
-        <ion-card-title>Hotel Panama Garden</ion-card-title>
+        
+        <ion-card-title><ion-spinner slot="end"></ion-spinner>   Pedido en curso</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+
+        <ion-item>
+          <ion-label>
+            <!-- <h3 *ngIf="order_active.mesa_id">Mesa de destino: {{order_active.mesa_id}}</h3> -->
+            <h3 *ngIf="order_active.address">Dirección destino: {{order_active.address[0].name}}</h3>
+            <ion-datetime value="{{order_active.creation_date}}" display-timezone="utc" disabled></ion-datetime>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Preparando en cocina</ion-label>
+          <ion-spinner name="dots"></ion-spinner>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Preparando en barra</ion-label>
+          <ion-spinner name="dots"></ion-spinner>
+        </ion-item>
+
+        <ion-list>
+            <ion-item-group >
+
+              <ion-item>
+                <ion-label>Productos</ion-label>
+                <ion-button slot="end" (click)="showProducts()">
+                  <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+              </ion-item>
+              
+              <div *ngIf="show_product">
+                
+                <ion-item *ngFor="let product of order_active.products" >
+                  <ion-avatar slot="start">
+                    <ion-img [src]="product.image"></ion-img>
+                  </ion-avatar>
+                  <ion-label class="ion-margin">
+                    <h3>{{product.name}}</h3>
+                    <p >
+                      {{product.description}} <ion-label> Precio: {{product.price}} € </ion-label>
+                    </p>
+                  </ion-label>
+                </ion-item>
+              </div>
+
+            </ion-item-group>
+        </ion-list>
+      
       </ion-card-content>
     
-      <ion-footer>
-        <ion-row>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div>1.5k Likes</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="text"></ion-icon>
-              <div>4 Comments</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="time"></ion-icon>
-              <div>11h ago</div>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-footer>
     </ion-card>
-
 
   </ion-list>
 
 
-
-
+  
   <ion-list>
 
     <ion-list-header>
       <ion-label>Historico de pedidos</ion-label>
       <ion-button>See All</ion-button>
     </ion-list-header>
-    
 
-    <ion-card *ngFor="let order_active of list_order_history">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="">
-        </ion-avatar>
-        <ion-label>
-          <h3 *ngIf="order_active.mesa">{{order_active.mesa_id}}</h3>
-          <h3 *ngIf="order_active.address">{{order_active.address[0].name}}</h3>
-          <p>{{order_active.creation_date}}</p>
-        </ion-label>
-      </ion-item>
-    
-      <img src="" alt="ion">
+    <ion-card *ngFor="let order_history of list_order_history">
       <ion-card-header>
-        <ion-card-title>Hotel Panama Garden</ion-card-title>
+        <ion-card-title>Pedido en curso</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+
+        <ion-item>
+          <ion-label>
+            <p>Mesa de destino: </p>
+            <h3 *ngIf="order_history.mesa_id">{{order_history.mesa_id}}</h3>
+            <h3 *ngIf="order_history.address">{{order_history.address[0].name}}</h3>
+            <p>{{order_history.creation_date}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-list>
+            <ion-item-group >
+
+              <ion-label>Productos</ion-label>
+
+              <ion-item *ngFor="let product of order_active.products">
+                <ion-avatar slot="start">
+                  <ion-img [src]="product.image"></ion-img>
+                </ion-avatar>
+                <ion-label class="ion-margin">
+                  <h3>{{product.name}}</h3>
+                  <p >
+                    {{product.description}} <ion-label> Precio: {{product.price}} € </ion-label>
+                  </p>
+                </ion-label>
+              </ion-item>
+
+            </ion-item-group>
+        </ion-list>
+      
       </ion-card-content>
     
-      <ion-footer>
-        <ion-row>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div>1.5k Likes</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="text"></ion-icon>
-              <div>4 Comments</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <button>
-              <ion-icon name="time"></ion-icon>
-              <div>11h ago</div>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-footer>
     </ion-card>
 
-
   </ion-list>
-
 
 </ion-content>

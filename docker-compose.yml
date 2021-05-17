@@ -28,7 +28,7 @@ services:
     restart: always
     volumes:
     - "./docker/volumes/django/logs:/var/log"
-    - "./Api:/code/"
+    #- "./Api:/code/"
     command: bash -c "python manage.py makemigrations && python manage.py migrate_schemas --shared && gunicorn --workers=4 Api.wsgi -b 0.0.0.0:8000"
     links:
     - postgresql
@@ -40,7 +40,9 @@ services:
     restart: always
     ports:
       - "5432:5432"
-
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=docker
 
 
 

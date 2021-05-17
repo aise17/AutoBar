@@ -3,7 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">192.168.1.133</domain>
-        <domain includeSubdomains="true">autobar.tk:8080</domain>
-        <domain includeSubdomains="true">autobar.tk</domain>
+        <domain includeSubdomains="true">lab-autobar.tk:8080</domain>
+        <domain includeSubdomains="true">lab-autobar.tk</domain>
     </domain-config>
 </network-security-config>
