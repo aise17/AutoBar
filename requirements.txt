@@ -4,7 +4,7 @@ asgiref
 Babel
 billiard
 celery
-Django==2.2
+Django==2.2.20
 django-celery
 django-extensions
 django-filter
